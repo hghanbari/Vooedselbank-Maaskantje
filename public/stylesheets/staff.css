@@ -1,0 +1,55 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  height: 980px;
+  width: 100%;
+}
+
+header {
+  width: 980px;
+  height: 40px;
+  margin: 0 0 10px 0;
+  padding: 0;
+  background: #0055dd;
+  color: white;
+}
+
+header h1 {
+  margin: 0;
+  padding: 5px;
+  font-size: 20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: center;
+}
+
+nav {
+  width: 980px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 1em;
+}
+
+#content {
+  width: 920px;
+  min-height: 500px;
+  padding: 0 30px;
+}
+
+footer {
+  width: 940px;
+  height: 20px;
+  margin: 0 0 10px 0;
+  padding: 10px 20px;
+  background: #0055dd;
+  color: white;
+}
