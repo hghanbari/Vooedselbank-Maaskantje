@@ -5,21 +5,22 @@
 <head>
   <title>GBI</title>
   <meta charset="utf-8">
+  <link rel="stylesheet" media="all" href="/public/stylesheets/staff.css" />
 </head>
-<header>
-  <h1>GBI staff Area</h1>
-</header>
-<nav>
-  <ul>
-    <li><a href="index.php">Menu</a></li>
-  </ul>
-</nav>
-<footer>
-  &copy; <?php echo date('Y') ?> Globe Bank
-</footer>
 
 <body>
-
+  <header>
+    <h1>GBI staff Area</h1>
+  </header>
+  <navigation>
+    <ul>
+      <li><a href="index.php">Menu</a></li>
+    </ul>
+  </navigation>
+  <div id="content"></div>
+  <footer>
+    &copy; <?php echo date('Y') ?> Globe Bank
+  </footer>
 </body>
 
 </html>

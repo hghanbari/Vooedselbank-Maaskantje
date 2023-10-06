@@ -4,10 +4,10 @@ html {
 }
 
 body {
-  padding: 0;
-  margin: 0;
   height: 980px;
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 header {
@@ -23,18 +23,25 @@ header h1 {
   margin: 0;
   padding: 5px;
   font-size: 20px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
   text-align: center;
 }
 
-nav {
+navigation {
   width: 980px;
   margin: 0;
   padding: 0;
   text-align: center;
 }
 
-nav ul li {
+navigation ul {
+  width: 980px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+navigation ul li {
   display: inline;
   margin-right: 1em;
 }
