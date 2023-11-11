@@ -21,13 +21,6 @@ function App() {
               <span class="material-symbols-outlined">home</span>
             </div>
           </div>
-
-          <h2>salam</h2>
-          <h2>salam</h2>
-          <h2>salam</h2>
-          <h2>salam</h2>
-          <h2>salam</h2>
-          <h2>salam</h2>
           <h2>salam</h2>
           <h2>salam</h2>
           <h2>salam</h2>
