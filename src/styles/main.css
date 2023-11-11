@@ -82,6 +82,7 @@ a {
 li > span {
   margin-top: 10px;
   margin-left: 5px;
+  color: #ec7403;
 }
 
 /* Header */
@@ -95,20 +96,40 @@ li > span {
   color: blue;
 }
 
-.circle {
+.header-navbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-navbar > a > span {
+  color: #f4f0f0;
+  margin: 20px;
+}
+
+.header-card {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.card-content {
+  margin: 10px;
+  background-color: #f4f0f0;
+  border: #a0a0a0;
+  border-radius: 3%;
+  width: 370px;
+  height: 120px;
+}
+.card-content > span {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: #000;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   color: #fff;
-}
-
-.circle > .material-symbols-outlined {
-  font-size: 40px;
+  background-color: #f5365c;
 }
 
 /* Footer */

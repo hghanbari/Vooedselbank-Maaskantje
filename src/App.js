@@ -14,13 +14,6 @@ function App() {
       <div className="app-body">
         <Header />
         <div className="body-content">
-          <h2 className="main-title">salam</h2>
-
-          <div>
-            <div className="circle">
-              <span class="material-symbols-outlined">home</span>
-            </div>
-          </div>
           <h2>salam</h2>
           <h2>salam</h2>
           <h2>salam</h2>
