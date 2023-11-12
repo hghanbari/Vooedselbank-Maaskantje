@@ -1,6 +1,5 @@
 import * as React from "react";
 import Logo from "./images/logo-sidebar.jpg";
-import { Link } from "react-router-dom";
 
 export default function Sidebar() {
   return (
@@ -12,24 +11,34 @@ export default function Sidebar() {
         <div className="sidebar-mine">
           <ul className="list-main">
             <li>
-              <span class="material-symbols-outlined">computer</span>
-              <a href="#">Overzicht</a>
+              <a href="#">
+                <span class="material-symbols-outlined">computer</span>
+                <span>Overzicht</span>
+              </a>
             </li>
             <li>
-              <span class="material-symbols-outlined">for_you</span>
-              <a href="#">Klanten</a>
+              <a href="#">
+                <span class="material-symbols-outlined">for_you</span>
+                <span>Klanten</span>
+              </a>
             </li>
             <li>
-              <span class="material-symbols-outlined">local_shipping</span>
-              <a href="#">Leverancier</a>
+              <a href="#">
+                <span class="material-symbols-outlined">local_shipping</span>
+                <span>Leverancier</span>
+              </a>
             </li>
             <li>
-              <span class="material-symbols-outlined">package_2</span>
-              <a href="#">Pakketten</a>
+              <a href="#">
+                <span class="material-symbols-outlined">package_2</span>
+                <span>Pakketten</span>
+              </a>
             </li>
             <li>
-              <span class="material-symbols-outlined">article</span>
-              <a href="#">Voorraadbeheer</a>
+              <a href="#">
+                <span class="material-symbols-outlined">article</span>
+                <spam>Voorraadbeheer</spam>
+              </a>
             </li>
           </ul>
         </div>

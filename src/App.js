@@ -13,20 +13,7 @@ function App() {
       <Sidebar />
       <div className="app-body">
         <Header />
-        <div className="body-content">
-          <h2>salam</h2>
-          <h2>salam</h2>
-          <h2>salam</h2>
-          <h2>salam</h2>
-          <h2>salam</h2>
-          <h2>salam</h2>
-          <h2>salam</h2>
-          <h2>salam</h2>
-          <h2>salam</h2>
-          <h2>salam</h2>
-          <h2>salam</h2>
-          <h2>salam</h2>
-        </div>
+        <div className="body-content"></div>
         <Footer />
       </div>
     </main>

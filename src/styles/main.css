@@ -32,14 +32,9 @@ body {
   flex-direction: column;
   flex: 1 1 auto;
   position: relative;
-}
-
-.app-body::before {
-  content: " ";
-  position: absolute;
-  width: 100%;
-  height: 33%;
-  background: linear-gradient(90deg, #ec7403 0%, #e2b890 100%);
+  min-height: 100%;
+  overflow: hidden;
+  background-color: #f8f9fe;
 }
 
 .app-body > * {
@@ -49,6 +44,7 @@ body {
 
 .body-content {
   flex: 1 0 auto;
+  padding: 20px;
 }
 
 /* Sidebar */
@@ -73,23 +69,32 @@ body {
   font-size: large;
 }
 
-a {
-  text-decoration: none;
-  margin: 5px;
-  color: #a0a0a0;
+.list-main > li {
+  margin-bottom: 20px;
 }
 
-li > span {
-  margin-top: 10px;
-  margin-left: 5px;
+.list-main > li > a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  margin: 0;
+  text-decoration: none;
+  color: #a0a0a0;
+  padding: 0 10px;
+}
+
+.list-main > li > a > .material-symbols-outlined {
   color: #ec7403;
 }
 
 /* Header */
 
 .app-header {
-  height: 100px;
-  border: 1px solid red;
+  background: linear-gradient(90deg, #ec7403 0%, #e2b890 100%);
+  flex: 0 1 auto;
+  padding-bottom: 100px;
 }
 
 .main-title {
@@ -107,20 +112,64 @@ li > span {
 }
 
 .header-card {
+  flex: 1 1 auto;
   display: flex;
   justify-content: space-between;
   margin: 20px;
+  gap: 20px;
 }
 
 .card-content {
-  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px 20px;
   background-color: #f4f0f0;
   border: #a0a0a0;
-  border-radius: 3%;
-  width: 370px;
-  height: 120px;
+  border-radius: 2%;
+  flex: 0 1 auto;
+  width: 100%;
 }
-.card-content > span {
+
+.card-content > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.card-content > div:last-child {
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  color: #8898aa;
+}
+
+.card-content .info {
+  color: #2dce89;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.card-content .info > .material-symbols-outlined {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.card-content h3 {
+  display: flex;
+  flex-direction: column;
+  font-weight: normal;
+  color: #8898aa;
+  margin: 0;
+}
+
+.card-content h3 > span:last-child {
+  font-size: 1.5em;
+  color: #32325d;
+}
+
+.circle-icon {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -129,15 +178,29 @@ li > span {
   align-items: center;
   justify-content: center;
   color: #fff;
+}
+
+.circle-icon.red {
   background-color: #f5365c;
 }
 
+.circle-icon.yellow {
+  background-color: #ffd600;
+}
+
+.circle-icon.orange {
+  background-color: #fb6340;
+}
+
+.circle-icon.blue {
+  background-color: #11cdef;
+}
 /* Footer */
 
 .app-footer {
   justify-content: end;
   height: 50px;
-  background-color: white;
+  background-color: #f8f9fe;
 }
 
 .footer-content {
