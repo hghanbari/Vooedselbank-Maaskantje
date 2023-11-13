@@ -7,9 +7,14 @@ export default function Header() {
         <a href="#">
           <span class="material-symbols-outlined">view_agenda</span>
         </a>
-        <a href="#">
-          <span class="material-symbols-outlined">account_circle</span>
-        </a>
+        <div className="header-navbar">
+          <a href="#">
+            <span class="material-symbols-outlined">account_circle</span>
+          </a>
+          <a href="#">
+            <span class="material-symbols-outlined">logout</span>
+          </a>
+        </div>
       </div>
       <div className="header-card">
         <div className="card-content">
@@ -66,25 +71,6 @@ export default function Header() {
             <p className="info">
               <span className="material-symbols-outlined ">arrow_upward</span>
               25 %
-            </p>
-            <p>Since last month</p>
-          </div>
-        </div>
-
-        <div className="card-content">
-          <div>
-            <h3>
-              <span>Performance</span>
-              <span>25%</span>
-            </h3>
-            <div className="circle-icon orange">
-              <span className="material-symbols-outlined ">query_stats</span>
-            </div>
-          </div>
-          <div>
-            <p className="info">
-              <span className="material-symbols-outlined ">arrow_upward</span>
-              12 %
             </p>
             <p>Since last month</p>
           </div>
