@@ -23,7 +23,7 @@ try {
 
     // Query DB
     $query = $conn->prepare('SELECT `email`, `phone` FROM `user` WHERE `email` = :email OR `phone` = :phone');
-    $query->bindPAram(':email', $_POST['email']);
+    $query->bindParam(':email', $_POST['email']);
     $query->bindParam(':phone', $_POST['phone']);
     $query->execute();
 
