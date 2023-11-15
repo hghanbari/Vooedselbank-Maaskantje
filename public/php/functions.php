@@ -14,3 +14,29 @@ function ConnectDB($user, $pass) {
         echo "Error!: " . $e->getMessage();
     }
 }
+
+function CheckAuth($minAuth, $conn) {
+    $query = $conn->prepare('SELECT `auth` FROM `user` WHERE `userId` = :id');
+    $query->bindParam(':id', $_SESSION['login']);
+    $query->execute();
+
+    $result = $query->fetchAll();
+
+    if ($result >= $minAuth) {
+        return true;
+    }
+
+    return false;
+}
+
+function CheckIfExists($stmt, $dataset, $conn) {
+    $query = $conn->prepare($stmt);
+    $query->execute($dataset);
+
+    $result = $query->fetchAll();
+    if (!empty($result)) {
+        return true;
+    }
+
+    return false;
+}
