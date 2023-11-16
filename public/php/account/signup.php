@@ -4,42 +4,29 @@ include("../functions.php");
 // Connect to DB
 $conn = ConnectDB("root", "");
 
-// Checks for email & phone
 try {
     // Since we still need to create a user, this'll be commented out
     
     // Check for admin status
-    /*$query = $conn->prepare('SELECT `auth` FROM `user` WHERE `userId` = :id');
-    $query->bindParam(':id', $_SESSION['login']);
-    $query->execute();
-
-    $result = $query->fetchAll();
-
-    if ($result[0] !== 3) {
-        // User is not admin
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
-        exit();
-    }*/
-
-    // Query DB
-    $query = $conn->prepare('SELECT `email`, `phone` FROM `user` WHERE `email` = :email OR `phone` = :phone');
-    $query->bindParam(':email', $_POST['email']);
-    $query->bindParam(':phone', $_POST['phone']);
-    $query->execute();
-
-    $result = $query->fetchAll();
-
-    if (!empty($result)) {
+    if (!CheckAuth(3, $conn)) {
         // Create error cookie
 
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit();
     }
 
-    // Cleanup
-    $query->closeCursor();
-    unset($query);
-    unset($result);
+    // Check for email and phone
+    $stmt = 'SELECT `email`, `phone` FROM `user` WHERE `email` = :email OR `phone` = :phone';
+    $data = [
+        ':email' => $_POST['email'],
+        ':phone' => $_POST['phone']
+    ];
+    if (CheckIfExists($stmt, $data, $conn)) {
+        // Create error cookie
+
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit();
+    }
 
     // Insert new user into db
     // Get data
@@ -62,11 +49,7 @@ try {
         ');
     $query->execute($data);
 
-    echo "Added to DB";
-
-    // Cleanup
     $query->closeCursor();
-    unset($query);
 } catch (PDOException $e) {
     echo "Error!: " . $e->getMessage();
 
