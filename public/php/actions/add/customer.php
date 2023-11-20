@@ -27,8 +27,9 @@ try {
     unset($data);
 
     // Insert into DB
+    $id = hexdec(uniqid());
     $data = [
-        ':id' => hexdec(uniqid()),
+        ':id' => $id,
         ':name' => $_POST['name'],
         ':lastName' => $_POST['lastName'],
         ':email' => $_POST['email'],
@@ -44,7 +45,20 @@ try {
     );
     $query->execute($data);
 
-    $query->closeCursor();
+    if (!in_array('nothing', $_POST['specifics'])) {
+        foreach ($_POST['specifics'] as $specific) {
+            $data = [
+                ':specificId' => $specific,
+                ':customerId' => $id
+            ];
+    
+            $query = $conn->prepare(
+                'INSERT INTO `customerspecifics` (`specificId`, `customerId`)
+                VALUES (:specificId, :customerId)'
+            );
+            $query->execute($data);
+        }
+    }
 } catch (PDOException $e) {
     echo "Error!: " . $e->getMessage();
 

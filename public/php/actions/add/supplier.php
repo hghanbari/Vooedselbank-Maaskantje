@@ -21,10 +21,6 @@ try {
         exit();
     }
 
-    $query->closeCursor();
-    unset($query);
-    unset($result);
-
     $data = [
         ':id' => hexdec(uniqid()),
         ':name' => $_POST["bedrijfsnaam"],
