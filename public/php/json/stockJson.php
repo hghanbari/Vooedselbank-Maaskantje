@@ -23,37 +23,41 @@ try {
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
     // Put data in array
-    $data = array();
-    foreach ($result as $stock) {
-        $stockId = $stock['stockId'];
+    if (!empty($result)) {
+        $data = array();
+        foreach ($result as $stock) {
+            $stockId = $stock['stockId'];
 
-        if (!array_key_exists($stockId, $data)) {
-            $data[$stockId] = [
-                'stockId' => $stockId,
-                'amount' => $stock['amount'],
-                'inUseAmount' => $stock['inUseAmount'],
-                'bestByDate' => $stock['bestByDate'],
+            if (!array_key_exists($stockId, $data)) {
+                $data[$stockId] = [
+                    'stockId' => $stockId,
+                    'amount' => $stock['amount'],
+                    'inUseAmount' => $stock['inUseAmount'],
+                    'bestByDate' => $stock['bestByDate'],
 
-                'productInfo' => [
-                    'ean' => $stock['EAN'],
-                    'productAge' => $stock['productAge'],
-                    'name' => $stock['name'],
-                    'catagoryId' => $stock['catagoryId'],
-                    'catagoryDesc' => $stock['desc'],
-                ],
+                    'productInfo' => [
+                        'ean' => $stock['EAN'],
+                        'productAge' => $stock['productAge'],
+                        'name' => $stock['name'],
+                        'catagoryId' => $stock['catagoryId'],
+                        'catagoryDesc' => $stock['desc'],
+                    ],
 
-                'deliveryInfo' => [
-                    'deliveryId' => $stock['deliveryId'],
-                    'dilveryDate' => $stock['deliveryDate'],
-                    'deliveryTime' => $stock['deliveryTime']
-                ]
-            ];
+                    'deliveryInfo' => [
+                        'deliveryId' => $stock['deliveryId'],
+                        'dilveryDate' => $stock['deliveryDate'],
+                        'deliveryTime' => $stock['deliveryTime']
+                    ]
+                ];
+            }
         }
+
+        header('Content-Type: application/json');
+
+        echo json_encode($data);
+    } else {
+        echo "This table is empty";
     }
-
-    header('Content-Type: application/json');
-
-    echo json_encode($data);
 } catch (PDOException $e) {
     echo "Error!: " . $e->getMessage();
 }
