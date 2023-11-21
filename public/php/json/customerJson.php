@@ -49,7 +49,7 @@ try {
                 
                 $specData = [
                     'specificId' => $specId,
-                    'specificDesc' => $customer['specId']
+                    'specificDesc' => $customer['desc']
                 ];
                 array_push($data[$custId]['specifics'], $specData);
             }
