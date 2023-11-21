@@ -8,7 +8,6 @@ try {
     $query = $conn->prepare(
         'SELECT
         customer.`customerId` AS custId, customer.`name`, customer.`lastName`, customer.`email`, customer.`phone`, customer.`familyMemberAmount`, customer.`youngestPerson`,
-        customerspecifics.`customerId`, customerspecifics.`specificId`,
         specifics.`specificId` AS specId, specifics.`desc`
         FROM customer
         LEFT JOIN customerspecifics
@@ -28,8 +27,6 @@ try {
 
             // Create array key if not exists
             if (!array_key_exists($custId, $data)) {
-                $data[$custId] = array();
-
                 // Generic data
                 $data[$custId] = [
                     'customerId' => $custId,
