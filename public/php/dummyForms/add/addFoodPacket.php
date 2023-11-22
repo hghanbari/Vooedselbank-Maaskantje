@@ -1,15 +1,3 @@
-<!--
--- packet:
--- packetId, made after
--- customerId, gotten from db
--- makeDate, gotten from Date() (maybe next thursday)
--- pickUpDate, make date, but next friday
-
--- packet stock:
--- Check if product has specific that match with customer
--- Add in use for stock and remove from available
--->
-
 <?php
 include_once("../functions.php");
 
