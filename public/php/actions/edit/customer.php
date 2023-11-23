@@ -42,12 +42,14 @@ try {
         ':youngest' => $result[0]['youngestPerson']
     ];
 
+    // Update data
     foreach ($_POST as $key=>$item) {
         if ($item != '' && $key != 'specifics') {
             $data[":$key"] = $item;
         }
     }
 
+    // Execute w/ correct data
     $query = $conn->prepare(
         'UPDATE `customer` SET
         `name` = :name,
