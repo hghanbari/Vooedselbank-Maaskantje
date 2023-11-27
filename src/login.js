@@ -2,6 +2,11 @@ import * as React from "react";
 import "./styles/login.css";
 
 export default function Login() {
+  fetch("http://localhost/hamid/json/customerJson.php")
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {});
   return (
     <>
       <div className="backdrop">
