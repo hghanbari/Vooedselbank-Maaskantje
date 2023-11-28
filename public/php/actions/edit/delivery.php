@@ -15,7 +15,7 @@ try {
     }
 
     // Check if any field is filled in
-    if ($_POST["deliveryDate"] == "" && $_POST["deliveryTime" == "" && $_POST["delivered"] == ""]) {
+    if ($_POST["deliveryDate"] == "" && $_POST["deliveryTime"] == "" && $_POST["delivered"] == "") {
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit();
     }
