@@ -83,7 +83,7 @@
     * Delete
     * Next delivery
     * Previous delivery
-5. Klanten
+5. Customers
     * Add
     * Edit
     * Delete
