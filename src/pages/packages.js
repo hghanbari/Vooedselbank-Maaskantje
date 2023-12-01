@@ -2,14 +2,15 @@ import React from "react";
 import { useTable } from "react-table";
 import { useState } from "react";
 
-export default function Customers() {
-  // const [customers, setCustomers] = useState([]);
+export default function Packages() {
+  const [customers, setCustomers] = useState([]);
 
-  fetch("http://localhost/backend/json/customerJson.php")
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    });
+  // fetch("http://localhost/backend/json/customerJson.php")
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     // customers(data);
+  //     // console.log(data);
+  //   });
 
   // Dummy data for demonstration
   const data = React.useMemo(
@@ -38,10 +39,10 @@ export default function Customers() {
   return (
     <div className="body-content">
       <div className="header-content">
-        <h4 className="header-title">Klanten</h4>
-        <button className="header-button">Klant Toevogen</button>
+        <h4 className="header-title">Pakketten</h4>
+        <button className="header-button">Pakketten Toevogen</button>
       </div>
-      <table className="data-table" {...getTableProps}>
+      <table className="data-table">
         <thead className="table-header">
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>

@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import { Link } from "react-router-dom";
 export default function Header() {
   return (
     <div className="app-header">
@@ -8,12 +8,12 @@ export default function Header() {
           <span className="material-symbols-outlined">view_agenda</span>
         </a>
         <div className="header-navbar">
-          <a href="#">
+          <Link to="/profile">
             <span className="material-symbols-outlined">account_circle</span>
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="/login">
             <span className="material-symbols-outlined">logout</span>
-          </a>
+          </Link>
         </div>
       </div>
       <div className="header-card">
