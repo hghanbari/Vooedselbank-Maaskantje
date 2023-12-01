@@ -1,5 +1,5 @@
 <?php
-include_once('../functions.php');
+include_once('../../functions.php');
 
 $conn = ConnectDB("root", "");
 
@@ -21,7 +21,7 @@ try {
     <title>Add customer</title>
 </head>
 <body>
-    <form action="../actions/add/customer.php" method="post">
+    <form action="../../actions/add/customer.php" method="post">
         name: <input type="text" name="name"><br>
         last name: <input type="text" name="lastName"><br>
         email: <input type="email" name="email"><br>

@@ -1,5 +1,5 @@
 <?php
-include_once("../functions.php");
+include_once("../../functions.php");
 
 $conn = ConnectDB("root", "");
 try {
@@ -28,7 +28,7 @@ try {
 </head>
 <body>
 
-<form action="../actions/add/stock.php" method="post">
+<form action="../../actions/add/stock.php" method="post">
     Product: <select name="product">
         <?php
             foreach ($result as $product) {

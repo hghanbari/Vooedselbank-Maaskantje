@@ -1,5 +1,5 @@
 <?php 
-include_once("../functions.php");
+include_once("../../functions.php");
 
 $conn = ConnectDB("root", "");
 try {
@@ -20,7 +20,7 @@ try {
     <title>Document</title>
 </head>
 <body>
-    <form action="../actions/add/delivery.php" method="post">
+    <form action="../../actions/add/delivery.php" method="post">
         Supplier: <select name="supplier">
             <?php 
                 foreach ($result as $supplier) {
