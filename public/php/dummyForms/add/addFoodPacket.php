@@ -61,7 +61,7 @@ try {
     <?php
     if (isset($_GET['customer'])) {
     ?>
-    <form action="../actions/add/foodPacket.php" method="post">
+    <form action="../../actions/add/foodPacket.php" method="post">
         <!-- 
         -- There needs to be a button that adds more items 
         -- For now there will only be one
