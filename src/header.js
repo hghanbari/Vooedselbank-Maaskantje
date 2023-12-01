@@ -5,14 +5,14 @@ export default function Header() {
     <div className="app-header">
       <div className="header-navbar">
         <a href="#">
-          <span class="material-symbols-outlined">view_agenda</span>
+          <span className="material-symbols-outlined">view_agenda</span>
         </a>
         <div className="header-navbar">
           <a href="#">
-            <span class="material-symbols-outlined">account_circle</span>
+            <span className="material-symbols-outlined">account_circle</span>
           </a>
           <a href="#">
-            <span class="material-symbols-outlined">logout</span>
+            <span className="material-symbols-outlined">logout</span>
           </a>
         </div>
       </div>
@@ -63,7 +63,7 @@ export default function Header() {
             </h3>
             <div className="circle-icon yellow">
               <span className="material-symbols-outlined ">
-                <span class="material-symbols-outlined">inventory</span>
+                <span className="material-symbols-outlined">inventory</span>
               </span>
             </div>
           </div>

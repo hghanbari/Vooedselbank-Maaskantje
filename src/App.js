@@ -14,10 +14,8 @@ function App() {
       <Sidebar />
       <div className="app-body">
         <Header />
-     
-     <Customers/>
+        <Customers />
         <Footer />
-        
       </div>
     </main>
   );
