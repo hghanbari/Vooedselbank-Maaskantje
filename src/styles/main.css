@@ -293,23 +293,25 @@ body {
   display: flex;
   justify-content: end;
   align-items: end;
-  margin-bottom: 5px;
-  font-size: 15px;
+  margin: 10px;
+  font-size: 10px;
   gap: 5px;
 }
 
 .page-num {
   padding: 8px 15px;
   cursor: pointer;
-  border-radius: 3px;
+  border: 1px solid #8898aa;
   font-weight: 400;
+  border-radius: 50%;
 }
 
 .page-num:hover {
-  background-color: #11cdef;
-  color: #32325d;
+  background-color: #fb6340;
+  color: #8898aa;
 }
 
 .active {
-  background-color: #11cdef;
+  background-color: #5e72e4;
+  color: #ffffff;
 }

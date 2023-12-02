@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 
 export default function Customers() {
-  const [data, setData] = useState([{}]);
+  const [data, setData] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
   const [pageCount, setPageCount] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
@@ -58,14 +58,13 @@ export default function Customers() {
           })}
         </tbody>
       </table>
-
       <ReactPaginate
         breakLabel="..."
-        nextLabel="next >"
+        nextLabel=" >"
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
         pageCount={pageCount}
-        previousLabel="< previous"
+        previousLabel="< "
         renderOnZeroPageCount={null}
         containerClassName="pagination"
         pageLinkClassName="page-num"

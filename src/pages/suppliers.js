@@ -1,9 +1,15 @@
 import axios from "axios";
 import React from "react";
 import { useState, useEffect } from "react";
+import ReactPaginate from "react-paginate";
 
 export default function Suppliers() {
-  const [data, setData] = useState([{}]);
+  const [data, setData] = useState([]);
+  const [itemOffset, setItemOffset] = useState(0);
+  const [pageCount, setPageCount] = useState(0);
+  const [currentItems, setCurrentItems] = useState([]);
+  const itemsPerPage = 5;
+
   useEffect(() => {
     axios
       .get("http://localhost/backend/json/supplierJson.php")
@@ -12,6 +18,17 @@ export default function Suppliers() {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    setCurrentItems(Object.values(data).slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(data.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, data]);
+
+  const handlePageClick = (e) => {
+    const newOffset = (e.selected * itemsPerPage) % data.length;
+    setItemOffset(newOffset);
+  };
 
   return (
     <div className="body-content">
@@ -30,7 +47,7 @@ export default function Suppliers() {
           </tr>
         </thead>
         <tbody>
-          {Object.values(data).map((user, index) => {
+          {currentItems.map((user, index) => {
             return (
               <tr key={index}>
                 <td>{user.companyName}</td>
@@ -43,7 +60,20 @@ export default function Suppliers() {
           })}
         </tbody>
       </table>
-      <div className="pagination"></div>
+      <ReactPaginate
+        breakLabel="..."
+        nextLabel=" >"
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={5}
+        pageCount={pageCount}
+        previousLabel="< "
+        renderOnZeroPageCount={null}
+        containerClassName="pagination"
+        pageLinkClassName="page-num"
+        nextLinkClassName="page-num"
+        previousLinkClassName="page-num"
+        activeClassName="active"
+      />
     </div>
   );
 }
