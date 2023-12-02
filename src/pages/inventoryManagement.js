@@ -1,41 +1,18 @@
-import React from "react";
-import { useTable } from "react-table";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import axios from "axios";
 
 export default function InventoryManagement() {
-  const [customers, setCustomers] = useState([]);
+  const [data, setData] = useState([{}]);
+  useEffect(() => {
+    axios
+      .get("http://localhost/backend/json/supplierJson.php")
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
-  // fetch("http://localhost/backend/json/customerJson.php")
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     // customers(data);
-  //     // console.log(data);
-  //   });
-
-  // Dummy data for demonstration
-  const data = React.useMemo(
-    () => [
-      {},
-      // Add more data as needed
-    ],
-    []
-  );
-
-  // Define columns for the datatable
-  const columns = React.useMemo(
-    () => [
-      { Header: "First Name", accessor: "firstName" },
-      { Header: "Last Name", accessor: "name" },
-      { Header: "Phone", accessor: "phone" },
-      { Header: "E-mail", accessor: "email" },
-      // Add more columns as needed
-    ],
-    []
-  );
-
-  // Create an instance of the table
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data });
   return (
     <div className="body-content">
       <div className="header-content">
@@ -44,22 +21,23 @@ export default function InventoryManagement() {
       </div>
       <table className="data-table">
         <thead className="table-header">
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
-              ))}
-            </tr>
-          ))}
+          <tr>
+            <th>Name</th>
+            <th>EAN</th>
+            <th>Hoeveelhied</th>
+            <th>Sort</th>
+            <th>Prijs</th>
+          </tr>
         </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
+        <tbody>
+          {Object.values(data).map((user, index) => {
             return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                ))}
+              <tr key={index}>
+                <td>{user.companyName}</td>
+                <td>{user.adress}</td>
+                <td>{user.contactName}</td>
+                <td>{user.email}</td>
+                <td>{user.phone}</td>
               </tr>
             );
           })}

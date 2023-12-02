@@ -1,65 +1,40 @@
-import React from "react";
-import { useTable } from "react-table";
+import axios from "axios";
+import React, { useEffect } from "react";
+
 import { useState } from "react";
 
 export default function Packages() {
-  const [customers, setCustomers] = useState([]);
+  const [data, setData] = useState([{}]);
+  useEffect(() => {
+    axios
+      .get("http://localhost/backend/json/foodPacketJson.php")
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
-  // fetch("http://localhost/backend/json/customerJson.php")
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     // customers(data);
-  //     // console.log(data);
-  //   });
-
-  // Dummy data for demonstration
-  const data = React.useMemo(
-    () => [
-      {},
-      // Add more data as needed
-    ],
-    []
-  );
-
-  // Define columns for the datatable
-  const columns = React.useMemo(
-    () => [
-      { Header: "First Name", accessor: "firstName" },
-      { Header: "Last Name", accessor: "name" },
-      { Header: "Phone", accessor: "phone" },
-      { Header: "E-mail", accessor: "email" },
-      // Add more columns as needed
-    ],
-    []
-  );
-
-  // Create an instance of the table
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data });
   return (
     <div className="body-content">
       <div className="header-content">
         <h4 className="header-title">Pakketten</h4>
-        <button className="header-button">Pakketten Toevogen</button>
+        <button className="header-button">Pakket Toevogen</button>
       </div>
       <table className="data-table">
         <thead className="table-header">
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
-              ))}
-            </tr>
-          ))}
+          <tr>
+            <th>Make Date</th>
+            <th>Pick Up Date</th>
+            <th>Customer Name</th>
+          </tr>
         </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
+        <tbody>
+          {Object.values(data).map((user, index) => {
             return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                ))}
+              <tr key={index}>
+                <td>{user.makeDate}</td>
+                <td>{user.pickUpDate}</td>
+                <td>{user.customer}</td>
               </tr>
             );
           })}
