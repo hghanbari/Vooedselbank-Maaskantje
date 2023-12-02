@@ -30,7 +30,8 @@ try {
                 // Generic data
                 $data[$custId] = [
                     'customerId' => $custId,
-                    'name' => $customer['name'],
+                    'firstName' => $customer['firstName'],
+                    "middleName" => $customer["middleName"],
                     'lastName' => $customer['lastName'],
                     'email' => $customer['email'],
                     'phone' => $customer['phone'],
@@ -38,12 +39,14 @@ try {
                     'youngestPerson' => $customer['youngestPerson']
                 ];
             }
-            
+
+
+
             if ($specId != '') {
                 if (!array_key_exists('specifics', $data[$custId])) {
                     $data[$custId]['specifics'] = array();
                 }
-                
+
                 $specData = [
                     'specificId' => $specId,
                     'specificDesc' => $customer['desc']

@@ -1,19 +1,19 @@
 import * as React from "react";
-
+import { Link } from "react-router-dom";
 export default function Header() {
   return (
     <div className="app-header">
       <div className="header-navbar">
         <a href="#">
-          <span class="material-symbols-outlined">view_agenda</span>
+          <span className="material-symbols-outlined">view_agenda</span>
         </a>
         <div className="header-navbar">
-          <a href="#">
-            <span class="material-symbols-outlined">account_circle</span>
-          </a>
-          <a href="#">
-            <span class="material-symbols-outlined">logout</span>
-          </a>
+          <Link to="/profile">
+            <span className="material-symbols-outlined">account_circle</span>
+          </Link>
+          <Link to="/login">
+            <span className="material-symbols-outlined">logout</span>
+          </Link>
         </div>
       </div>
       <div className="header-card">
@@ -63,7 +63,7 @@ export default function Header() {
             </h3>
             <div className="circle-icon yellow">
               <span className="material-symbols-outlined ">
-                <span class="material-symbols-outlined">inventory</span>
+                <span className="material-symbols-outlined">inventory</span>
               </span>
             </div>
           </div>

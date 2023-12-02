@@ -2,6 +2,11 @@ import * as React from "react";
 import "./styles/login.css";
 
 export default function Login() {
+  fetch("http://localhost/hamid/json/customerJson.php")
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {});
   return (
     <>
       <div className="backdrop">
@@ -18,28 +23,28 @@ export default function Login() {
         <div id="card-content">
           <div id="card-title">
             <h2>LOGIN</h2>
-            <div class="underline-title"></div>
+            <div className="underline-title"></div>
           </div>
-          <form method="post" class="form">
+          <form method="post" className="form">
             <label for="user-email">&nbsp;Email</label>
             <input
               id="user-email"
-              class="form-content"
+              className="form-content"
               type="email"
               name="email"
               autocomplete="on"
               required
             />
-            <div class="form-border"></div>
+            <div className="form-border"></div>
             <label for="user-password">&nbsp;Password</label>
             <input
               id="user-password"
-              class="form-content"
+              className="form-content"
               type="password"
               name="password"
               required
             />
-            <div class="form-border"></div>
+            <div className="form-border"></div>
             <a href="#">
               <legend className="forgot-pass">Forgot password?</legend>
             </a>

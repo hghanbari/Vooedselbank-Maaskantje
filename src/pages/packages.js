@@ -1,12 +1,13 @@
 import axios from "axios";
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
-export default function Customers() {
+import { useState } from "react";
+
+export default function Packages() {
   const [data, setData] = useState([{}]);
   useEffect(() => {
     axios
-      .get("http://localhost/backend/json/customerJson.php")
+      .get("http://localhost/backend/json/foodPacketJson.php")
       .then((res) => {
         setData(res.data);
       })
@@ -16,26 +17,24 @@ export default function Customers() {
   return (
     <div className="body-content">
       <div className="header-content">
-        <h4 className="header-title">Klanten</h4>
-        <button className="header-button">Klant Toevogen</button>
+        <h4 className="header-title">Pakketten</h4>
+        <button className="header-button">Pakket Toevogen</button>
       </div>
       <table className="data-table">
         <thead className="table-header">
           <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>E-mail</th>
-            <th>Phone</th>
+            <th>Make Date</th>
+            <th>Pick Up Date</th>
+            <th>Customer Name</th>
           </tr>
         </thead>
         <tbody>
           {Object.values(data).map((user, index) => {
             return (
               <tr key={index}>
-                <td>{user.firstName}</td>
-                <td>{user.lastName}</td>
-                <td>{user.email}</td>
-                <td>{user.phone}</td>
+                <td>{user.makeDate}</td>
+                <td>{user.pickUpDate}</td>
+                <td>{user.customer}</td>
               </tr>
             );
           })}

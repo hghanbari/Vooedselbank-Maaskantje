@@ -2,11 +2,11 @@ import axios from "axios";
 import React from "react";
 import { useState, useEffect } from "react";
 
-export default function Customers() {
+export default function Suppliers() {
   const [data, setData] = useState([{}]);
   useEffect(() => {
     axios
-      .get("http://localhost/backend/json/customerJson.php")
+      .get("http://localhost/backend/json/supplierJson.php")
       .then((res) => {
         setData(res.data);
       })
@@ -16,14 +16,15 @@ export default function Customers() {
   return (
     <div className="body-content">
       <div className="header-content">
-        <h4 className="header-title">Klanten</h4>
-        <button className="header-button">Klant Toevogen</button>
+        <h4 className="header-title">Leveranciers</h4>
+        <button className="header-button">Leverancier Toevogen</button>
       </div>
       <table className="data-table">
         <thead className="table-header">
           <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
+            <th>Company</th>
+            <th>Contact Person</th>
+            <th>Address</th>
             <th>E-mail</th>
             <th>Phone</th>
           </tr>
@@ -32,8 +33,9 @@ export default function Customers() {
           {Object.values(data).map((user, index) => {
             return (
               <tr key={index}>
-                <td>{user.firstName}</td>
-                <td>{user.lastName}</td>
+                <td>{user.companyName}</td>
+                <td>{user.adress}</td>
+                <td>{user.contactName}</td>
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
               </tr>
