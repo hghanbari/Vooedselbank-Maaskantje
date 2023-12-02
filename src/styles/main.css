@@ -285,3 +285,31 @@ body {
   color: #8898aa;
   font-size: small;
 }
+
+/* pagination */
+
+.pagination {
+  list-style: none;
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  margin-bottom: 5px;
+  font-size: 15px;
+  gap: 5px;
+}
+
+.page-num {
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: 400;
+}
+
+.page-num:hover {
+  background-color: #11cdef;
+  color: #32325d;
+}
+
+.active {
+  background-color: #11cdef;
+}
