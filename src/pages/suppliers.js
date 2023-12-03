@@ -1,14 +1,11 @@
-import axios from "axios";
 import React from "react";
-import { useState, useEffect } from "react";
-import ReactPaginate from "react-paginate";
+import axios from "axios";
 
-export default function Suppliers() {
+import { useState, useEffect } from "react";
+
+export default function Suppliers(currentItems) {
   const [data, setData] = useState([]);
-  const [itemOffset, setItemOffset] = useState(0);
-  const [pageCount, setPageCount] = useState(0);
-  const [currentItems, setCurrentItems] = useState([]);
-  const itemsPerPage = 5;
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     axios
@@ -17,24 +14,16 @@ export default function Suppliers() {
         setData(res.data);
       })
       .catch((err) => console.log(err));
-  }, []);
-
-  useEffect(() => {
-    const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(Object.values(data).slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(data.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, data]);
-
-  const handlePageClick = (e) => {
-    const newOffset = (e.selected * itemsPerPage) % data.length;
-    setItemOffset(newOffset);
-  };
+  }, [data]);
 
   return (
     <div className="body-content">
       <div className="header-content">
         <h4 className="header-title">Leveranciers</h4>
-        <button className="header-button">Leverancier Toevogen</button>
+        <button className="header-button" onClick={() => setOpenModal(true)}>
+          Leverancier Toevogen
+        </button>
+        {/* {openModal && <SupplierForm cloosModal={setOpenModal} />} */}
       </div>
       <table className="data-table">
         <thead className="table-header">
@@ -47,7 +36,7 @@ export default function Suppliers() {
           </tr>
         </thead>
         <tbody>
-          {currentItems.map((user, index) => {
+          {Object.values(currentItems).map((user, index) => {
             return (
               <tr key={index}>
                 <td>{user.companyName}</td>
@@ -60,20 +49,6 @@ export default function Suppliers() {
           })}
         </tbody>
       </table>
-      <ReactPaginate
-        breakLabel="..."
-        nextLabel=" >"
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={5}
-        pageCount={pageCount}
-        previousLabel="< "
-        renderOnZeroPageCount={null}
-        containerClassName="pagination"
-        pageLinkClassName="page-num"
-        nextLinkClassName="page-num"
-        previousLinkClassName="page-num"
-        activeClassName="active"
-      />
     </div>
   );
 }

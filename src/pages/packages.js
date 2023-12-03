@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-
 import { useState } from "react";
 
-export default function Packages() {
-  const [data, setData] = useState([{}]);
+export default function Packages(currentItems) {
+  const [data, setData] = useState([]);
+
   useEffect(() => {
     axios
       .get("http://localhost/backend/json/foodPacketJson.php")
@@ -12,7 +12,7 @@ export default function Packages() {
         setData(res.data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [data]);
 
   return (
     <div className="body-content">
@@ -29,7 +29,7 @@ export default function Packages() {
           </tr>
         </thead>
         <tbody>
-          {Object.values(data).map((user, index) => {
+          {Object.values(currentItems).map((user, index) => {
             return (
               <tr key={index}>
                 <td>{user.makeDate}</td>
@@ -40,7 +40,6 @@ export default function Packages() {
           })}
         </tbody>
       </table>
-      <div className="pagination"></div>
     </div>
   );
 }

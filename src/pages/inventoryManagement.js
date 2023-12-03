@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 
-export default function InventoryManagement() {
-  const [data, setData] = useState([{}]);
+export default function InventoryManagement(currentItems) {
+  const [data, setData] = useState([]);
+
   useEffect(() => {
     axios
       .get("http://localhost/backend/json/supplierJson.php")
@@ -11,7 +12,7 @@ export default function InventoryManagement() {
         setData(res.data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [data]);
 
   return (
     <div className="body-content">
@@ -30,7 +31,7 @@ export default function InventoryManagement() {
           </tr>
         </thead>
         <tbody>
-          {Object.values(data).map((user, index) => {
+          {Object.values(currentItems).map((user, index) => {
             return (
               <tr key={index}>
                 <td>{user.companyName}</td>
@@ -43,7 +44,6 @@ export default function InventoryManagement() {
           })}
         </tbody>
       </table>
-      <div className="pagination"></div>
     </div>
   );
 }

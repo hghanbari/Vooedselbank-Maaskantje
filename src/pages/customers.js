@@ -3,12 +3,13 @@ import React from "react";
 import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 
-export default function Customers() {
+export default function Customers({ setModal }) {
   const [data, setData] = useState([]);
+
+  const [currentItems, setCurrentItems] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
   const [pageCount, setPageCount] = useState(0);
-  const [currentItems, setCurrentItems] = useState([]);
-  const itemsPerPage = 5;
+  const itemsPerPage = 3;
 
   useEffect(() => {
     axios
@@ -21,12 +22,12 @@ export default function Customers() {
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(Object.values(data).slice(itemOffset, endOffset));
+    setCurrentItems(data.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(data.length / itemsPerPage));
   }, [itemOffset, itemsPerPage, data]);
 
-  const handlePageClick = (e) => {
-    const newOffset = (e.selected * itemsPerPage) % data.length;
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % data.length;
     setItemOffset(newOffset);
   };
 
@@ -34,7 +35,9 @@ export default function Customers() {
     <div className="body-content">
       <div className="header-content">
         <h4 className="header-title">Klanten</h4>
-        <button className="header-button">Klant Toevogen</button>
+        <button className="header-button" onClick={() => setModal(true)}>
+          Klant Toevogen
+        </button>
       </div>
       <table className="data-table">
         <thead className="table-header">
@@ -62,10 +65,9 @@ export default function Customers() {
         breakLabel="..."
         nextLabel=" >"
         onPageChange={handlePageClick}
-        pageRangeDisplayed={5}
+        pageRangeDisplayed={itemsPerPage}
         pageCount={pageCount}
         previousLabel="< "
-        renderOnZeroPageCount={null}
         containerClassName="pagination"
         pageLinkClassName="page-num"
         nextLinkClassName="page-num"
