@@ -5,7 +5,6 @@ import ReactPaginate from "react-paginate";
 
 export default function Customers({ setModal }) {
   const [data, setData] = useState([]);
-
   const [currentItems, setCurrentItems] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
   const [pageCount, setPageCount] = useState(0);

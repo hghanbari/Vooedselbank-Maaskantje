@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function Profile() {
-  const [data, setData] = useState([{}]);
+  const [data, setData] = useState([]);
+
   useEffect(() => {
     axios
       .get("http://localhost/backend/json/userJson.php")
@@ -30,7 +31,7 @@ export default function Profile() {
           </tr>
         </thead>
         <tbody>
-          {Object.values(data).map((user, index) => {
+          {data.map((user, index) => {
             return (
               <tr key={index}>
                 <td>{user.firstName}</td>
