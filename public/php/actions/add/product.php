@@ -15,7 +15,7 @@ try {
     // If EAN is not entered use auto ID
     $ean = $_POST['EAN'];
     if ($ean == "") {
-        $ean = hexdec(uniqid());
+        $ean = GenerateUUID();
     }
 
     $stmt = 'SELECT `EAN` FROM `products` WHERE `EAN` = :ean';

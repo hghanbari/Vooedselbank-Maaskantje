@@ -22,7 +22,7 @@ try {
     }
 
     $data = [
-        ':id' => hexdec(uniqid()),
+        ':id' => GenerateUUID(),
         ':name' => $_POST["bedrijfsnaam"],
         ':adres' => $_POST["adres"],
         ':contactPerson' => $_POST["contact_persoon"],

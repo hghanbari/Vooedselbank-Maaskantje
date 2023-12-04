@@ -4,7 +4,7 @@ include_once("../../functions.php");
 $conn = ConnectDB("root", "");
 
 try {
-    $query = $conn->prepare('SELECT `customerId`, `name`, `lastName` FROM `customer`');
+    $query = $conn->prepare('SELECT `customerId`, `firstName`, `lastName` FROM `customer`');
     $query->execute();
     $customers = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -12,7 +12,7 @@ try {
         // Get customer and specifics
         $query = $conn->prepare(
             'SELECT 
-            customer.`customerId` AS custId, customer.`name`, customer.`lastName`, customer.`youngestPerson`, 
+            customer.`customerId` AS custId, customer.`firstName`, customer.`lastName`, customer.`youngestPerson`, 
             specifics.`specificId` AS specId, specifics.`desc` 
             FROM `customer`
             LEFT JOIN `customerSpecifics`
@@ -69,7 +69,7 @@ try {
         -- color: red means that the item may not be compatible for customer
         -->
         <?php
-        echo $customer[0]['name'] . " " . $customer[0]['lastName'] . "<br>";
+        echo $customer[0]['firstName'] . " " . $customer[0]['lastName'] . "<br>";
         ?>
         <select name="_item0">
             <?php

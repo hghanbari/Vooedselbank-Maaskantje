@@ -23,7 +23,7 @@ try {
     }
 
     $data = [
-        ':id' => hexdec(uniqid()),
+        ':id' => GenerateUUID(),
         ':description' => $_POST["description"]
     ];
 

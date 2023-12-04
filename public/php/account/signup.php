@@ -31,7 +31,7 @@ try {
     // Insert new user into db
     // Get data
     $data = [
-        ':id' => hexdec(uniqid()),
+        ':id' => GenerateUUID(),
         ':name' => $_POST['name'],
         ':lastName' => $_POST['lastName'],
         ':pass' => password_hash('12345678', PASSWORD_BCRYPT),

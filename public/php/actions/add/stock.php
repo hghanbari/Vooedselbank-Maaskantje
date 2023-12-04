@@ -23,7 +23,7 @@ try {
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
     $data = [
-        ':id' => hexdec(uniqid()),
+        ':id' => GenerateUUID(),
         ':ean' => $_POST["product"],
         ':deliveryId' => $_POST["delivery"],
         ':supplierId' => $result[0]['supplierId'],

@@ -20,7 +20,7 @@ try {
 
         return $nextDay;
     }
-    $packetId = hexdec(uniqid());
+    $packetId = GenerateUUID();
 
     $data = [
         ':packetId' => $packetId,
