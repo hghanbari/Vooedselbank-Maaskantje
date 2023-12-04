@@ -44,7 +44,7 @@ try {
     // Query DB
     $query = $conn->prepare
         ('INSERT INTO `user`
-        (`userId`, `name`, `lastName`, `pass`, `email`, `phone`, `adress`, `auth`)
+        (`userId`, `firstName`, `lastName`, `pass`, `email`, `phone`, `adress`, `auth`)
         VALUES (:id, :name, :lastName, :pass, :email, :phone, :adress, :auth)
         ');
     $query->execute($data);

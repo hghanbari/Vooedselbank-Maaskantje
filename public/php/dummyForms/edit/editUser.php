@@ -4,7 +4,7 @@ include_once('../../functions.php');
 $conn = ConnectDB('root', '');
 
 try {
-    $query = $conn->prepare('SELECT userId, name, lastName FROM user');
+    $query = $conn->prepare('SELECT userId, firstName, lastName FROM user');
     $query->execute();
     
     $users = $query->fetchAll(PDO::FETCH_ASSOC);

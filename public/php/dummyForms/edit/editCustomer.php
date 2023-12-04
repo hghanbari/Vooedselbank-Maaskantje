@@ -4,7 +4,7 @@ include_once('../../functions.php');
 $conn = ConnectDB('root', '');
 
 try {
-    $query = $conn->prepare('SELECT `customerId`, `name`, `lastName` FROM `customer`');
+    $query = $conn->prepare('SELECT `customerId`, `firstName`, `lastName` FROM `customer`');
     $query->execute();
 
     $customers = $query->fetchAll(PDO::FETCH_ASSOC);

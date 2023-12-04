@@ -4,7 +4,7 @@ include_once("../../functions.php");
 $conn = ConnectDB("root", "");
 
 try {
-    $query = $conn->prepare("SELECT userId, name, lastName, email, pass, phone, adress, auth FROM user WHERE userId = :userId");
+    $query = $conn->prepare("SELECT `userId`, `firstName`, `lastName`, `email`, `pass`, `phone`, `adress`, `auth` FROM `user` WHERE `userId` = :userId");
     $query->bindParam(":userId", $_POST["id"]);
     $query->execute();
     $user = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -49,7 +49,7 @@ try {
         }
 
         $query = $conn->prepare("UPDATE user 
-        SET name = :firstName, lastName = :lastName, email = :email, pass = :password, phone = :phone, adress = :adress, auth = :auth 
+        SET `firstName` = :firstName, lastName = :lastName, email = :email, pass = :password, phone = :phone, adress = :adress, auth = :auth 
         WHERE userId = :id
         ");
         $query->bindParam(":firstName", $firstName);

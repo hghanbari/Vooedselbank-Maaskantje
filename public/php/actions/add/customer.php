@@ -40,7 +40,7 @@ try {
 
     $query = $conn->prepare(
         'INSERT INTO `customer`
-        (`customerId`, `name`, `lastName`, `email`, `phone`, `familyMemberAmount`, `youngestPerson`)
+        (`customerId`, `firstName`, `lastName`, `email`, `phone`, `familyMemberAmount`, `youngestPerson`)
         VALUES (:id, :name, :lastName, :email, :phone, :amount, :age)'
     );
     $query->execute($data);

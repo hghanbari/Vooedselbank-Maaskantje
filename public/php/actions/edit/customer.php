@@ -27,7 +27,7 @@ try {
 
     // Check what changed
     // Get default data
-    $query = $conn->prepare('SELECT `name`, `lastName`, `email`, `phone`, `familyMemberAmount`, `youngestPerson` FROM `customer` WHERE `customerId` = :id');
+    $query = $conn->prepare('SELECT `firstName`, `lastName`, `email`, `phone`, `familyMemberAmount`, `youngestPerson` FROM `customer` WHERE `customerId` = :id');
     $query->bindParam(':id', $_POST['id']);
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -52,7 +52,7 @@ try {
     // Execute w/ correct data
     $query = $conn->prepare(
         'UPDATE `customer` SET
-        `name` = :name,
+        `firstName` = :name,
         `lastName` = :lastName,
         `email` = :email,
         `phone` = :phone,
