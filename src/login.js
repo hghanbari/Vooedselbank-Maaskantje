@@ -1,17 +1,22 @@
 import * as React from "react";
 import "./styles/login.css";
 import axios from "axios";
+import { useState } from "react";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
       .post(
         "http://localhost/backend/account/login.php",
         {
-          email: "gh@gmail.com",
-          password: "12345",
+          email: email,
+          password: password,
         },
+
         {
           withCredentials: true,
         }
@@ -38,8 +43,7 @@ export default function Login() {
             <h2>LOGIN</h2>
             <div className="underline-title"></div>
           </div>
-          <button onClick={handleSubmit}>Submit</button>
-          <form method="post" className="form">
+          <form method="post" className="form" onClick={handleSubmit}>
             <label for="user-email">&nbsp;Email</label>
             <input
               id="user-email"
@@ -47,6 +51,8 @@ export default function Login() {
               type="email"
               name="email"
               autocomplete="on"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
             <div className="form-border"></div>
@@ -56,12 +62,11 @@ export default function Login() {
               className="form-content"
               type="password"
               name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
             <div className="form-border"></div>
-            <a href="#">
-              <legend className="forgot-pass">Forgot password?</legend>
-            </a>
             <input id="submit-btn" type="submit" name="submit" value="LOGIN" />
           </form>
         </div>
