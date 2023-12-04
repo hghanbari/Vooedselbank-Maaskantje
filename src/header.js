@@ -1,6 +1,22 @@
+import axios from "axios";
 import * as React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+
 export default function Header() {
+const [customers,setCustomers]= useState ();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost/backend/json/customerJson.php")
+      .then((res) => {
+        setData(res.customers);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+
   return (
     <div className="app-header">
       <div className="header-navbar">
