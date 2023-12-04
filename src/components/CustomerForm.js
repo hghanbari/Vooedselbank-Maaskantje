@@ -1,16 +1,14 @@
 import axios from "axios";
 import * as React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 export default function CustomerForm({ closeModal }) {
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [familyMemberAmount, setFamilyMemberAmount] = useState("");
-  const [youngestPerson, setYoungestPerson] = useState("");
+  const [amount, setAmount] = useState("");
+  const [age, setAge] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,7 +16,11 @@ export default function CustomerForm({ closeModal }) {
     axios
       .post("http://localhost/backend/add/customer.php", {
         email: "asdasd",
-        name: "sadf",
+        firstName: "sadf",
+        lastName: "sadf",
+        phone: "sadf",
+        amount: "sadf",
+        age: "sadf",
       })
       .then((res) => {})
       .catch((err) => console.log(err));
@@ -37,31 +39,67 @@ export default function CustomerForm({ closeModal }) {
             X
           </button>
         </div>
-        <div className="form">
-          <form className="form" onSubmit={handleSubmit}>
-            <div className="form-item">
-              <label htmlFor="name">Name:</label>
-              <input type="text" name="name" />
-            </div>
-            <div className="form-item">
-              <label htmlFor="email">Email:</label>
-              <input
-                type="email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="form-item">
-              <label htmlFor="password">Password:</label>
-              <input type="password" name="password" />
-            </div>
-            <div className="form-item">
-              <label></label>
-              <button>Register</button>
-            </div>
-          </form>
-        </div>
+        <form className="form" onSubmit={handleSubmit}>
+          <div className="form-item">
+            <label htmlFor="firstName">First Name:</label>
+            <input
+              type="text"
+              name="name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </div>
+          <div className="form-item">
+            <label htmlFor="lastName">Last Name:</label>
+            <input
+              type="text"
+              name="name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </div>
+          <div className="form-item">
+            <label htmlFor="email">E-mail:</label>
+            <input
+              type="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="form-item">
+            <label htmlFor="number">Age:</label>
+            <input
+              type="number"
+              name="number"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+            />
+          </div>
+          <div className="form-item">
+            <label htmlFor="number">Phone:</label>
+            <input
+              type="number"
+              name="number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </div>
+          <div className="form-item">
+            <label htmlFor="number">Phone:</label>
+            <input
+              type="number"
+              name="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+            />
+          </div>
+
+          <div className="form-item">
+            <label></label>
+            <button>Register</button>
+          </div>
+        </form>
       </div>
     </div>
   );

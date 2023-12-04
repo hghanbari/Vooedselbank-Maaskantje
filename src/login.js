@@ -39,7 +39,7 @@ export default function Login() {
             <div className="underline-title"></div>
           </div>
           <button onClick={handleSubmit}>Submit</button>
-          {/* <form method="post" className="form">
+          <form method="post" className="form">
             <label for="user-email">&nbsp;Email</label>
             <input
               id="user-email"
@@ -63,7 +63,7 @@ export default function Login() {
               <legend className="forgot-pass">Forgot password?</legend>
             </a>
             <input id="submit-btn" type="submit" name="submit" value="LOGIN" />
-          </form> */}
+          </form>
         </div>
       </div>
     </>

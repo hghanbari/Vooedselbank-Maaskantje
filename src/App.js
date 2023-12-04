@@ -21,8 +21,6 @@ function App() {
   return (
     <BrowserRouter>
       {sesId ? (
-        <Login />
-      ) : (
         <main className="app">
           <link
             rel="stylesheet"
@@ -48,6 +46,10 @@ function App() {
             <Footer />
           </div>{" "}
         </main>
+      ) : (
+        <Routes>
+          <Route path="/login" element={<Login />} />
+        </Routes>
       )}
       {customerModal && <CustomerForm closeModal={setCustomerModal} />}
     </BrowserRouter>

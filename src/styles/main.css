@@ -408,3 +408,12 @@ body {
 #aadBtn {
   background-color: rgb(16, 171, 37);
 }
+
+/* formCart */
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+
