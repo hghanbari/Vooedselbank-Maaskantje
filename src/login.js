@@ -1,12 +1,25 @@
 import * as React from "react";
 import "./styles/login.css";
+import axios from "axios";
 
 export default function Login() {
-  fetch("http://localhost/hamid/json/customerJson.php")
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {});
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        "http://localhost/backend/account/login.php",
+        {
+          email: "gh@gmail.com",
+          password: "12345",
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {})
+      .catch((err) => console.log(err));
+  };
+
   return (
     <>
       <div className="backdrop">
@@ -25,6 +38,7 @@ export default function Login() {
             <h2>LOGIN</h2>
             <div className="underline-title"></div>
           </div>
+          <button onClick={handleSubmit}>Submit</button>
           <form method="post" className="form">
             <label for="user-email">&nbsp;Email</label>
             <input
