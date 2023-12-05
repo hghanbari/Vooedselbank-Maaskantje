@@ -31,6 +31,7 @@ try {
     $data = [
         ':id' => $id,
         ':name' => $_POST['name'],
+        ':middleName' => $_POST['middleName'],
         ':lastName' => $_POST['lastName'],
         ':email' => $_POST['email'],
         ':phone' => $_POST['phone'],
@@ -40,12 +41,12 @@ try {
 
     $query = $conn->prepare(
         'INSERT INTO `customer`
-        (`customerId`, `firstName`, `lastName`, `email`, `phone`, `familyMemberAmount`, `youngestPerson`)
-        VALUES (:id, :name, :lastName, :email, :phone, :amount, :age)'
+        (`customerId`, `firstName`, `middleName`, `lastName`, `email`, `phone`, `familyMemberAmount`, `youngestPerson`)
+        VALUES (:id, :name, :middleName, :lastName, :email, :phone, :amount, :age)'
     );
     $query->execute($data);
 
-    if (!in_array('nothing', $_POST['specifics'])) {
+    if (isset($_POST['specifics']) && !in_array('nothing', $_POST['specifics'])) {
         foreach ($_POST['specifics'] as $specific) {
             $data = [
                 ':specificId' => $specific,

@@ -33,6 +33,7 @@ try {
     $data = [
         ':id' => GenerateUUID(),
         ':name' => $_POST['name'],
+        ':middleName' => $_POST['middleName'],
         ':lastName' => $_POST['lastName'],
         ':pass' => password_hash('12345678', PASSWORD_BCRYPT),
         ':email' => $_POST['email'],
@@ -44,8 +45,8 @@ try {
     // Query DB
     $query = $conn->prepare
         ('INSERT INTO `user`
-        (`userId`, `firstName`, `lastName`, `pass`, `email`, `phone`, `adress`, `auth`)
-        VALUES (:id, :name, :lastName, :pass, :email, :phone, :adress, :auth)
+        (`userId`, `firstName`, `middleName`, `lastName`, `pass`, `email`, `phone`, `adress`, `auth`)
+        VALUES (:id, :name, :middleName, :lastName, :pass, :email, :phone, :adress, :auth)
         ');
     $query->execute($data);
 

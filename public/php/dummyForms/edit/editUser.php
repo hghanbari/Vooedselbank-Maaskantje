@@ -39,6 +39,8 @@ try {
         <form action="../../actions/edit/user.php" method="post">
             Firstname: <input type="text" name="firstName">
             <br>
+            Middlename: <input type="text" name="middleName">
+            <br>
             Lastname: <input type="text" name="lastName">
             <br>
             Email: <input type="text" name="email">

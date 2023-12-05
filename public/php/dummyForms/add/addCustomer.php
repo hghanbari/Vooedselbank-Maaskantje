@@ -23,6 +23,7 @@ try {
 <body>
     <form action="../../actions/add/customer.php" method="post">
         name: <input type="text" name="name"><br>
+        middle name: <input type="text" name="middleName"><br>
         last name: <input type="text" name="lastName"><br>
         email: <input type="email" name="email"><br>
         phone number: <input type="text" name="phone"><br>

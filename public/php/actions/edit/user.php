@@ -12,22 +12,19 @@ try {
     // Check current password
     if (password_verify($_POST["currPass"], $user[0]["pass"])) {
         $firstName = $_POST["firstName"];
+        $middleName = $_POST['middleName'];
         $lastName = $_POST["lastName"];
         $email = $_POST["email"];
         $password = password_hash($_POST["newPass"], PASSWORD_BCRYPT);
         $phone = $_POST["phone"];
         $adress = $_POST["adress"];
         $auth = $_POST["auth"];
-
-        // Check if any field is filled in
-        if ($_POST["firstName"] == "" && $_POST["lastName"] == "" && $_POST["email"] == "" && $_POST["newPass"] == "" && $_POST["phone"] == "" && $_POST["adress"] == "" && $_POST["auth"] == "") {
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
-            exit();
-        }
-
         
         if ($_POST["firstName"] == "") {
-            $firstName = $user[0]["name"];
+            $firstName = $user[0]["firstName"];
+        }
+        if ($_POST['middleName'] == "") {
+            $middleName = isset($user[0]['middleName']) ? $user[0]['middleName'] : null;
         }
         if ($_POST["lastName"] == "") {
             $lastName = $user[0]["lastName"];
@@ -49,10 +46,11 @@ try {
         }
 
         $query = $conn->prepare("UPDATE user 
-        SET `firstName` = :firstName, lastName = :lastName, email = :email, pass = :password, phone = :phone, adress = :adress, auth = :auth 
+        SET `firstName` = :firstName, `middleName` = :middleName, lastName = :lastName, email = :email, pass = :password, phone = :phone, adress = :adress, auth = :auth 
         WHERE userId = :id
         ");
         $query->bindParam(":firstName", $firstName);
+        $query->bindParam(':middleName', $middleName);
         $query->bindParam(":lastName", $lastName);
         $query->bindParam(":email", $email);
         $query->bindParam(":password", $password);
