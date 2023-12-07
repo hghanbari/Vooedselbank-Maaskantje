@@ -9,7 +9,7 @@ export default function Login() {
       .post(
         "http://localhost/backend/account/login.php",
         {
-          email: "gh@gmail.com",
+          email: "",
           password: "12345",
         },
         {
@@ -19,7 +19,7 @@ export default function Login() {
       .then((res) => {})
       .catch((err) => console.log(err));
   };
-
+  console.log(handleSubmit);
   return (
     <>
       <div className="backdrop">
@@ -38,8 +38,7 @@ export default function Login() {
             <h2>LOGIN</h2>
             <div className="underline-title"></div>
           </div>
-          <button onClick={handleSubmit}>Submit</button>
-          <form method="post" className="form">
+          <form method="post" className="form" onClick={handleSubmit}>
             <label for="user-email">&nbsp;Email</label>
             <input
               id="user-email"
@@ -59,9 +58,6 @@ export default function Login() {
               required
             />
             <div className="form-border"></div>
-            <a href="#">
-              <legend className="forgot-pass">Forgot password?</legend>
-            </a>
             <input id="submit-btn" type="submit" name="submit" value="LOGIN" />
           </form>
         </div>

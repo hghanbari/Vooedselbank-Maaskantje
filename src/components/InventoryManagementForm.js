@@ -1,8 +1,8 @@
 import axios from "axios";
-import React from "react";
+import * as React from "react";
 import { useState } from "react";
 
-export default function SupplierForm({ closeModal }) {
+export default function InventoryManagementForm({ closeModal }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -12,7 +12,7 @@ export default function SupplierForm({ closeModal }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost/backend/add/supliers.php", {
+      .post("http://localhost/backend/add/product.php", {
         email: email,
         firstName: firstName,
         lastName: lastName,
@@ -27,7 +27,7 @@ export default function SupplierForm({ closeModal }) {
     <div className="modal-background">
       <div className="modal-container">
         <div className="title">
-          <h4>Leverancier gegeven tovogen</h4>
+          <h4>Voorraad gegeven tovogen</h4>
           <button
             className="modal-close-button"
             onClick={() => {
