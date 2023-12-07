@@ -21,12 +21,12 @@ try {
     }
 
     // If more than one field is left empty query the database for that information
-    if ($_POST["deliveryDate"] == "" || $_POST["deliveryTime" == "" || $_POST["delivered"] == ""]) {
+    if ($_POST["deliveryDate"] == "" || $_POST["deliveryTime"] == "" || $_POST["delivered"] == "") {
         $query = $conn->prepare("SELECT deliveryDate, deliveryTime, delivered FROM delivery WHERE deliveryId = :id");
         $data = [':id' => $id];
         $query->execute($data);
         $delivery = $query->fetchAll(PDO::FETCH_ASSOC);
-    }
+    }    
 
     // Check if deliveryDate is set
     if ($_POST["deliveryDate"] == "") {

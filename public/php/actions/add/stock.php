@@ -4,22 +4,20 @@ include_once("../../functions.php");
 $conn = ConnectDB("root", "");
 
 try {
-    // if (!CheckAuth(3, $conn)) {
-    //     // Return
-    //     header('Location: ' . $_SERVER['HTTP_REFERER']);
-    //     exit();
-    // }
+    if (!CheckAuth(3, $conn)) {
+        // Return
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit();
+    }
 
     // get supplierId
-    $deliveryId = $_POST["delivery"];
-
     $query = $conn->prepare(
-        "SELECT supplier.supplierId FROM supplier
-        INNER JOIN delivery ON delivery.supplierId = supplier.supplierId
-        WHERE delivery.deliveryId = $deliveryId
+        "SELECT supplier.`supplierId` FROM supplier
+        INNER JOIN delivery ON delivery.`supplierId` = supplier.`supplierId`
+        WHERE delivery.`deliveryId` = :id
     ");
 
-    $query->execute();
+    $query->execute([':id' => $_POST['delivery']]);
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
     $data = [

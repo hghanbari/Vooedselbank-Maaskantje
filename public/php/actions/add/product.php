@@ -32,17 +32,18 @@ try {
         ':ean' => $ean,
         ':catagoryId' => $_POST['catagory'],
         ':productAge' => $_POST['age'],
+        ':name' => $_POST['name']
     ];
 
     $query = $conn->prepare(
-        'INSERT INTO `products` (`EAN`, `catagoryId`, `productAge`)
-        VALUES (:ean, :catagoryId, :productAge);'
+        'INSERT INTO `products` (`EAN`, `catagoryId`, `productAge`, `name`)
+        VALUES (:ean, :catagoryId, :productAge, :name);'
     );
     $query->execute($data);
 
     // Add specifics
-    if (!in_array('nothing', $_POST['specifics'])) {
-        foreach ($_POST['specifics'] as $specific) {
+    if (isset($_POST['specifics[]']) && !in_array('nothing', $_POST['specifics[]'])) {
+        foreach ($_POST['specifics[]'] as $specific) {
             $data = [
                 ':specificId' => $specific,
                 ':ean' => $ean
