@@ -4,17 +4,12 @@ export default function Header() {
   return (
     <div className="app-header">
       <div className="header-navbar">
-        <a href="#">
-          <span className="material-symbols-outlined">view_agenda</span>
-        </a>
-        <div className="header-navbar">
-          <Link to="/profile">
-            <span className="material-symbols-outlined">account_circle</span>
-          </Link>
-          <Link to="/login">
-            <span className="material-symbols-outlined">logout</span>
-          </Link>
-        </div>
+        <Link to="/profile">
+          <span className="material-symbols-outlined">account_circle</span>
+        </Link>
+        <Link to="/login">
+          <span className="material-symbols-outlined">logout</span>
+        </Link>
       </div>
       <div className="header-card">
         <div className="card-content">
