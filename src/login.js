@@ -1,25 +1,67 @@
 import * as React from "react";
 import "./styles/login.css";
 import axios from "axios";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 export default function Login() {
-  const handleSubmit = async (e) => {
+  const [updateCookies] = useCookies(["PHPSESSID"]);
+
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [msg, setMas] = useState("");
+
+  useEffect(() => {
+    setTimeout(function () {
+      setMas("");
+    }, 3000);
+  }, [msg]);
+
+  const handleSubmit = async (e, type) => {
     e.preventDefault();
-    axios
-      .post(
-        "http://localhost/backend/account/login.php",
-        {
-          email: "",
-          password: "12345",
-        },
-        {
-          withCredentials: true,
+    switch (type) {
+      case "email":
+        setError("");
+        setEmail(e.target.value);
+        if (e.target.value === "") {
+          setError("Username has left blank");
         }
-      )
-      .then((res) => {})
-      .catch((err) => console.log(err));
+        break;
+      case "password":
+        setError("");
+        setPassword(e.target.value);
+        if (e.target.value === "") {
+          setError("Password has left blank");
+        }
+        break;
+      default:
+    }
+    if (email !== "" && password !== "") {
+      axios
+        .post(
+          "http://localhost/backend/account/login.php",
+          {
+            email: email,
+            password: password,
+          },
+
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          // updateCookies();
+          window.location.href = "/home";
+          // navigate("/home");
+        })
+        .catch((err) => console.log(err));
+    }
+    return false;
   };
-  console.log(handleSubmit);
+
   return (
     <>
       <div className="backdrop">
@@ -36,25 +78,36 @@ export default function Login() {
         <div id="card-content">
           <div id="card-title">
             <h2>LOGIN</h2>
+            <p>
+              {error !== "" ? (
+                <span className="error">{error}</span>
+              ) : (
+                <span className="success">{msg}</span>
+              )}
+            </p>
             <div className="underline-title"></div>
           </div>
           <form method="post" className="form" onClick={handleSubmit}>
-            <label for="user-email">&nbsp;Email</label>
+            <label htmlFor="user-email">&nbsp;Email</label>
             <input
               id="user-email"
               className="form-content"
               type="email"
               name="email"
-              autocomplete="on"
+              autoComplete="on"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
             <div className="form-border"></div>
-            <label for="user-password">&nbsp;Password</label>
+            <label htmlFor="user-password">&nbsp;Password</label>
             <input
               id="user-password"
               className="form-content"
               type="password"
               name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
             <div className="form-border"></div>

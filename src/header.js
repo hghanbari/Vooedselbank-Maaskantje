@@ -1,14 +1,36 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 export default function Header() {
+  const handleRejectCookies = (e) => {
+    e.preventDefault();
+
+    axios
+      .post(
+        "http://localhost/backend/account/logout.php",
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        Cookies.remove("PHPSESSID");
+        window.location.href = "/";
+        // navigate("/");
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div className="app-header">
       <div className="header-navbar">
         <Link to="/profile">
           <span className="material-symbols-outlined">account_circle</span>
         </Link>
-        <Link to="/login">
+        <Link onClick={handleRejectCookies}>
           <span className="material-symbols-outlined">logout</span>
         </Link>
       </div>

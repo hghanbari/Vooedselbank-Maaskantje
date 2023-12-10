@@ -23,46 +23,49 @@ function App() {
   const [supplierModal, setSupplierModal] = useState(false);
   const [inventoryManagementModal, setInventoryManagementModal] =
     useState(false);
-  const sesId = Cookies.get("PHPSESSID");
+  const session = Cookies.get("PHPSESSID");
 
   return (
     <BrowserRouter>
-      <main className="app">
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-        />
-        <Sidebar />
-        <div className="app-body">
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route
-              path="/customers"
-              element={<Customers setModal={setCustomerModal} />}
-            />
-            <Route
-              path="/suppliers"
-              element={<Suppliers setModal={setSupplierModal} />}
-            />
-            <Route
-              path="/packages"
-              element={<Packages setModal={setPackageModal} />}
-            />
-            <Route
-              path="/inventoryManagement"
-              element={
-                <InventoryManagement setModal={setInventoryManagementModal} />
-              }
-            />
-          </Routes>
-          <Footer />
-        </div>
+      {session ? (
+        <main className="app">
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          />
+          <Sidebar />
+          <div className="app-body">
+            <Header />
+            <Routes>
+              <Route path="/home" element={<Home />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route
+                path="/customers"
+                element={<Customers setModal={setCustomerModal} />}
+              />
+              <Route
+                path="/suppliers"
+                element={<Suppliers setModal={setSupplierModal} />}
+              />
+              <Route
+                path="/packages"
+                element={<Packages setModal={setPackageModal} />}
+              />
+              <Route
+                path="/inventoryManagement"
+                element={
+                  <InventoryManagement setModal={setInventoryManagementModal} />
+                }
+              />
+            </Routes>
+            <Footer />
+          </div>
+        </main>
+      ) : (
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
         </Routes>
-      </main>
+      )}
       {customerModal && <CustomerForm closeModal={setCustomerModal} />}
       {packageModal && <PackageForm closeModal={setPackageModal} />}
       {supplierModal && <SupplierForm closeModal={setSupplierModal} />}

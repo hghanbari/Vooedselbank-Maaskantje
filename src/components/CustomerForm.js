@@ -12,13 +12,19 @@ export default function CustomerForm({ closeModal }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost/backend/add/customer.php", {
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        phone: phone,
-        age: age,
-      })
+      .post(
+        "http://localhost/backend/add/customer.php",
+        {
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+          phone: phone,
+          age: age,
+        },
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => {})
       .catch((err) => console.log(err));
   };
