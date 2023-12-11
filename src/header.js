@@ -5,13 +5,22 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function Header() {
-const [customers,setCustomers]= useState ();
+const [customers,setCustomers]= useState([]);
 
   useEffect(() => {
     axios
       .get("http://localhost/backend/json/customerJson.php")
       .then((res) => {
-        setData(res.customers);
+        setCustomers(res.customers);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  
+  useEffect(() => {
+    axios
+      .get("http://localhost/backend/json/customerJson.php")
+      .then((res) => {
+        setCustomers(res.customers);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -36,8 +45,8 @@ const [customers,setCustomers]= useState ();
         <div className="card-content">
           <div>
             <h3>
-              <span>Antal Pakketen</span>
-              <span>25</span>
+              <span>Aantal Pakketen</span>
+              <span>{Count()}</span>
             </h3>
             <div className="circle-icon red">
               <span className="material-symbols-outlined ">
@@ -56,9 +65,9 @@ const [customers,setCustomers]= useState ();
         <div className="card-content">
           <div>
             <h3>
-              <span>Antal Klanten</span>
-              <span>25</span>
-            </h3>
+              <span>Aantal Klanten</span>
+              <span>{customers.length}</span>
+                          </h3>
             <div className="circle-icon blue">
               <span className="material-symbols-outlined ">data_usage</span>
             </div>
