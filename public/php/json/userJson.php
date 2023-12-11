@@ -6,7 +6,7 @@ $conn = ConnectDB('root', '');
 try {
     $query = $conn->prepare(
         'SELECT
-        user.`userId`, user.`firstName`, user.`lastName`, user.`email`, user.`phone`, user.`adress`, user.`auth`
+        user.`userId`, user.`name`, user.`lastName`, user.`email`, user.`phone`, user.`adress`, user.`auth`
         FROM `user`'
     );
     $query->execute();
@@ -18,7 +18,7 @@ try {
         foreach ($result as $user) {
             $data[$user['userId']] = [
                 'userId' => $user['userId'],
-                'firstName' => $user['firstName'],
+                'name' => $user['name'],
                 'lastName' => $user['lastName'],
                 'email' => $user['email'],
                 'phone' => $user['phone'],

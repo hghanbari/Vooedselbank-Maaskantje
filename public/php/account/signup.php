@@ -6,7 +6,7 @@ $conn = ConnectDB("root", "");
 
 try {
     // Since we still need to create a user, this'll be commented out
-    
+
     // Check for admin status
     if (!CheckAuth(3, $conn)) {
         // Create error cookie
@@ -42,8 +42,7 @@ try {
     ];
 
     // Query DB
-    $query = $conn->prepare
-        ('INSERT INTO `user`
+    $query = $conn->prepare('INSERT INTO `user`
         (`userId`, `name`, `lastName`, `pass`, `email`, `phone`, `adress`, `auth`)
         VALUES (:id, :name, :lastName, :pass, :email, :phone, :adress, :auth)
         ');

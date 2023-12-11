@@ -11,7 +11,7 @@ export default function Sidebar() {
         <div className="sidebar-mine">
           <ul className="list-main">
             <li>
-              <Link to="/">
+              <Link to="/home">
                 <span className="material-symbols-outlined">computer</span>
                 <span>Overzicht</span>
               </Link>
