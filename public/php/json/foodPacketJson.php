@@ -13,7 +13,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 try {
     $query = $conn->prepare(
-        "SELECT packet.packetId, packet.customerId, packet.makeDate, packet.pickUpDate, customer.name, customer.lastname, packetStock.stockId, packetStock.EAN, packetStock.amount, products.name AS productName FROM packet
+        "SELECT packet.packetId, packet.customerId, packet.makeDate, packet.pickUpDate, customer.firstName, customer.lastName, packetStock.stockId, packetStock.EAN, packetStock.amount, products.name AS productName FROM packet
         LEFT JOIN customer
         ON packet.customerId = customer.customerId
         LEFT JOIN packetStock
@@ -35,8 +35,8 @@ try {
                     'packetId' => $packetId,
                     'customer' => [
                         'customerId' => $packet["customerId"],
-                        'customerName' => $packet["name"],
-                        'customerLastName' => $packet["lastname"]
+                        'customerName' => $packet["firstName"],
+                        'customerLastName' => $packet["lastName"]
                     ],
                     'makeDate' => $packet["makeDate"],
                     'pickUpDate' => $packet["pickUpDate"]

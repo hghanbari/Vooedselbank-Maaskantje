@@ -12,9 +12,10 @@ export default function Suppliers({ setModal }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost/backend/json/supplierJson.php")
+      .get("http://localhost/code/Vooedselbank-Maaskantje/public/php/json/supplierJson.php")
       .then((res) => {
-        setData(res.data);
+        const myArray = Object.keys(res.data).map(key => res.data[key]);
+        setData(myArray);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -53,8 +54,8 @@ export default function Suppliers({ setModal }) {
             return (
               <tr key={index}>
                 <td>{user.companyName}</td>
-                <td>{user.adress}</td>
                 <td>{user.contactName}</td>
+                <td>{user.adress}</td>
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
               </tr>

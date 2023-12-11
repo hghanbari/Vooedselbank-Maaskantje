@@ -12,9 +12,11 @@ export default function Packages({ setModal }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost/backend/json/foodPacketJson.php")
+      .get("http://localhost/code/Vooedselbank-Maaskantje/public/php/json/foodPacketJson.php")
       .then((res) => {
-        setData(res.data);
+        const myArray = Object.keys(res.data).map(key => res.data[key]);
+        console.log(myArray);
+        setData(myArray);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -52,7 +54,7 @@ export default function Packages({ setModal }) {
               <tr key={index}>
                 <td>{user.makeDate}</td>
                 <td>{user.pickUpDate}</td>
-                <td>{user.customer}</td>
+                <td>{user.customer.customerName} {user.customer.customerLastName}</td>
               </tr>
             );
           })}

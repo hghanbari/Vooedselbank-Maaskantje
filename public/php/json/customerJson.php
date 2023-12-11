@@ -17,10 +17,10 @@ try {
         customer.`customerId` AS custId, customer.`firstName`, customer.`lastName`, customer.`email`, customer.`phone`, customer.`familyMemberAmount`, customer.`youngestPerson`,
         specifics.`specificId` AS specId, specifics.`desc`
         FROM customer
-        LEFT JOIN customerspecifics
-        ON customer.`customerId` = customerspecifics.`customerId`
+        LEFT JOIN customerSpecifics
+        ON customer.`customerId` = customerSpecifics.`customerId`
         LEFT JOIN specifics
-        ON customerspecifics.`specificId` = specifics.`specificId`'
+        ON customerSpecifics.`specificId` = specifics.`specificId`'
     );
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_ASSOC);

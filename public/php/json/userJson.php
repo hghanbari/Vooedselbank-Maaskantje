@@ -25,7 +25,7 @@ try {
         foreach ($result as $user) {
             $data[$user['userId']] = [
                 'userId' => $user['userId'],
-                'name' => $user['name'],
+                'firstName' => $user['name'],
                 'lastName' => $user['lastName'],
                 'email' => $user['email'],
                 'phone' => $user['phone'],

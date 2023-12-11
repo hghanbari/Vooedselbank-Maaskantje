@@ -12,9 +12,11 @@ export default function InventoryManagement({ setModal }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost/backend/json/supplierJson.php")
+      .get("http://localhost/code/Vooedselbank-Maaskantje/public/php/json/stockJson.php")
       .then((res) => {
-        setData(res.data);
+        const myArray = Object.keys(res.data).map(key => res.data[key]);
+        console.log(myArray);
+        setData(myArray);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -41,9 +43,9 @@ export default function InventoryManagement({ setModal }) {
       <table className="data-table">
         <thead className="table-header">
           <tr>
-            <th>Name</th>
+            <th>Naam</th>
             <th>EAN</th>
-            <th>Hoeveelhied</th>
+            <th>Hoeveelheid</th>
             <th>Sort</th>
             <th>Prijs</th>
           </tr>
@@ -52,9 +54,9 @@ export default function InventoryManagement({ setModal }) {
           {currentItems.map((user, index) => {
             return (
               <tr key={index}>
-                <td>{user.companyName}</td>
-                <td>{user.adress}</td>
-                <td>{user.contactName}</td>
+                <td>{user.productInfo.name}</td>
+                <td>{user.productInfo.ean}</td>
+                <td>{user.amount}</td>
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
               </tr>

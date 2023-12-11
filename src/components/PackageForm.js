@@ -12,7 +12,7 @@ export default function PackageForm({ closeModal }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost/backend/add/foodPacket.php", {
+      .post("http://localhost/public/php/actions/add/foodPacket.php", {
         email: email,
         firstName: firstName,
         lastName: lastName,

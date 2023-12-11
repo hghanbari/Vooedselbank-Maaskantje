@@ -7,9 +7,11 @@ export default function Profile() {
 
   useEffect(() => {
     axios
-      .get("http://localhost/backend/json/userJson.php")
+      .get("http://localhost/code/Vooedselbank-Maaskantje/public/php/json/userJson.php")
       .then((res) => {
-        setData(res.data);
+        const myArray = Object.keys(res.data).map(key => res.data[key]);
+        console.log(myArray);
+        setData(myArray);
       })
       .catch((err) => console.log(err));
   }, []);
