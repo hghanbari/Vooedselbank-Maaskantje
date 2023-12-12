@@ -26,6 +26,7 @@ try {
         ':deliveryId' => $_POST["delivery"],
         ':supplierId' => $result[0]['supplierId'],
         ':amount' => $_POST["amount"],
+        ':inUse' => 0,
         ':bestByDate' => $_POST["best_by_date"]
     ];
 
@@ -34,8 +35,8 @@ try {
     unset($result);
 
     $query = $conn->prepare(
-        "INSERT INTO stock (stockId, EAN, deliveryId, supplierId, amount, bestByDate)
-        VALUES (:id, :ean, :deliveryId, :supplierId, :amount, :bestByDate)");
+        "INSERT INTO stock (stockId, EAN, deliveryId, supplierId, amount, inUseAmount, bestByDate)
+        VALUES (:id, :ean, :deliveryId, :supplierId, :amount, :inUse, :bestByDate)");
     $query->execute($data);
     $query->closeCursor();
     unset($query);

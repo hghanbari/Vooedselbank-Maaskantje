@@ -10,18 +10,19 @@ try {
         exit();
     }
 
-    // check if specifics exists
-    $stmt = 'SELECT specificId FROM specifics WHERE specificId = :specificId';
-    $data = [':specificId' => $_POST["specifics"]];
-    if (!CheckIfExists($stmt, $data, $conn)) {
-        header("Location: " . $_SERVER["HTTP_REFERER"]);
+    // Check if specific is in use
+    $prod = $conn->prepare('SELECT `specificId` FROM `specificsforproducts` WHERE `specificId` = :id');
+    $prod->execute([':id' => $_POST['specifics']]);
+    $cust = $conn->prepare('SELECT `specificId` FROM `customerspecifics` WHERE `specificId` = :id');
+    $cust->execute([':id' => $_POST['specifics']]);
+    if ($prod->rowCount() > 0 || $cust->rowCount() > 0) {
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit();
     }
 
     $query = $conn->prepare("DELETE FROM specifics WHERE specificId = :specificId");
     $query->bindParam("specificId", $_POST["specifics"]);
     $query->execute();
-
 } catch (PDOException $e) {
     echo "Error!: " . $e->getMessage();
 }

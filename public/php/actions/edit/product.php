@@ -29,14 +29,39 @@ try {
 
     // Update data
     foreach ($_POST as $key=>$item) {
-        if ($item != '') {
+        if ($key == 'catagory' && $item == 'none') {
+            $data[":$key"] = null;
+        } else if ($key == 'catagory' && $item == 'same') {
+            $data[":catagory"] = $data[":catagory"];
+        } else if ($item != '' && $key != 'specifics[]') {
             $data[":$key"] = $item;
         }
 
-        if ($key == 'catagory' && $item == 'none') {
-            $data[":$key"] = null;
+        // Update specifics
+        if ($key == 'specifics' && !in_array('same', $_POST['specifics'])) {
+            $conn->prepare(
+                'DELETE FROM `specificsforproducts` WHERE `ean` = :ean'
+            )->execute([':ean' => $data[':ean']]);
+
+            if (!in_array('none', $_POST['specifics'])) {
+                foreach ($_POST['specifics'] as $spec) {
+                    $query = $conn->prepare(
+                        'INSERT INTO `specificsforproducts` 
+                        (`specificId`, `EAN`) VALUES (:id, :ean)'
+                    );
+                    $query->bindParam(':id', $spec);
+                    $query->bindParam(':ean', $data[':ean']);
+                    $query->execute();
+                }
+            }
         }
     }
+
+    // Specifics has been updated so it can be deleted to circumvent errors
+    unset($data[':specifics']);
+
+    
+print_r($data);
 
     // Insert data
     $query = $conn->prepare('UPDATE `products` SET `catagoryId` = :catagory, `productAge` = :age, `name` = :name WHERE `EAN` = :ean');
@@ -45,4 +70,4 @@ try {
     echo "Error!: " . $e->getMessage();
 }
 
-header('Location: ' . $_SERVER['HTTP_REFERER']);
+//header('Location: ' . $_SERVER['HTTP_REFERER']);
