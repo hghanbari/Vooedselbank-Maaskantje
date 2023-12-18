@@ -46,7 +46,11 @@ const [customers,setCustomers]= useState([]);
           <div>
             <h3>
               <span>Aantal Pakketen</span>
+<<<<<<< Updated upstream
               <span>{Count()}</span>
+=======
+              <span>{customers.length}</span>
+>>>>>>> Stashed changes
             </h3>
             <div className="circle-icon red">
               <span className="material-symbols-outlined ">
