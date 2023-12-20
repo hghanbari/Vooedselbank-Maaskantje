@@ -10,7 +10,7 @@ export default function Profile() {
       .get("http://localhost/code/Vooedselbank-Maaskantje/public/php/json/userJson.php")
       .then((res) => {
         const myArray = Object.keys(res.data).map(key => res.data[key]);
-        console.log(myArray);
+        console.log(res.data);
         setData(myArray);
       })
       .catch((err) => console.log(err));
@@ -20,7 +20,7 @@ export default function Profile() {
     <div className="body-content">
       <div className="header-content">
         <h4 className="header-title">profile</h4>
-        <button className="header-button">profile wijzegen</button>
+        <button className="header-button">profile wijzigen</button>
       </div>
       <table className="data-table">
         <thead className="table-header">

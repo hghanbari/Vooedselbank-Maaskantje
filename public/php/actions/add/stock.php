@@ -10,6 +10,13 @@ header("Access-Control-Allow-Methods: POST, DELETE, OPTIONS");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+$json = file_get_contents('php://input');
+
+// Converts it into a PHP object
+$input = json_decode($json);
+
+
+
 try {
     if (!CheckAuth(3, $conn)) {
         // Return
@@ -24,17 +31,17 @@ try {
         WHERE delivery.`deliveryId` = :id
     ");
 
-    $query->execute([':id' => $_POST['delivery']]);
+    $query->execute([':id' => $input->delivery]);
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
     $data = [
         ':id' => GenerateUUID(),
-        ':ean' => $_POST["product"],
-        ':deliveryId' => $_POST["delivery"],
+        ':ean' => $input->ean,
+        ':deliveryId' => $input->delivery,
         ':supplierId' => $result[0]['supplierId'],
-        ':amount' => $_POST["amount"],
+        ':amount' => $input->amount,
         ':inUse' => 0,
-        ':bestByDate' => $_POST["best_by_date"]
+        ':bestByDate' => $input->bestByDate
     ];
 
     $query->closeCursor();
@@ -45,9 +52,7 @@ try {
         "INSERT INTO stock (stockId, EAN, deliveryId, supplierId, amount, inUseAmount, bestByDate)
         VALUES (:id, :ean, :deliveryId, :supplierId, :amount, :inUse, :bestByDate)");
     $query->execute($data);
-    $query->closeCursor();
-    unset($query);
-    unset($data);
+    echo json_encode(['success' => true]);
 } catch (PDOException $e) {
     echo "Error!: " . $e->getMessage();
 }
