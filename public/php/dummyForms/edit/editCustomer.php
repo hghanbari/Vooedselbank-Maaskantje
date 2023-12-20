@@ -4,7 +4,7 @@ include_once('../../functions.php');
 $conn = ConnectDB('root', '');
 
 try {
-    $query = $conn->prepare('SELECT `customerId`, `name`, `lastName` FROM `customer`');
+    $query = $conn->prepare('SELECT `customerId`, `firstName`, `middleName`, `lastName` FROM `customer`');
     $query->execute();
 
     $customers = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -25,7 +25,7 @@ try {
         <select name="customer">
             <?php
             foreach ($customers as $customer) {
-                echo "<option value='" . $customer['customerId'] . "'>" . $customer['name'] . " " . $customer['lastName'] . "</option>";
+                echo "<option value='" . $customer['customerId'] . "'>" . $customer['firstName'] . " " . $customer['middleName'] . " " . $customer['lastName'] . "</option>";
             }
             ?>
         </select><br>
@@ -48,6 +48,7 @@ try {
 
         <form action="../../actions/edit/customer.php" method="post">
         name: <input type="text" name="name"><br>
+        middle name: <input type="text" name="middleName"><br>
         last name: <input type="text" name="lastName"><br>
         email: <input type="email" name="email"><br>
         phone number: <input type="text" name="phone"><br>

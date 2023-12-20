@@ -18,7 +18,7 @@ try {
     }
 
     $data = [
-        ':id' => hexdec(uniqid()),
+        ':id' => GenerateUUID(),
         ':supplierId' => $_POST["supplier"],
         ':deliveryDate' => $_POST["deliveryDate"],
         ':deliveryTime' => $_POST["deliveryTime"]

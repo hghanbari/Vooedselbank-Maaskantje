@@ -26,6 +26,7 @@ try {
 <body>
     <form action="../../actions/add/product.php" method="post">
         EAN: <input type="text" name="EAN" required><br>
+        Name: <input type="text" name="name"><br>
         Catagory: 
         <select name="catagory">
             <?php

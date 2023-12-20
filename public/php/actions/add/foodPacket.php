@@ -27,7 +27,7 @@ try {
 
         return $nextDay;
     }
-    $packetId = hexdec(uniqid());
+    $packetId = GenerateUUID();
 
     $data = [
         ':packetId' => $packetId,
@@ -58,6 +58,13 @@ try {
     }
 
     foreach ($ean as $i => $eanValue) {
+        // Update stock
+        $query = $conn->prepare('UPDATE `stock` SET `inUseAmount` = `inUseAmount` + :amount WHERE `stockId` = :id');
+        $query->bindParam(':amount', $amount[$i]);
+        $query->bindParam(':id', $stockId[$i]);
+        $query->execute();
+
+        // Update packet
         $data = [
             ':packetId' => $packetId,
             ':customerId' => $_POST['custId'],

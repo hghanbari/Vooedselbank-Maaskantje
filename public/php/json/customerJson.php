@@ -14,7 +14,7 @@ try {
     // Get customer data
     $query = $conn->prepare(
         'SELECT
-        customer.`customerId` AS custId, customer.`firstName`, customer.`lastName`, customer.`email`, customer.`phone`, customer.`familyMemberAmount`, customer.`youngestPerson`,
+        customer.`customerId` AS custId, customer.`firstName`, customer.`middleName`, customer.`lastName`, customer.`email`, customer.`phone`, customer.`familyMemberAmount`, customer.`youngestPerson`,
         specifics.`specificId` AS specId, specifics.`desc`
         FROM customer
         LEFT JOIN customerSpecifics

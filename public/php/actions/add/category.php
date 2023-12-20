@@ -20,7 +20,7 @@ try {
     }
 
     $query = $conn->prepare('INSERT INTO `catagory` (`catagoryId`, `desc`) VALUE (:id, :desc)');
-    $query->bindParam(':id', hexdec(uniqid()));
+    $query->bindParam(':id', GenerateUUID());
     $query->bindParam(':desc', $_POST['desc']);
     $query->execute();
 } catch (PDOException $e) {

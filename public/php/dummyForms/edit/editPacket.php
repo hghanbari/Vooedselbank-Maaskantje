@@ -8,7 +8,7 @@ try {
     $query = $conn->prepare(
         'SELECT
         packet.`packetId`, packet.`customerId`, packet.`pickUpDate`,
-        customer.`name`, customer.`lastName`
+        customer.`firstName`, customer.`middleName`, customer.`lastName`
         FROM `packet`
         LEFT JOIN `customer` ON packet.`customerId` = customer.`customerId`
         WHERE packet.`pickUpDate` >= CURRENT_DATE()'
@@ -52,7 +52,7 @@ try {
         <select name="packet">
             <?php
             foreach ($packet as $pack) {
-                echo "<option value='" . $pack['packetId'] . "'>" . $pack['name'] . " " . $pack['lastName'] . " - " . $pack['pickUpDate'] . "</option>";
+                echo "<option value='" . $pack['packetId'] . "'>" . $pack['firstName'] . " " . $pack['middleName'] . " " . $pack['lastName'] . " - " . $pack['pickUpDate'] . "</option>";
             }
             ?>
         </select>

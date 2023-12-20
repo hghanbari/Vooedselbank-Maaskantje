@@ -34,14 +34,15 @@ try {
 
     // Check what changed
     // Get default data
-    $query = $conn->prepare('SELECT `name`, `lastName`, `email`, `phone`, `familyMemberAmount`, `youngestPerson` FROM `customer` WHERE `customerId` = :id');
+    $query = $conn->prepare('SELECT `firstName`, `lastName`, `email`, `phone`, `familyMemberAmount`, `youngestPerson` FROM `customer` WHERE `customerId` = :id');
     $query->bindParam(':id', $_POST['id']);
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
     $data = [
         ':id' => $_POST['id'],
-        ':name' => $result[0]['name'],
+        ':name' => $result[0]['firstName'],
+        ':middleName' => isset($result[0]['middleName']) ? $result[0]['middleName'] : null,
         ':lastName' => $result[0]['lastName'],
         ':email' => $result[0]['email'],
         ':phone' => $result[0]['phone'],
@@ -59,7 +60,8 @@ try {
     // Execute w/ correct data
     $query = $conn->prepare(
         'UPDATE `customer` SET
-        `name` = :name,
+        `firstName` = :name,
+        `middleName` = :middleName,
         `lastName` = :lastName,
         `email` = :email,
         `phone` = :phone,
