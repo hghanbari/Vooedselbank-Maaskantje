@@ -12,6 +12,10 @@ try {
         $query = $conn->prepare('SELECT `catagoryId`, `desc` FROM `catagory`');
         $query->execute();
         $catagories = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        $query = $conn->prepare('SELECT `specificId`, `desc` FROM `specifics`');
+        $query->execute();
+        $specifics = $query->fetchAll(PDO::FETCH_ASSOC);
     }
 } catch (PDOException $e) {
     echo "Error!: " . $e->getMessage();
@@ -51,6 +55,7 @@ try {
 
             Catagory:
             <select name="catagory">
+                <option value='same' selected=''>Stay the same</option>
                 <option value="none">none</option>
                 <?php
                 foreach ($catagories as $catagory) {
@@ -58,6 +63,18 @@ try {
                 }
                 ?>
             </select><br>
+            
+            Specifics:
+            <select name="specifics[]" multiple>
+                <option value='same' selected=''>Stay the same</option>
+                <option value="none">none</option>
+
+                <?php
+                foreach ($specifics as $spec) {
+                    echo "<option value='" . $spec['specificId'] . "'>" . $spec['desc'] . "</option>";
+                }
+                ?>
+            </select>
 
             <input type="hidden" name="ean" value="<?php echo $_GET['product'] ?>">
             <input type="submit">

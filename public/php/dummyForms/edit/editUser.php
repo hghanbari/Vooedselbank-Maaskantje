@@ -4,7 +4,7 @@ include_once('../../functions.php');
 $conn = ConnectDB('root', '');
 
 try {
-    $query = $conn->prepare('SELECT userId, name, lastName FROM user');
+    $query = $conn->prepare('SELECT userId, firstName, lastName FROM user');
     $query->execute();
     
     $users = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -38,6 +38,8 @@ try {
         <p>If left blank nothing changes</p>
         <form action="../../actions/edit/user.php" method="post">
             Firstname: <input type="text" name="firstName">
+            <br>
+            Middlename: <input type="text" name="middleName">
             <br>
             Lastname: <input type="text" name="lastName">
             <br>

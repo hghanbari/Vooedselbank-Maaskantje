@@ -4,7 +4,7 @@ include_once("../../functions.php");
 $conn = ConnectDB("root", "");
 
 try {
-    $query = $conn->prepare("SELECT `userId`, `name`, `lastName` FROM `user`");
+    $query = $conn->prepare("SELECT `userId`, `firstName`, `middleName`, `lastName` FROM `user`");
     $query->execute();
     $users = $query->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -23,7 +23,7 @@ try {
         User: <select name="user">
             <?php 
                 foreach ($users as $user) {
-                    echo '<option value="' . $user["userId"] . '">' . $user["name"] . ' ' . $user["lastName"] . '</option>';
+                    echo '<option value="' . $user["userId"] . '">' . $user["firstName"] . ' ' . $user['middleName'] .  ' ' . $user["lastName"] . '</option>';
                 } 
             ?>
         </select>

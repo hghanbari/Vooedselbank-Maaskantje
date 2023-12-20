@@ -7,7 +7,7 @@ try {
     $query = $conn->prepare(
         'SELECT 
         packet.`packetId`, packet.`pickUpDate`,
-        customer.`name`, customer.`lastName`
+        customer.`firstName`, customer.`lastName`
         FROM `packet`
         LEFT JOIN `customer` ON packet.`customerId` = customer.`customerId`
         WHERE packet.`pickUpDate` > CURRENT_DATE()'
