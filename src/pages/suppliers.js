@@ -36,7 +36,7 @@ export default function Suppliers({ setModal }) {
       <div className="header-content">
         <h4 className="header-title">Leveranciers</h4>
         <button className="header-button" onClick={() => setModal(true)}>
-          Leverancier Toevogen
+          Leverancier Toevoegen
         </button>
       </div>
       <table className="data-table">

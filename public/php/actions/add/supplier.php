@@ -10,6 +10,11 @@ header("Access-Control-Allow-Methods: POST, DELETE, OPTIONS");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+$json = file_get_contents('php://input');
+
+// Converts it into a PHP object
+$input = json_decode($json);
+
 try {
     // Check auth
     if (!CheckAuth(3, $conn)) {
@@ -20,7 +25,7 @@ try {
 
     // Check if supplier already exits
     $stmt = 'SELECT `companyName` FROM `supplier` WHERE `companyName` = :name';
-    $data = [':name' => $_POST['bedrijfsnaam']];
+    $data = [':name' => $input->companyName];
 
     if(CheckIfExists($stmt, $data, $conn)) {
         // Create error cookie
@@ -30,11 +35,11 @@ try {
 
     $data = [
         ':id' => GenerateUUID(),
-        ':name' => $_POST["bedrijfsnaam"],
-        ':adres' => $_POST["adres"],
-        ':contactPerson' => $_POST["contact_persoon"],
-        ':email' => $_POST["email"],
-        ':telefoon' => $_POST["telefoon"]
+        ':name' => $input->companyName,
+        ':adres' => $input->adress,
+        ':contactPerson' => $input->contactPerson,
+        ':email' => $input->email,
+        ':telefoon' => $input->phone
     ];
 
     $query = $conn->prepare("INSERT INTO supplier (supplierId, companyName, adress, contactName, email, phone) 

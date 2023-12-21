@@ -37,7 +37,7 @@ export default function Packages({ setModal }) {
       <div className="header-content">
         <h4 className="header-title">Pakketten</h4>
         <button className="header-button" onClick={() => setModal(true)}>
-          Pakket Toevogen
+          Pakket Toevoegen
         </button>
       </div>
       <table className="data-table">

@@ -3,23 +3,25 @@ import React from "react";
 import { useState } from "react";
 
 export default function SupplierForm({ closeModal }) {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [adress, setAdress] = useState("");
   const [phone, setPhone] = useState("");
-  const [age, setAge] = useState("");
+  const [contactPerson, setContactPerson] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost/backend/add/supliers.php", {
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
+      .post("http://localhost/code/Vooedselbank-Maaskantje/public/php/actions/add/supplier.php", {
+        companyName: companyName,
+        adress: adress,
         phone: phone,
-        age: age,
+        contactPerson: contactPerson,
+        email: email
       })
-      .then((res) => {})
+      .then((res) => {
+        closeModal(false);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -27,7 +29,7 @@ export default function SupplierForm({ closeModal }) {
     <div className="modal-background">
       <div className="modal-container">
         <div className="title">
-          <h4>Leverancier gegeven tovogen</h4>
+          <h4>Leverancier gegeven toevoegen</h4>
           <button
             className="modal-close-button"
             onClick={() => {
@@ -38,27 +40,28 @@ export default function SupplierForm({ closeModal }) {
         </div>
         <div className="underline-title"></div>
         <form method="post" className="form" onSubmit={handleSubmit}>
-          <label htmlFor="firstName">First Name:</label>
+          <label htmlFor="companyName">Bedrijfsnaam:</label>
           <input
             type="text"
-            name="name"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            name="companyName"
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
             className="form-content"
             required
           />
           <div className="form-border"></div>
 
-          <label htmlFor="lastName">Last Name:</label>
+          <label htmlFor="adress">Adres:</label>
           <input
             type="text"
-            name="name"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            name="adress"
+            value={adress}
+            onChange={(e) => setAdress(e.target.value)}
             className="form-content"
             required
           />
           <div className="form-border"></div>
+          
           <label htmlFor="email">E-mail:</label>
           <input
             type="email"
@@ -70,12 +73,12 @@ export default function SupplierForm({ closeModal }) {
           />
           <div className="form-border"></div>
 
-          <label htmlFor="number">Age:</label>
+          <label htmlFor="contactPerson">Contact persoon:</label>
           <input
-            type="number"
-            name="number"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
+            type="text"
+            name="contactPerson"
+            value={contactPerson}
+            onChange={(e) => setContactPerson(e.target.value)}
             className="form-content"
             required
           />
@@ -90,7 +93,7 @@ export default function SupplierForm({ closeModal }) {
             required
           />
           <div className="form-border"></div>
-          <input id="submit-btn" type="submit" name="submit" value="Toevogen" />
+          <input id="submit-btn" type="submit" name="submit" value="Toevoegen" />
         </form>
       </div>
     </div>

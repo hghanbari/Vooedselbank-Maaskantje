@@ -37,7 +37,7 @@ export default function Customers({ setModal }) {
       <div className="header-content">
         <h4 className="header-title">Klanten</h4>
         <button className="header-button" onClick={() => setModal(true)}>
-          Klant Toevogen
+          Klant Toevoegen
         </button>
       </div>
       <table className="data-table">

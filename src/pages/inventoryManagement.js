@@ -37,7 +37,7 @@ export default function InventoryManagement({ setModal }) {
       <div className="header-content">
         <h4 className="header-title">Voorraad</h4>
         <button className="header-button" onClick={() => setModal(true)}>
-          Product Toevogen
+          Product Toevoegen
         </button>
       </div>
       <table className="data-table">
@@ -46,8 +46,8 @@ export default function InventoryManagement({ setModal }) {
             <th>Naam</th>
             <th>EAN</th>
             <th>Hoeveelheid</th>
-            <th>Sort</th>
-            <th>Prijs</th>
+            <th>Categorie</th>
+            <th>houdbaarheidsdatum</th>
           </tr>
         </thead>
         <tbody>
@@ -57,8 +57,8 @@ export default function InventoryManagement({ setModal }) {
                 <td>{user.productInfo.name}</td>
                 <td>{user.productInfo.ean}</td>
                 <td>{user.amount}</td>
-                <td>{user.email}</td>
-                <td>{user.phone}</td>
+                <td>{user.productInfo.catagoryDesc}</td>
+                <td>{user.bestByDate}</td>
               </tr>
             );
           })}
