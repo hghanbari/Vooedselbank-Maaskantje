@@ -103,7 +103,7 @@ body {
 
 .header-navbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
 }
 
 .header-navbar > a > span {

@@ -37,7 +37,7 @@ label {
 }
 
 .header-title {
-  color: #fbfbfb;
+  /* color: #fbfbfb; */
   display: flex;
   justify-content: center;
   margin: 0;

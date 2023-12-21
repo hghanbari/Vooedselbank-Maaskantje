@@ -27,9 +27,9 @@ export default function Header() {
   return (
     <div className="app-header">
       <div className="header-navbar">
-        <Link to="/profile">
+        {/* <Link to="/profile">
           <span className="material-symbols-outlined">account_circle</span>
-        </Link>
+        </Link> */}
         <Link onClick={handleRejectCookies}>
           <span className="material-symbols-outlined">logout</span>
         </Link>
