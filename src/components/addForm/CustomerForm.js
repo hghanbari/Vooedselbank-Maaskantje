@@ -2,8 +2,8 @@ import axios from "axios";
 import * as React from "react";
 import { useState, useEffect } from "react";
 
-export default function CustomerForm({ closeModalForm, store }) {
-  const { fetchCustomers } = store;
+export default function CustomerForm({ closeModalForm, customerStore }) {
+  const { fetchCustomers } = customerStore;
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");

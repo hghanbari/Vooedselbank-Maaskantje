@@ -2,7 +2,8 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 
-export default function SupplierEdit({ closeModalEdit }) {
+export default function SupplierEdit({ closeModalEdit, suppliersStore }) {
+  const { fetchSupplier } = suppliersStore;
   const [companyName, setCompanyName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
@@ -20,7 +21,11 @@ export default function SupplierEdit({ closeModalEdit }) {
         email: email,
       })
       .then((res) => {
-        closeModalEdit(false);
+        if (res.data.success) {
+          alert(res.data.message);
+          closeModalEdit(false);
+          fetchSupplier();
+        }
       })
       .catch((err) => console.log(err));
   };

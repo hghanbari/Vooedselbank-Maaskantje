@@ -3,8 +3,12 @@ import React from "react";
 import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 
-export default function Customers({ setModalForm, setEditModalForm, store }) {
-  const { customerList, fetchCustomers } = store;
+export default function Customers({
+  setModalForm,
+  setEditModalForm,
+  customerStore,
+}) {
+  const { customersList, fetchCustomers } = customerStore;
   const [currentItems, setCurrentItems] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
   const [pageCount, setPageCount] = useState(0);
@@ -29,22 +33,17 @@ export default function Customers({ setModalForm, setEditModalForm, store }) {
         .catch((err) => console.log(err));
     }
   };
-  const handleEdit = (e) => {
-    e.preventDefault();
-  };
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(customerList.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(customerList.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, customerList]);
+    setCurrentItems(customersList.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(customersList.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, customersList]);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % customerList.length;
+    const newOffset = (event.selected * itemsPerPage) % customersList.length;
     setItemOffset(newOffset);
   };
-
-  // fetchCustomers();
 
   return (
     <div className="body-content">

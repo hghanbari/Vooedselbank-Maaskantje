@@ -3,31 +3,44 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 
-export default function Suppliers({ setModalForm }) {
-  const [data, setData] = useState([]);
+export default function Suppliers({
+  setModalForm,
+  setEditModalForm,
+  suppliersStore,
+}) {
+  const { suppliersList, fetchSuppliers } = suppliersStore;
   const [currentItems, setCurrentItems] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
   const [pageCount, setPageCount] = useState(0);
   const itemsPerPage = 3;
 
-  useEffect(() => {
-    axios
-      .get("http://localhost/backend/json/supplierJson.php")
-      .then((res) => {
-        const myArray = Object.keys(res.data).map((key) => res.data[key]);
-        setData(myArray);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure?")) {
+      axios
+        .delete(
+          "http://localhost/backend/actions/delete/supplier.php?id=" + id,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          if (res.data.success) {
+            alert(res.data.message);
+            fetchSuppliers();
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  };
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(data.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(data.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, data]);
+    setCurrentItems(suppliersList.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(suppliersList.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, suppliersList]);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % data.length;
+    const newOffset = (event.selected * itemsPerPage) % suppliersList.length;
     setItemOffset(newOffset);
   };
 
@@ -47,6 +60,7 @@ export default function Suppliers({ setModalForm }) {
             <th>Address</th>
             <th>E-mail</th>
             <th>Phone</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -58,6 +72,19 @@ export default function Suppliers({ setModalForm }) {
                 <td>{user.adress}</td>
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
+                <td>
+                  <button
+                    className="in-table"
+                    onClick={() => setEditModalForm(true)}>
+                    <span className="material-symbols-outlined">edit</span>
+                  </button>
+
+                  <button
+                    className="in-table"
+                    onClick={handleDelete.bind(this, user.customerId)}>
+                    <span className="material-symbols-outlined">delete</span>
+                  </button>
+                </td>
               </tr>
             );
           })}

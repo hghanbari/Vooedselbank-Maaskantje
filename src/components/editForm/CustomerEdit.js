@@ -2,8 +2,8 @@ import * as React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-export default function CustomerEdit({ closeModalEdit, store }) {
-  const { fetchCustomers } = store;
+export default function CustomerEdit({ closeModalEdit, customerStore }) {
+  const { fetchCustomers } = customerStore;
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");

@@ -2,9 +2,10 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 
-export default function SupplierForm({ closeModal }) {
+export default function SupplierForm({ closeModalForm, suppliersStore }) {
+  const { fetchSupplier } = suppliersStore;
   const [companyName, setCompanyName] = useState("");
-  const [adress, setAdress] = useState("");
+  const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [contactPerson, setContactPerson] = useState("");
   const [email, setEmail] = useState("");
@@ -14,13 +15,17 @@ export default function SupplierForm({ closeModal }) {
     axios
       .post("http://localhost/backend/actions/add/supplier.php", {
         companyName: companyName,
-        adress: adress,
+        address: address,
         phone: phone,
         contactPerson: contactPerson,
         email: email,
       })
       .then((res) => {
-        closeModal(false);
+        if (res.data.success) {
+          alert(res.data.message);
+          closeModalForm(false);
+          fetchSupplier();
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -33,7 +38,7 @@ export default function SupplierForm({ closeModal }) {
           <button
             className="modal-close-button"
             onClick={() => {
-              closeModal(false);
+              closeModalForm(false);
             }}>
             X
           </button>
@@ -51,12 +56,12 @@ export default function SupplierForm({ closeModal }) {
           />
           <div className="form-border"></div>
 
-          <label htmlFor="adress">Adres:</label>
+          <label htmlFor="address">Addres:</label>
           <input
             type="text"
-            name="adress"
-            value={adress}
-            onChange={(e) => setAdress(e.target.value)}
+            name="address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
             className="form-content"
             required
           />

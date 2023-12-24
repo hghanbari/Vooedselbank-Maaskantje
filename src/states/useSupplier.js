@@ -1,28 +1,28 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const useCustomers = () => {
-  const [customerList, setCustomerList] = useState([], []);
+const useSupplier = () => {
+  const [suppliersList, setSuppliersList] = useState([], []);
   const [timestamp, setTimestamp] = useState(0);
 
   useEffect(() => {
     axios
-      .get("http://localhost/backend/json/customerJson.php")
+      .get("http://localhost/backend/json/supplierJson.php")
       .then((res) => {
         const myArray = Object.keys(res.data).map((key) => res.data[key]);
-        setCustomerList(myArray);
+        setSuppliersList(myArray);
       })
       .catch((err) => console.log(err));
   }, [timestamp]);
 
-  function fetchCustomers() {
+  function fetchSuppliers() {
     setTimestamp(new Date().getTime());
   }
 
   return {
-    customerList,
-    fetchCustomers,
+    suppliersList,
+    fetchSuppliers,
   };
 };
 
-export default useCustomers;
+export default useSupplier;

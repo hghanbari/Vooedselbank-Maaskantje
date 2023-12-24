@@ -20,10 +20,12 @@ import InventoryManagementEdit from "./components/editForm/InventoryManagementEd
 import "./styles/main.css";
 import Login from "./login";
 import Cookies from "js-cookie";
-import useCustomers from "./states/customers";
+import useCustomers from "./states/useCustomers";
+import useSupplier from "./states/useSupplier";
 
 function App() {
   const customerStore = useCustomers();
+  const suppliersStore = useSupplier();
   const [customerModalForm, setCustomerModalForm] = useState(false);
   const [packageModalForm, setPackageModalForm] = useState(false);
   const [supplierModalForm, setSupplierModalForm] = useState(false);
@@ -54,7 +56,7 @@ function App() {
                 path="/customers"
                 element={
                   <Customers
-                    store={customerStore}
+                    customerStore={customerStore}
                     setModalForm={setCustomerModalForm}
                     setEditModalForm={setCustomerModalEdit}
                   />
@@ -62,7 +64,13 @@ function App() {
               />
               <Route
                 path="/suppliers"
-                element={<Suppliers setModalForm={setSupplierModalForm} />}
+                element={
+                  <Suppliers
+                    suppliersStore={suppliersStore}
+                    setModalForm={setSupplierModalForm}
+                    setEditModalForm={setSupplierModalEdit}
+                  />
+                }
               />
               <Route
                 path="/packages"
@@ -87,13 +95,16 @@ function App() {
       )}
       {customerModalForm && (
         <CustomerForm
-          store={customerStore}
+          customerStore={customerStore}
           closeModalForm={setCustomerModalForm}
         />
       )}
       {packageModalForm && <PackageForm closeModalForm={setPackageModalForm} />}
       {supplierModalForm && (
-        <SupplierForm closeModalForm={setSupplierModalForm} />
+        <SupplierForm
+          closeModalForm={setSupplierModalForm}
+          suppliersStore={suppliersStore}
+        />
       )}
       {inventoryManagementModalForm && (
         <InventoryManagementForm
@@ -102,13 +113,16 @@ function App() {
       )}
       {customerModalEdit && (
         <CustomerEdit
-          store={customerStore}
+          customerStore={customerStore}
           closeModalEdit={setCustomerModalEdit}
         />
       )}
       {packageModalEdit && <PackageEdit closeModalEdit={setPackageModalEdit} />}
       {supplierModalEdit && (
-        <SupplierEdit closeModalEdit={setSupplierModalEdit} />
+        <SupplierEdit
+          closeModalEdit={setSupplierModalEdit}
+          suppliersStore={suppliersStore}
+        />
       )}
       {inventoryManagementModalEdit && (
         <InventoryManagementEdit
