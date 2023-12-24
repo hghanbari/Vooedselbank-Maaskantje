@@ -14,13 +14,14 @@ try {
     // Get customer data
     $query = $conn->prepare(
         'SELECT
-        customer.`customerId` AS custId, customer.`firstName`, customer.`middleName`, customer.`lastName`, customer.`email`, customer.`phone`, customer.`familyMemberAmount`, customer.`youngestPerson`,
+        customer.`customerId`, customer.`firstName`, customer.`middleName`, customer.`lastName`, customer.`email`, customer.`phone`, customer.`familyMemberAmount`, customer.`youngestPerson`,
         specifics.`specificId` AS specId, specifics.`desc`
         FROM customer
         LEFT JOIN customerSpecifics
         ON customer.`customerId` = customerSpecifics.`customerId`
         LEFT JOIN specifics
-        ON customerSpecifics.`specificId` = specifics.`specificId`'
+        ON customerSpecifics.`specificId` = specifics.`specificId`
+        ORDER BY customer.customerId DESC'
     );
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_ASSOC);

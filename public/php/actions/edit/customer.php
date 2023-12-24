@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once('../../functions.php');
 
 $conn = ConnectDB('root', '');
@@ -11,16 +12,20 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 try {
-    if (!CheckAuth(3, $conn)) {
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+    if (empty($_SESSION["login"])) {
+        echo json_encode(["success" => false, "message" => "User is not authorized"]);
         exit();
     }
 
+    $json = file_get_contents('php://input');
+
+    // Converts it into a PHP object
+    $input = json_decode($json);
+
     // Check for same email / phone
-    $stmt = 'SELECT `email`, `phone` FROM `customer` WHERE `email` = :email OR `phone` = :phone';
+    $stmt = 'SELECT `email`, `phone` FROM `customer` WHERE `email` = :email';
     $data = [
-        ':email' => $_POST['email'],
-        ':phone' => $_POST['phone']
+        ':email' => $input->email
     ];
     if (CheckIfExists($stmt, $data, $conn)) {
         echo "This email or phone already exists";
@@ -35,13 +40,13 @@ try {
     // Check what changed
     // Get default data
     $query = $conn->prepare('SELECT `firstName`, `lastName`, `email`, `phone`, `familyMemberAmount`, `youngestPerson` FROM `customer` WHERE `customerId` = :id');
-    $query->bindParam(':id', $_POST['id']);
+    $query->bindParam(':id', $input->id);
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
     $data = [
-        ':id' => $_POST['id'],
-        ':name' => $result[0]['firstName'],
+        ':id' => $input->id,
+        ':firstName' => $result[0]['firstName'],
         ':middleName' => isset($result[0]['middleName']) ? $result[0]['middleName'] : null,
         ':lastName' => $result[0]['lastName'],
         ':email' => $result[0]['email'],
@@ -51,7 +56,7 @@ try {
     ];
 
     // Update data
-    foreach ($_POST as $key=>$item) {
+    foreach ($input as $key => $item) {
         if ($item != '' && $key != 'specifics') {
             $data[":$key"] = $item;
         }
@@ -60,7 +65,7 @@ try {
     // Execute w/ correct data
     $query = $conn->prepare(
         'UPDATE `customer` SET
-        `firstName` = :name,
+        `firstName` = :firstName,
         `middleName` = :middleName,
         `lastName` = :lastName,
         `email` = :email,
@@ -72,21 +77,23 @@ try {
     $query->execute($data);
 
     // Check if specifics has changed
-    if (!empty($_POST['specifics'])) {
-        // Remove all specifics
-        $query = $conn->prepare('DELETE FROM `customerspecifics` WHERE `customerId` = :custId');
-        $query->bindParam(':custId', $_POST['id']);
-        $query->execute();
+    // if (!empty($_POST['specifics'])) {
+    //     // Remove all specifics
+    //     $query = $conn->prepare('DELETE FROM `customerspecifics` WHERE `customerId` = :custId');
+    //     $query->bindParam(':custId', $_POST['id']);
+    //     $query->execute();
 
-        foreach ($_POST['specifics'] as $item) {
-            $query = $conn->prepare('INSERT INTO `customerspecifics` (`customerId`, `specificId`) VALUE (:custId, :specId)');
-            $query->bindParam(':custId', $_POST['id']);
-            $query->bindParam(':specId', $item);
-            $query->execute();
-        }
-    }    
+    //     foreach ($_POST['specifics'] as $item) {
+    //         $query = $conn->prepare('INSERT INTO `customerspecifics` (`customerId`, `specificId`) VALUE (:custId, :specId)');
+    //         $query->bindParam(':custId', $_POST['id']);
+    //         $query->bindParam(':specId', $item);
+    //         $query->execute();
+    //     }
+    // }
+
+    echo json_encode(["success" => true, "message" => "Customer has been updated successfully"]);
 } catch (PDOException $e) {
-    echo "Error!: " . $e->getMessage();
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }
 
-header('Location: ' . $_SERVER['HTTP_REFERER']);
+// header('Location: ' . $_SERVER['HTTP_REFERER']);

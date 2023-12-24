@@ -8,7 +8,7 @@ $conn = ConnectDB("root", "");
 header('Access-Control-Allow-Origin: http://localhost:3000');
 header('Access-Control-Allow-Credentials: true');
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST, DELETE, OPTIONS");
+header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
@@ -35,27 +35,20 @@ try {
             session_start();
             $_SESSION["login"] = $result[0]["userId"];
 
-
-
             echo json_encode(['success' => true]);
             // Sent the user to the home page
 
         } else {
             // Create error cookie (incorrect password)
-
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            echo json_encode(['success' => false, 'message' => 'Incorrect password']);
             exit();
         }
     } else {
         // Create error cookie (incorrect email)
-
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        echo json_encode(['success' => false, 'message' => 'User not found']);
         exit();
     }
 } catch (PDOException $e) {
-    echo "Error!: " . $e->getMessage();
-
-    // Create error cookie
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
     exit();
 }

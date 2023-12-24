@@ -1,6 +1,7 @@
 <?php
 // Connect to db function
-function ConnectDB($user, $pass) {
+function ConnectDB($user, $pass)
+{
     $name = 'voedselbank_maaskantje';
     try {
         // The host is currently localhost
@@ -15,7 +16,8 @@ function ConnectDB($user, $pass) {
     }
 }
 
-function CheckAuth($minAuth, $conn) {
+function CheckAuth($minAuth, $conn)
+{
     $query = $conn->prepare('SELECT `auth` FROM `user` WHERE `userId` = :id');
     $query->bindParam(':id', $_SESSION['login']);
     $query->execute();
@@ -29,7 +31,8 @@ function CheckAuth($minAuth, $conn) {
     return false;
 }
 
-function CheckIfExists($stmt, $dataset, $conn) {
+function CheckIfExists($stmt, $dataset, $conn)
+{
     $query = $conn->prepare($stmt);
     $query->execute($dataset);
 
@@ -41,10 +44,13 @@ function CheckIfExists($stmt, $dataset, $conn) {
     return false;
 }
 
-function GenerateUUID() {
-    return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+function GenerateUUID()
+{
+    return sprintf(
+        '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
         // 32 bits for "time_low"
-        mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+        mt_rand(0, 0xffff),
+        mt_rand(0, 0xffff),
 
         // 16 bits for "time_mid"
         mt_rand(0, 0xffff),
@@ -56,6 +62,8 @@ function GenerateUUID() {
         mt_rand(0, 0x3fff) | 0x8000,
 
         // 48 bits for "node"
-        mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+        mt_rand(0, 0xffff),
+        mt_rand(0, 0xffff),
+        mt_rand(0, 0xffff)
     );
 }
