@@ -9,25 +9,24 @@ export default function PackageForm({ closeModal }) {
   const [customerData, setCustomerData] = useState([]);
   const [productData, setProductData] = useState([]);
 
-
   useEffect(() => {
     axios
-      .get("http://localhost/code/Vooedselbank-Maaskantje/public/php/json/customerJson.php")
+      .get("http://localhost/backend/json/customerJson.php")
       .then((res) => {
-        const customer = Object.keys(res.data).map(key => res.data[key]);
+        const customer = Object.keys(res.data).map((key) => res.data[key]);
         setCustomerData(customer);
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
 
   useEffect(() => {
     axios
-      .get("http://localhost/code/Vooedselbank-Maaskantje/public/php/json/productJson.php")
+      .get("http://localhost/backend/json/foodPacketJson.php")
       .then((res) => {
-        const productArr = Object.keys(res.data).map(key => res.data[key]);
+        const productArr = Object.keys(res.data).map((key) => res.data[key]);
         setProductData(productArr);
-        console.log(res.data);
+        console.log("Products", productArr);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -35,13 +34,16 @@ export default function PackageForm({ closeModal }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost/code/Vooedselbank-Maaskantje/public/php/actions/add/foodPacket.php", {
-        klant: klant,
-        product: product
-      },
-      {
-        withCredentials: true,
-      })
+      .post(
+        "http://localhost/backend/actions/add/foodPacket.php",
+        {
+          klant: klant,
+          product: product,
+        },
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         closeModal(false);
       })
@@ -68,13 +70,14 @@ export default function PackageForm({ closeModal }) {
             name="klant"
             value={klant}
             onChange={(e) => setKlant(e.target.value)}
-            className="form-content"
-          >
-          {customerData.map((klant) => {
-            return (
-              <option value={klant.custId}>{klant.firstName} {klant.lastName}</option>
-            );
-          })}
+            className="form-content">
+            {customerData.map((klant) => {
+              return (
+                <option key={klant.custId} value={klant.custId}>
+                  {klant.firstName} {klant.lastName}
+                </option>
+              );
+            })}
           </select>
           <div className="form-border"></div>
 
@@ -83,16 +86,22 @@ export default function PackageForm({ closeModal }) {
             name="product"
             value={product}
             onChange={(e) => setProduct(e.target.value)}
-            className="form-content"
-          >
-          {productData.map((product) => {
-            return (
-              <option value={product.ean}>{product.name}</option>
-            );
-          })}
+            className="form-content">
+            {productData.map((product) => {
+              return (
+                <option key={product.packetId} value={product.ean}>
+                  {product.name}
+                </option>
+              );
+            })}
           </select>
           <div className="form-border"></div>
-          <input id="submit-btn" type="submit" name="submit" value="Toevoegen" />
+          <input
+            id="submit-btn"
+            type="submit"
+            name="submit"
+            value="Toevoegen"
+          />
         </form>
       </div>
     </div>

@@ -2,7 +2,7 @@ import axios from "axios";
 import * as React from "react";
 import { useState, useEffect } from "react";
 
-export default function InventoryManagementForm({ closeModal }) {
+export default function InventoryManagementEdit({ closeModalEdit }) {
   const [product, setProduct] = useState("");
   const [delivery, setDelivery] = useState("");
   const [amount, setAmount] = useState(0);
@@ -13,13 +13,11 @@ export default function InventoryManagementForm({ closeModal }) {
   const [productData, setProductData] = useState([]);
   const [deliveryData, setDeliveryData] = useState([]);
 
-
-  
-    useEffect(() => {
+  useEffect(() => {
     axios
-      .get("http://localhost/code/Vooedselbank-Maaskantje/public/php/json/productDeliveryJson.php")
+      .get("http://localhost/backend/json/productDeliveryJson.php")
       .then((res) => {
-        const data = Object.keys(res.data).map(key => res.data[key]);
+        const data = Object.keys(res.data).map((key) => res.data[key]);
         setProductData(data[0]);
         setDeliveryData(data[1]);
         console.log(productData);
@@ -31,19 +29,22 @@ export default function InventoryManagementForm({ closeModal }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost/code/Vooedselbank-Maaskantje/public/php/actions/add/stock.php", {
-        // product: product,
-        delivery: delivery,
-        amount: amount,
-        bestByDate: bestByDate,
-        ean: ean
-        // supplierId: supplierId
-      },
-      {
-        withCredentials: true,
-      })
+      .post(
+        "http://localhost/backend/actions/add/stock.php",
+        {
+          // product: product,
+          delivery: delivery,
+          amount: amount,
+          bestByDate: bestByDate,
+          ean: ean,
+          // supplierId: supplierId
+        },
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => {
-        closeModal(false);
+        closeModalEdit(false);
       })
       .catch((err) => console.log(err));
   };
@@ -56,7 +57,7 @@ export default function InventoryManagementForm({ closeModal }) {
           <button
             className="modal-close-button"
             onClick={() => {
-              closeModal(false);
+              closeModalEdit(false);
             }}>
             X
           </button>
@@ -69,13 +70,10 @@ export default function InventoryManagementForm({ closeModal }) {
             value={ean}
             onChange={(e) => setEan(e.target.value)}
             className="form-content"
-            required
-          >
+            required>
             {productData.map((product) => {
-            return (
-              <option value={product.EAN}>{product.name}</option>
-            );
-          })}
+              return <option value={product.EAN}>{product.name}</option>;
+            })}
           </select>
           <div className="form-border"></div>
 
@@ -85,13 +83,14 @@ export default function InventoryManagementForm({ closeModal }) {
             value={delivery}
             onChange={(e) => setDelivery(e.target.value)}
             className="form-content"
-            required
-          >
+            required>
             {deliveryData.map((delivery) => {
-            return (
-              <option value={delivery.deliveryId}>{delivery.companyName} {delivery.deliveryDate}</option>
-            );
-          })}
+              return (
+                <option value={delivery.deliveryId}>
+                  {delivery.companyName} {delivery.deliveryDate}
+                </option>
+              );
+            })}
           </select>
           <div className="form-border"></div>
           <label htmlFor="amount">hoeveelheid:</label>
@@ -115,7 +114,12 @@ export default function InventoryManagementForm({ closeModal }) {
             required
           />
           <div className="form-border"></div>
-          <input id="submit-btn" type="submit" name="submit" value="Toevoegen" />
+          <input
+            id="submit-btn"
+            type="submit"
+            name="submit"
+            value="Toevoegen"
+          />
         </form>
       </div>
     </div>

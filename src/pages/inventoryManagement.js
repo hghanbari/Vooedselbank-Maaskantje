@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 
-export default function InventoryManagement({ setModal }) {
+export default function InventoryManagement({ setModalForm }) {
   const [data, setData] = useState([]);
   const [currentItems, setCurrentItems] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
@@ -12,9 +12,9 @@ export default function InventoryManagement({ setModal }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost/code/Vooedselbank-Maaskantje/public/php/json/stockJson.php")
+      .get("http://localhost/backend/json/stockJson.php")
       .then((res) => {
-        const myArray = Object.keys(res.data).map(key => res.data[key]);
+        const myArray = Object.keys(res.data).map((key) => res.data[key]);
         console.log(myArray);
         setData(myArray);
       })
@@ -36,7 +36,7 @@ export default function InventoryManagement({ setModal }) {
     <div className="body-content">
       <div className="header-content">
         <h4 className="header-title">Voorraad</h4>
-        <button className="header-button" onClick={() => setModal(true)}>
+        <button className="header-button" onClick={() => setModalForm(true)}>
           Product Toevoegen
         </button>
       </div>

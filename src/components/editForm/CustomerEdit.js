@@ -1,10 +1,9 @@
-import axios from "axios";
 import * as React from "react";
+import axios from "axios";
 import { useState, useEffect } from "react";
 
-
-
-export default function CustomerForm({ closeModal }) {
+export default function CustomerEdit({ closeModalEdit, store }) {
+  const { fetchCustomers } = store;
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -12,43 +11,44 @@ export default function CustomerForm({ closeModal }) {
   const [phone, setPhone] = useState("");
   const [famAmount, setFamAmount] = useState("");
   const [age, setAge] = useState("");
-
   const [data, setData] = useState([]);
   const [specifics, setSpecifics] = useState("");
 
-
-  
-    useEffect(() => {
-    axios
-      .get("http://localhost/code/Vooedselbank-Maaskantje/public/php/json/specificsJson.php")
-      .then((res) => {
-        const specificsArr = Object.keys(res.data).map(key => res.data[key]);
-        setData(specificsArr);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost/backend/json/.php")
+  //     .then((res) => {
+  //       const specificsArr = Object.keys(res.data).map((key) => res.data[key]);
+  //       setData(specificsArr);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
-      .post(
-        "http://localhost/code/Vooedselbank-Maaskantje/public/php/actions/add/customer.php",
+      .get(
+        "http://localhost/backend/actions/edit/customer.php",
         {
           email: email,
           firstName: firstName,
           middleName: middleName,
           lastName: lastName,
           phone: phone,
-          famAmount: famAmount,
+          amount: famAmount,
           age: age,
-          specifics: specifics
+          specifics: specifics,
         },
         {
           withCredentials: true,
         }
       )
       .then((res) => {
-        closeModal(false);
+        if (res.data.success) {
+          alert(res.data.message);
+          closeModalEdit(false);
+          fetchCustomers();
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -57,11 +57,11 @@ export default function CustomerForm({ closeModal }) {
     <div className="modal-background">
       <div className="modal-container">
         <div className="title">
-          <h4>Klant gegeven toevoegen</h4>
+          <h4>Klant gegeven wijzegen</h4>
           <button
             className="modal-close-button"
             onClick={() => {
-              closeModal(false);
+              closeModalEdit(false);
             }}>
             X
           </button>
@@ -79,14 +79,13 @@ export default function CustomerForm({ closeModal }) {
           />
           <div className="form-border"></div>
 
-          <label htmlFor="firstName">Middle Name:</label>
+          <label htmlFor="middleName">Middle Name:</label>
           <input
             type="text"
             name="name"
             value={middleName}
             onChange={(e) => setMiddleName(e.target.value)}
             className="form-content"
-            required
           />
           <div className="form-border"></div>
 
@@ -149,17 +148,21 @@ export default function CustomerForm({ closeModal }) {
             name="specifics"
             value={specifics}
             onChange={(e) => setSpecifics(e.target.value)}
-            className="form-content"
-          >
-          {data.map((specific) => {
-            return (
-              <option value={specific.specificId}>{specific.desc}</option>
-            );
-          })}
+            className="form-content">
+            {data.map((specific) => {
+              return (
+                <option value={specific.specificId}>{specific.desc}</option>
+              );
+            })}
           </select>
           <div className="form-border"></div>
-          
-          <input id="submit-btn" type="submit" name="submit" value="Toevoegen" />
+
+          <input
+            id="submit-btn"
+            type="submit"
+            name="submit"
+            value="Toevoegen"
+          />
         </form>
       </div>
     </div>

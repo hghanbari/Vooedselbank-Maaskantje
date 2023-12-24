@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import ReactPaginate from "react-paginate";
 
-export default function Packages({ setModal }) {
+export default function Packages({ setModalForm }) {
   const [data, setData] = useState([]);
   const [currentItems, setCurrentItems] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
@@ -12,9 +12,9 @@ export default function Packages({ setModal }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost/code/Vooedselbank-Maaskantje/public/php/json/foodPacketJson.php")
+      .get("http://localhost/backend/json/foodPacketJson.php")
       .then((res) => {
-        const myArray = Object.keys(res.data).map(key => res.data[key]);
+        const myArray = Object.keys(res.data).map((key) => res.data[key]);
         console.log(myArray);
         setData(myArray);
       })
@@ -36,7 +36,7 @@ export default function Packages({ setModal }) {
     <div className="body-content">
       <div className="header-content">
         <h4 className="header-title">Pakketten</h4>
-        <button className="header-button" onClick={() => setModal(true)}>
+        <button className="header-button" onClick={() => setModalForm(true)}>
           Pakket Toevoegen
         </button>
       </div>
@@ -54,7 +54,9 @@ export default function Packages({ setModal }) {
               <tr key={index}>
                 <td>{user.makeDate}</td>
                 <td>{user.pickUpDate}</td>
-                <td>{user.customer.customerName} {user.customer.customerLastName}</td>
+                <td>
+                  {user.customer.customerName} {user.customer.customerLastName}
+                </td>
               </tr>
             );
           })}

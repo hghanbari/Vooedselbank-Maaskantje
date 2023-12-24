@@ -3,40 +3,54 @@ import React from "react";
 import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 
-export default function Customers({ setModal }) {
-  const [data, setData] = useState([]);
+export default function Customers({ setModalForm, setEditModalForm, store }) {
+  const { customerList, fetchCustomers } = store;
   const [currentItems, setCurrentItems] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
   const [pageCount, setPageCount] = useState(0);
-  const itemsPerPage = 3;
 
-  useEffect(() => {
-    axios
-      .get("http://localhost/code/Vooedselbank-Maaskantje/public/php/json/customerJson.php")
-      .then((res) => {
-        const myArray = Object.keys(res.data).map(key => res.data[key]);
-        console.log(myArray);
-        setData(myArray);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  const itemsPerPage = 5;
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure?")) {
+      axios
+        .delete(
+          "http://localhost/backend/actions/delete/customer.php?id=" + id,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          if (res.data.success) {
+            alert(res.data.message);
+            fetchCustomers();
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+  const handleEdit = (e) => {
+    e.preventDefault();
+  };
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(data.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(data.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, data]);
+    setCurrentItems(customerList.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(customerList.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, customerList]);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % data.length;
+    const newOffset = (event.selected * itemsPerPage) % customerList.length;
     setItemOffset(newOffset);
   };
+
+  // fetchCustomers();
 
   return (
     <div className="body-content">
       <div className="header-content">
         <h4 className="header-title">Klanten</h4>
-        <button className="header-button" onClick={() => setModal(true)}>
+        <button className="header-button" onClick={() => setModalForm(true)}>
           Klant Toevoegen
         </button>
       </div>
@@ -47,6 +61,7 @@ export default function Customers({ setModal }) {
             <th>Last Name</th>
             <th>E-mail</th>
             <th>Phone</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -57,6 +72,19 @@ export default function Customers({ setModal }) {
                 <td>{user.lastName}</td>
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
+                <td>
+                  <button
+                    className="in-table"
+                    onClick={() => setEditModalForm(true)}>
+                    <span className="material-symbols-outlined">edit</span>
+                  </button>
+
+                  <button
+                    className="in-table"
+                    onClick={handleDelete.bind(this, user.customerId)}>
+                    <span className="material-symbols-outlined">delete</span>
+                  </button>
+                </td>
               </tr>
             );
           })}

@@ -237,13 +237,14 @@ body {
 .header-button {
   background: #7079f0;
   color: white;
-  border-radius: 0.9em;
+  border-radius: 15px;
   border: none;
   letter-spacing: 0.05em;
   box-shadow: inset 0 0 1.6em -0.6em #714da6;
   overflow: hidden;
   position: relative;
   height: 30px;
+  padding: 0 15px;
 }
 
 .header-button:hover {
@@ -256,14 +257,39 @@ body {
   box-shadow: 0.05em 0.05em #5566c2;
 }
 
+button.in-table {
+  background-color: transparent;
+  color: #888;
+  border-radius: 15px;
+  border: none;
+  font-size: 20px;
+  position: relative;
+  height: 30px;
+  width: 30px;
+}
+
+button.in-table > .material-symbols-outlined {
+  font-size: inherit;
+}
+
+button.in-table:hover {
+  color: #fb6340;
+}
+
 .data-table {
   font-size: 10px;
   border-spacing: 0;
+  table-layout: auto;
+  width: 100%;
 }
 
 .data-table td {
   padding: 10px 0;
   border-bottom: 1px solid #f6f9fc;
+}
+
+.data-table td:last-child {
+  max-width: 100px;
 }
 
 .data-table th {
@@ -301,7 +327,7 @@ body {
 .page-num {
   padding: 0;
   cursor: pointer;
-  border: 1px solid #8898aa;
+  border: 1px solid rgba(0, 0, 0, 0.35);
   font-weight: 400;
   border-radius: 50%;
   display: block;
@@ -313,7 +339,7 @@ body {
 
 .page-num:hover {
   background-color: #fb6340;
-  color: #8898aa;
+  color: #fff;
 }
 
 .active > a {

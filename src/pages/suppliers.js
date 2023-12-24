@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 
-export default function Suppliers({ setModal }) {
+export default function Suppliers({ setModalForm }) {
   const [data, setData] = useState([]);
   const [currentItems, setCurrentItems] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
@@ -12,9 +12,9 @@ export default function Suppliers({ setModal }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost/code/Vooedselbank-Maaskantje/public/php/json/supplierJson.php")
+      .get("http://localhost/backend/json/supplierJson.php")
       .then((res) => {
-        const myArray = Object.keys(res.data).map(key => res.data[key]);
+        const myArray = Object.keys(res.data).map((key) => res.data[key]);
         setData(myArray);
       })
       .catch((err) => console.log(err));
@@ -35,7 +35,7 @@ export default function Suppliers({ setModal }) {
     <div className="body-content">
       <div className="header-content">
         <h4 className="header-title">Leveranciers</h4>
-        <button className="header-button" onClick={() => setModal(true)}>
+        <button className="header-button" onClick={() => setModalForm(true)}>
           Leverancier Toevoegen
         </button>
       </div>

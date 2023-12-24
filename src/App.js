@@ -9,19 +9,30 @@ import Profile from "./pages/profile";
 import InventoryManagement from "./pages/inventoryManagement";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState } from "react";
-import CustomerForm from "./components/CustomerForm";
-import PackageForm from "./components/PackageForm";
-import SupplierForm from "./components/SupplierForm";
-import InventoryManagementForm from "./components/InventoryManagementForm";
+import CustomerForm from "./components/addForm/CustomerForm";
+import PackageForm from "./components/addForm/PackageForm";
+import SupplierForm from "./components/addForm/SupplierForm";
+import InventoryManagementForm from "./components/addForm/InventoryManagementForm";
+import CustomerEdit from "./components/editForm/CustomerEdit";
+import PackageEdit from "./components/editForm/PackageEdit";
+import SupplierEdit from "./components/editForm/SupplierEdit";
+import InventoryManagementEdit from "./components/editForm/InventoryManagementEdit";
 import "./styles/main.css";
 import Login from "./login";
 import Cookies from "js-cookie";
+import useCustomers from "./states/customers";
 
 function App() {
-  const [customerModal, setCustomerModal] = useState(false);
-  const [packageModal, setPackageModal] = useState(false);
-  const [supplierModal, setSupplierModal] = useState(false);
-  const [inventoryManagementModal, setInventoryManagementModal] =
+  const customerStore = useCustomers();
+  const [customerModalForm, setCustomerModalForm] = useState(false);
+  const [packageModalForm, setPackageModalForm] = useState(false);
+  const [supplierModalForm, setSupplierModalForm] = useState(false);
+  const [inventoryManagementModalForm, setInventoryManagementModalForm] =
+    useState(false);
+  const [customerModalEdit, setCustomerModalEdit] = useState(false);
+  const [packageModalEdit, setPackageModalEdit] = useState(false);
+  const [supplierModalEdit, setSupplierModalEdit] = useState(false);
+  const [inventoryManagementModalEdit, setInventoryManagementModalEdit] =
     useState(false);
   const session = Cookies.get("PHPSESSID");
 
@@ -41,20 +52,28 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route
                 path="/customers"
-                element={<Customers setModal={setCustomerModal} />}
+                element={
+                  <Customers
+                    store={customerStore}
+                    setModalForm={setCustomerModalForm}
+                    setEditModalForm={setCustomerModalEdit}
+                  />
+                }
               />
               <Route
                 path="/suppliers"
-                element={<Suppliers setModal={setSupplierModal} />}
+                element={<Suppliers setModalForm={setSupplierModalForm} />}
               />
               <Route
                 path="/packages"
-                element={<Packages setModal={setPackageModal} />}
+                element={<Packages setModalForm={setPackageModalForm} />}
               />
               <Route
                 path="/inventoryManagement"
                 element={
-                  <InventoryManagement setModal={setInventoryManagementModal} />
+                  <InventoryManagement
+                    setModalForm={setInventoryManagementModalForm}
+                  />
                 }
               />
             </Routes>
@@ -66,11 +85,35 @@ function App() {
           <Route path="/" element={<Login />} />
         </Routes>
       )}
-      {customerModal && <CustomerForm closeModal={setCustomerModal} />}
-      {packageModal && <PackageForm closeModal={setPackageModal} />}
-      {supplierModal && <SupplierForm closeModal={setSupplierModal} />}
-      {inventoryManagementModal && (
-        <InventoryManagementForm closeModal={setInventoryManagementModal} />
+      {customerModalForm && (
+        <CustomerForm
+          store={customerStore}
+          closeModalForm={setCustomerModalForm}
+        />
+      )}
+      {packageModalForm && <PackageForm closeModalForm={setPackageModalForm} />}
+      {supplierModalForm && (
+        <SupplierForm closeModalForm={setSupplierModalForm} />
+      )}
+      {inventoryManagementModalForm && (
+        <InventoryManagementForm
+          closeModalForm={setInventoryManagementModalForm}
+        />
+      )}
+      {customerModalEdit && (
+        <CustomerEdit
+          store={customerStore}
+          closeModalEdit={setCustomerModalEdit}
+        />
+      )}
+      {packageModalEdit && <PackageEdit closeModalEdit={setPackageModalEdit} />}
+      {supplierModalEdit && (
+        <SupplierEdit closeModalEdit={setSupplierModalEdit} />
+      )}
+      {inventoryManagementModalEdit && (
+        <InventoryManagementEdit
+          closeModalEdit={setInventoryManagementModalEdit}
+        />
       )}
     </BrowserRouter>
   );

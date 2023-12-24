@@ -1,16 +1,14 @@
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 
 export default function Header() {
   const handleRejectCookies = (e) => {
     e.preventDefault();
-
     axios
       .post(
-        "http://localhost/code/Vooedselbank-Maaskantje/public/php/account/logout.php",
+        "http://localhost/backend/account/logout.php",
         {},
         {
           withCredentials: true,
@@ -19,7 +17,6 @@ export default function Header() {
       .then((res) => {
         Cookies.remove("PHPSESSID");
         window.location.href = "/";
-        // navigate("/");
       })
       .catch((err) => console.log(err));
   };

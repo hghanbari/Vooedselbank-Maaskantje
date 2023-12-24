@@ -12,12 +12,12 @@ export default function SupplierForm({ closeModal }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost/code/Vooedselbank-Maaskantje/public/php/actions/add/supplier.php", {
+      .post("http://localhost/backend/actions/add/supplier.php", {
         companyName: companyName,
         adress: adress,
         phone: phone,
         contactPerson: contactPerson,
-        email: email
+        email: email,
       })
       .then((res) => {
         closeModal(false);
@@ -61,7 +61,7 @@ export default function SupplierForm({ closeModal }) {
             required
           />
           <div className="form-border"></div>
-          
+
           <label htmlFor="email">E-mail:</label>
           <input
             type="email"
@@ -93,7 +93,12 @@ export default function SupplierForm({ closeModal }) {
             required
           />
           <div className="form-border"></div>
-          <input id="submit-btn" type="submit" name="submit" value="Toevoegen" />
+          <input
+            id="submit-btn"
+            type="submit"
+            name="submit"
+            value="Toevoegen"
+          />
         </form>
       </div>
     </div>

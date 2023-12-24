@@ -2,13 +2,9 @@ import * as React from "react";
 import "./styles/login.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 export default function Login() {
-  const [updateCookies] = useCookies(["PHPSESSID"]);
-
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -42,7 +38,7 @@ export default function Login() {
     if (email !== "" && password !== "") {
       axios
         .post(
-          "http://localhost/code/Vooedselbank-Maaskantje/public/php/account/login.php",
+          "http://localhost/backend/account/login.php",
           {
             email: email,
             password: password,
@@ -53,9 +49,11 @@ export default function Login() {
           }
         )
         .then((res) => {
-          // updateCookies();
-          window.location.href = "/home";
-          // navigate("/home");
+          if (res.data.success) {
+            window.location.href = "/home";
+          } else {
+            setError(res.data.message);
+          }
         })
         .catch((err) => console.log(err));
     }
