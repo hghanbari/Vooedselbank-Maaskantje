@@ -9,6 +9,7 @@ export default function Customers({
   customerStore,
 }) {
   const { customersList, fetchCustomers } = customerStore;
+
   const [currentItems, setCurrentItems] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
   const [pageCount, setPageCount] = useState(0);

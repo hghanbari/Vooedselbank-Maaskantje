@@ -21,21 +21,28 @@ import "./styles/main.css";
 import Login from "./login";
 import Cookies from "js-cookie";
 import useCustomers from "./states/useCustomers";
-import useSupplier from "./states/useSupplier";
+import useSupplier from "./states/useSuppliers";
+import usePackages from "./states/usePackages";
+import useInventoryManagement from "./states/useInventoryManagement";
 
 function App() {
+  const packageStore = usePackages();
   const customerStore = useCustomers();
   const suppliersStore = useSupplier();
+  const inventoryManagementStore = useInventoryManagement();
+
   const [customerModalForm, setCustomerModalForm] = useState(false);
   const [packageModalForm, setPackageModalForm] = useState(false);
   const [supplierModalForm, setSupplierModalForm] = useState(false);
   const [inventoryManagementModalForm, setInventoryManagementModalForm] =
     useState(false);
+
   const [customerModalEdit, setCustomerModalEdit] = useState(false);
   const [packageModalEdit, setPackageModalEdit] = useState(false);
   const [supplierModalEdit, setSupplierModalEdit] = useState(false);
   const [inventoryManagementModalEdit, setInventoryManagementModalEdit] =
     useState(false);
+
   const session = Cookies.get("PHPSESSID");
 
   return (
@@ -50,7 +57,7 @@ function App() {
           <div className="app-body">
             <Header />
             <Routes>
-              <Route path="/home" element={<Home />} />
+              <Route path="/" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
               <Route
                 path="/customers"
@@ -74,13 +81,21 @@ function App() {
               />
               <Route
                 path="/packages"
-                element={<Packages setModalForm={setPackageModalForm} />}
+                element={
+                  <Packages
+                    setModalForm={setPackageModalForm}
+                    setEditModalForm={setPackageModalEdit}
+                    packageStore={packageStore}
+                  />
+                }
               />
               <Route
                 path="/inventoryManagement"
                 element={
                   <InventoryManagement
+                    setEditModalForm={setInventoryManagementModalEdit}
                     setModalForm={setInventoryManagementModalForm}
+                    inventoryManagementStore={inventoryManagementStore}
                   />
                 }
               />
@@ -99,7 +114,12 @@ function App() {
           closeModalForm={setCustomerModalForm}
         />
       )}
-      {packageModalForm && <PackageForm closeModalForm={setPackageModalForm} />}
+      {packageModalForm && (
+        <PackageForm
+          closeModalForm={setPackageModalForm}
+          packageStore={packageStore}
+        />
+      )}
       {supplierModalForm && (
         <SupplierForm
           closeModalForm={setSupplierModalForm}
@@ -109,6 +129,7 @@ function App() {
       {inventoryManagementModalForm && (
         <InventoryManagementForm
           closeModalForm={setInventoryManagementModalForm}
+          inventoryManagementStore={inventoryManagementStore}
         />
       )}
       {customerModalEdit && (
@@ -117,7 +138,12 @@ function App() {
           closeModalEdit={setCustomerModalEdit}
         />
       )}
-      {packageModalEdit && <PackageEdit closeModalEdit={setPackageModalEdit} />}
+      {packageModalEdit && (
+        <PackageEdit
+          closeModalEdit={setPackageModalEdit}
+          packageStore={packageStore}
+        />
+      )}
       {supplierModalEdit && (
         <SupplierEdit
           closeModalEdit={setSupplierModalEdit}
@@ -127,6 +153,7 @@ function App() {
       {inventoryManagementModalEdit && (
         <InventoryManagementEdit
           closeModalEdit={setInventoryManagementModalEdit}
+          inventoryManagementStore={inventoryManagementStore}
         />
       )}
     </BrowserRouter>

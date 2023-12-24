@@ -2,53 +2,58 @@ import axios from "axios";
 import * as React from "react";
 import { useState, useEffect } from "react";
 
-export default function PackageForm({ closeModal }) {
-  const [klant, setKlant] = useState("");
+export default function PackageForm({ closeModalForm, packageStore }) {
+  const { fetchPackages } = packageStore;
+  const [customer, setCustomer] = useState("");
   const [product, setProduct] = useState("");
 
   const [customerData, setCustomerData] = useState([]);
   const [productData, setProductData] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get("http://localhost/backend/json/customerJson.php")
-      .then((res) => {
-        const customer = Object.keys(res.data).map((key) => res.data[key]);
-        setCustomerData(customer);
-        // console.log(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost/backend/json/customerJson.php")
+  //     .then((res) => {
+  //       const customer = Object.keys(res.data).map((key) => res.data[key]);
+  //       setCustomerData(customer);
+  //       // console.log(res.data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
-  useEffect(() => {
-    axios
-      .get("http://localhost/backend/json/foodPacketJson.php")
-      .then((res) => {
-        const productArr = Object.keys(res.data).map((key) => res.data[key]);
-        setProductData(productArr);
-        console.log("Products", productArr);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost/backend/json/foodPacketJson.php")
+  //     .then((res) => {
+  //       const productArr = Object.keys(res.data).map((key) => res.data[key]);
+  //       setProductData(productArr);
+  //       console.log("Products", productArr);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    axios
-      .post(
-        "http://localhost/backend/actions/add/foodPacket.php",
-        {
-          klant: klant,
-          product: product,
-        },
-        {
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        closeModal(false);
-      })
-      .catch((err) => console.log(err));
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   axios
+  //     .post(
+  //       "http://localhost/backend/actions/add/foodPacket.php",
+  //       {
+  //         customer: customer,
+  //         product: product,
+  //       },
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     )
+  //     .then((res) => {
+  //       if (res.data.success) {
+  //         alert(res.data.message);
+  //         closeModalForm(false);
+  //         fetchPackages();
+  //       }
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   return (
     <div className="modal-background">
@@ -58,23 +63,23 @@ export default function PackageForm({ closeModal }) {
           <button
             className="modal-close-button"
             onClick={() => {
-              closeModal(false);
+              closeModalForm(false);
             }}>
             X
           </button>
         </div>
         <div className="underline-title"></div>
-        <form method="post" className="form" onSubmit={handleSubmit}>
-          <label htmlFor="klant">Klant:</label>
+        <form method="post" className="form">
+          <label htmlFor="customer">Klant:</label>
           <select
-            name="klant"
-            value={klant}
-            onChange={(e) => setKlant(e.target.value)}
+            name="customer"
+            value={customer}
+            onChange={(e) => setCustomer(e.target.value)}
             className="form-content">
-            {customerData.map((klant) => {
+            {customerData.map((customer) => {
               return (
-                <option key={klant.custId} value={klant.custId}>
-                  {klant.firstName} {klant.lastName}
+                <option key={customer.customerId} value={customer.customerId}>
+                  {customer.firstName} {customer.lastName}
                 </option>
               );
             })}

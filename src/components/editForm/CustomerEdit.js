@@ -1,6 +1,6 @@
 import * as React from "react";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function CustomerEdit({ closeModalEdit, customerStore }) {
   const { fetchCustomers } = customerStore;
@@ -11,7 +11,6 @@ export default function CustomerEdit({ closeModalEdit, customerStore }) {
   const [phone, setPhone] = useState("");
   const [famAmount, setFamAmount] = useState("");
   const [age, setAge] = useState("");
-  const [data, setData] = useState([]);
   const [specifics, setSpecifics] = useState("");
 
   // useEffect(() => {
@@ -149,11 +148,11 @@ export default function CustomerEdit({ closeModalEdit, customerStore }) {
             value={specifics}
             onChange={(e) => setSpecifics(e.target.value)}
             className="form-content">
-            {data.map((specific) => {
+            {/* {data.map((specific) => {
               return (
                 <option value={specific.specificId}>{specific.desc}</option>
               );
-            })}
+            })} */}
           </select>
           <div className="form-border"></div>
 
