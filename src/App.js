@@ -123,7 +123,7 @@ function App() {
         </main>
       ) : (
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/passwordReset" element={<PasswordReset />} />
         </Routes>
       )}

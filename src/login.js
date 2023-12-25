@@ -49,7 +49,7 @@ export default function Login() {
         )
         .then((res) => {
           if (res.data.success) {
-            window.location.href = "/home";
+            window.location.href = "/";
           } else {
             setError(res.data.message);
           }
