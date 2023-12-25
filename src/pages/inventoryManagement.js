@@ -74,6 +74,7 @@ export default function InventoryManagement({
             <th>Hoeveelheid</th>
             <th>Categorie</th>
             <th>houdbaarheidsdatum</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>

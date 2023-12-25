@@ -1,13 +1,13 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 
-export default function Packages({
+export default function UserManager({
   setModalForm,
   setEditModalForm,
-  packageStore,
+  userStore,
 }) {
-  const { packagesList, fetchPackages } = packageStore;
+  const { usersList, fetchUsers } = userStore;
 
   const [currentItems, setCurrentItems] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
@@ -15,30 +15,16 @@ export default function Packages({
 
   const itemsPerPage = 5;
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost/backend/json/foodPacketJson.php")
-  //     .then((res) => {
-  //       const myArray = Object.keys(res.data).map((key) => res.data[key]);
-  //       console.log(myArray);
-  //       setData(myArray);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
-
   const handleDelete = (id) => {
     if (window.confirm("Are you sure?")) {
       axios
-        .delete(
-          "http://localhost/backend/actions/delete/customer.php?id=" + id,
-          {
-            withCredentials: true,
-          }
-        )
+        .delete("http://localhost/backend/actions/delete/user.php?id=" + id, {
+          withCredentials: true,
+        })
         .then((res) => {
           if (res.data.success) {
             alert(res.data.message);
-            fetchPackages();
+            fetchUsers();
           }
         })
         .catch((err) => console.log(err));
@@ -47,29 +33,30 @@ export default function Packages({
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(packagesList.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(packagesList.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, packagesList]);
+    setCurrentItems(usersList.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(usersList.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, usersList]);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % packagesList.length;
+    const newOffset = (event.selected * itemsPerPage) % usersList.length;
     setItemOffset(newOffset);
   };
 
   return (
     <div className="body-content">
       <div className="header-content">
-        <h4 className="header-title">Pakketten</h4>
+        <h4 className="header-title">Useren</h4>
         <button className="header-button" onClick={() => setModalForm(true)}>
-          Pakket Toevoegen
+          User Toevoegen
         </button>
       </div>
       <table className="data-table">
         <thead className="table-header">
           <tr>
-            <th>Make Date</th>
-            <th>Pick Up Date</th>
-            <th>Customer Name</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>E-mail</th>
+            <th>Phone</th>
             <th></th>
           </tr>
         </thead>
@@ -77,12 +64,10 @@ export default function Packages({
           {currentItems.map((user, index) => {
             return (
               <tr key={index}>
-                <td>{user.makeDate}</td>
-                <td>{user.pickUpDate}</td>
-                <td>
-                  {/* {user.customer.customerFirstName}
-                  {user.customer.customerLastName} */}
-                </td>
+                <td>{user.firstName}</td>
+                <td>{user.lastName}</td>
+                <td>{user.email}</td>
+                <td>{user.phone}</td>
                 <td>
                   <button
                     className="in-table"
@@ -92,7 +77,7 @@ export default function Packages({
 
                   <button
                     className="in-table"
-                    onClick={handleDelete.bind(this, user.customerId)}>
+                    onClick={handleDelete.bind(this, user.userId)}>
                     <span className="material-symbols-outlined">delete</span>
                   </button>
                 </td>

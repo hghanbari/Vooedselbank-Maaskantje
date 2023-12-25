@@ -2,7 +2,7 @@ import axios from "axios";
 import * as React from "react";
 import { useState, useEffect } from "react";
 
-export default function InventoryManagementForm({ closeModal }) {
+export default function InventoryManagementForm({ closeModalForm }) {
   const [product, setProduct] = useState("");
   const [delivery, setDelivery] = useState("");
   const [amount, setAmount] = useState(0);
@@ -44,7 +44,7 @@ export default function InventoryManagementForm({ closeModal }) {
         }
       )
       .then((res) => {
-        closeModal(false);
+        closeModalForm(false);
       })
       .catch((err) => console.log(err));
   };
@@ -57,7 +57,7 @@ export default function InventoryManagementForm({ closeModal }) {
           <button
             className="modal-close-button"
             onClick={() => {
-              closeModal(false);
+              closeModalForm(false);
             }}>
             X
           </button>

@@ -1,3 +1,9 @@
+import "./styles/main.css";
+import Cookies from "js-cookie";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useState } from "react";
+import Login from "./login";
+import PasswordReset from "./passwordReset";
 import Header from "./header";
 import Sidebar from "./sidebar";
 import Footer from "./footer";
@@ -6,38 +12,40 @@ import Customers from "./pages/customers";
 import Suppliers from "./pages/suppliers";
 import Packages from "./pages/packages";
 import Profile from "./pages/profile";
+import UserManager from "./pages/userManager";
 import InventoryManagement from "./pages/inventoryManagement";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useState } from "react";
 import CustomerForm from "./components/addForm/CustomerForm";
+import UserManagerForm from "./components/addForm/UserManagerForm";
 import PackageForm from "./components/addForm/PackageForm";
 import SupplierForm from "./components/addForm/SupplierForm";
 import InventoryManagementForm from "./components/addForm/InventoryManagementForm";
 import CustomerEdit from "./components/editForm/CustomerEdit";
 import PackageEdit from "./components/editForm/PackageEdit";
 import SupplierEdit from "./components/editForm/SupplierEdit";
+import UserManagerEdit from "./components/editForm/UserManagerEdit";
 import InventoryManagementEdit from "./components/editForm/InventoryManagementEdit";
-import "./styles/main.css";
-import Login from "./login";
-import Cookies from "js-cookie";
 import useCustomers from "./states/useCustomers";
 import useSupplier from "./states/useSuppliers";
 import usePackages from "./states/usePackages";
+import useUsers from "./states/useUsers";
 import useInventoryManagement from "./states/useInventoryManagement";
 
 function App() {
   const packageStore = usePackages();
+  const userStore = useUsers();
   const customerStore = useCustomers();
   const suppliersStore = useSupplier();
   const inventoryManagementStore = useInventoryManagement();
 
   const [customerModalForm, setCustomerModalForm] = useState(false);
+  const [userModalForm, setUserModalForm] = useState(false);
   const [packageModalForm, setPackageModalForm] = useState(false);
   const [supplierModalForm, setSupplierModalForm] = useState(false);
   const [inventoryManagementModalForm, setInventoryManagementModalForm] =
     useState(false);
 
   const [customerModalEdit, setCustomerModalEdit] = useState(false);
+  const [userModalEdit, setUserModalEdit] = useState(false);
   const [packageModalEdit, setPackageModalEdit] = useState(false);
   const [supplierModalEdit, setSupplierModalEdit] = useState(false);
   const [inventoryManagementModalEdit, setInventoryManagementModalEdit] =
@@ -59,6 +67,16 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
+              <Route
+                path="/userManager"
+                element={
+                  <UserManager
+                    userStore={userStore}
+                    setModalForm={setCustomerModalForm}
+                    setEditModalForm={setCustomerModalEdit}
+                  />
+                }
+              />
               <Route
                 path="/customers"
                 element={
@@ -105,13 +123,20 @@ function App() {
         </main>
       ) : (
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/passwordReset" element={<PasswordReset />} />
         </Routes>
       )}
       {customerModalForm && (
         <CustomerForm
           customerStore={customerStore}
           closeModalForm={setCustomerModalForm}
+        />
+      )}
+      {userModalForm && (
+        <UserManagerForm
+          userStore={userStore}
+          closeModalForm={setUserModalForm}
         />
       )}
       {packageModalForm && (
@@ -142,6 +167,12 @@ function App() {
         <PackageEdit
           closeModalEdit={setPackageModalEdit}
           packageStore={packageStore}
+        />
+      )}
+      {userModalEdit && (
+        <UserManagerEdit
+          closeModalEdit={setUserModalEdit}
+          userStore={userStore}
         />
       )}
       {supplierModalEdit && (

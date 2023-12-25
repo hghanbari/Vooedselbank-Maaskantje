@@ -81,7 +81,7 @@ export default function Suppliers({
 
                   <button
                     className="in-table"
-                    onClick={handleDelete.bind(this, user.customerId)}>
+                    onClick={handleDelete.bind(this, user.supplierId)}>
                     <span className="material-symbols-outlined">delete</span>
                   </button>
                 </td>

@@ -3,9 +3,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export default function Login() {
+export default function PasswordReset() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [msg, setMas] = useState("");
 
@@ -25,22 +24,14 @@ export default function Login() {
           setError("Username has left blank");
         }
         break;
-      case "password":
-        setError("");
-        setPassword(e.target.value);
-        if (e.target.value === "") {
-          setError("Password has left blank");
-        }
-        break;
       default:
     }
-    if (email !== "" && password !== "") {
+    if (email !== "") {
       axios
         .post(
-          "http://localhost/backend/account/login.php",
+          "http://localhost/backend/account/.php",
           {
             email: email,
-            password: password,
           },
 
           {
@@ -49,7 +40,7 @@ export default function Login() {
         )
         .then((res) => {
           if (res.data.success) {
-            window.location.href = "/home";
+            window.location.href = "/login";
           } else {
             setError(res.data.message);
           }
@@ -66,15 +57,15 @@ export default function Login() {
         <span></span>
       </div>
       <header className="login-header">
-        <h1 className="header-title">Welkom!</h1>
+        <h1 className="header-title">Welkoom!</h1>
         <p className="header-Paragraph">
-          Log in met uw gebruikersnaam en wachtwoord.
+          Bent u uw wachtwoord vergeten, vul dan onderstaand formulier in.
         </p>
       </header>
       <div className="card">
         <div id="card-content">
           <div id="card-title">
-            <h2>LOGIN</h2>
+            <h2>Password Reset</h2>
             <p>
               {error !== "" ? (
                 <span className="error">{error}</span>
@@ -97,21 +88,10 @@ export default function Login() {
               required
             />
             <div className="form-border"></div>
-            <label htmlFor="user-password">&nbsp;Password</label>
-            <input
-              id="user-password"
-              className="form-content"
-              type="password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <div className="form-border"></div>
-            <Link to="/passwordReset">
-              <legend className="forgot-pass">Forgot password?</legend>
+            <Link to="/login">
+              <legend className="forgot-pass">Login</legend>
             </Link>
-            <input id="submit-btn" type="submit" name="submit" value="LOGIN" />
+            <input id="submit-btn" type="submit" name="submit" value="Send" />
           </form>
         </div>
       </div>

@@ -42,6 +42,14 @@ export default function Sidebar() {
                 <span>Voorraadbeheer</span>
               </Link>
             </li>
+            <li>
+              <Link to="/UserManager">
+                <span className="material-symbols-outlined">
+                  <span class="material-symbols-outlined">manage_accounts</span>
+                </span>
+                <span>Userbeheer</span>
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
