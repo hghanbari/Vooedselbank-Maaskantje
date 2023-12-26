@@ -10,7 +10,6 @@ export default function Profile() {
       .get("http://localhost/backend/json/userJson.php")
       .then((res) => {
         const myArray = Object.keys(res.data).map((key) => res.data[key]);
-        console.log(res.data);
         setData(myArray);
       })
       .catch((err) => console.log(err));
@@ -26,10 +25,11 @@ export default function Profile() {
         <thead className="table-header">
           <tr>
             <th>First Name</th>
+            <th>Middle Name</th>
             <th>Last Name</th>
-            <th>Adress</th>
-            <th>Phone</th>
+            <th>Address</th>
             <th>E-mail</th>
+            <th>Phone</th>
           </tr>
         </thead>
         <tbody>
@@ -37,6 +37,7 @@ export default function Profile() {
             return (
               <tr key={index}>
                 <td>{user.firstName}</td>
+                <td>{user.middleName}</td>
                 <td>{user.lastName}</td>
                 <td>{user.adress}</td>
                 <td>{user.email}</td>

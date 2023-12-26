@@ -13,7 +13,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 try {
     $query = $conn->prepare(
         'SELECT
-        user.`userId`, user.`firstName`, user.`lastName`, user.`email`, user.`phone`, user.`adress`, user.`auth`
+        user.`userId`, user.`firstName`, user.`middleName`,user.`lastName`, user.`email`, user.`phone`, user.`adress`, user.`auth`
         FROM `user`'
     );
     $query->execute();
@@ -26,6 +26,7 @@ try {
             $data[$user['userId']] = [
                 'userId' => $user['userId'],
                 'firstName' => $user['firstName'],
+                'middleName' => $user['middleName'],
                 'lastName' => $user['lastName'],
                 'email' => $user['email'],
                 'phone' => $user['phone'],

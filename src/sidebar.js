@@ -45,7 +45,9 @@ export default function Sidebar() {
             <li>
               <Link to="/UserManager">
                 <span className="material-symbols-outlined">
-                  <span class="material-symbols-outlined">manage_accounts</span>
+                  <span className="material-symbols-outlined">
+                    manage_accounts
+                  </span>
                 </span>
                 <span>Userbeheer</span>
               </Link>
