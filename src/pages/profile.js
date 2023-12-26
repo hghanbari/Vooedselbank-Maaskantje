@@ -2,8 +2,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function Profile() {
+export default function Profile({ setEditModalForm }) {
   const [data, setData] = useState([]);
+  // const { profile } = profileStore;
 
   useEffect(() => {
     axios
@@ -19,7 +20,11 @@ export default function Profile() {
     <div className="body-content">
       <div className="header-content">
         <h4 className="header-title">profile</h4>
-        <button className="header-button">profile wijzigen</button>
+        <button
+          className="header-button"
+          onClick={() => setEditModalForm(true)}>
+          profile wijzigen
+        </button>
       </div>
       <table className="data-table">
         <thead className="table-header">

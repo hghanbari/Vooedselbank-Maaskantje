@@ -20,6 +20,7 @@ import PackageForm from "./components/addForm/PackageForm";
 import SupplierForm from "./components/addForm/SupplierForm";
 import InventoryManagementForm from "./components/addForm/InventoryManagementForm";
 import CustomerEdit from "./components/editForm/CustomerEdit";
+import ProfileEdit from "./components/editForm/ProfileEdit";
 import PackageEdit from "./components/editForm/PackageEdit";
 import SupplierEdit from "./components/editForm/SupplierEdit";
 import UserManagerEdit from "./components/editForm/UserManagerEdit";
@@ -29,9 +30,11 @@ import useSupplier from "./states/useSuppliers";
 import usePackages from "./states/usePackages";
 import useUsers from "./states/useUsers";
 import useInventoryManagement from "./states/useInventoryManagement";
+// import useProfile from "./states/useProfile";
 
 function App() {
   const packageStore = usePackages();
+  // const profileStore = useProfile();
   const userStore = useUsers();
   const customerStore = useCustomers();
   const suppliersStore = useSupplier();
@@ -44,6 +47,7 @@ function App() {
   const [inventoryManagementModalForm, setInventoryManagementModalForm] =
     useState(false);
 
+  const [profileModalEdit, setProfileModalEdit] = useState(false);
   const [customerModalEdit, setCustomerModalEdit] = useState(false);
   const [userModalEdit, setUserModalEdit] = useState(false);
   const [packageModalEdit, setPackageModalEdit] = useState(false);
@@ -66,7 +70,15 @@ function App() {
             <Header />
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/profile" element={<Profile />} />
+              <Route
+                path="/profile"
+                element={
+                  <Profile
+                    setEditModalForm={setProfileModalEdit}
+                    // profileStore={profileStore}
+                  />
+                }
+              />
               <Route
                 path="/userManager"
                 element={
@@ -161,6 +173,12 @@ function App() {
         <CustomerEdit
           customerStore={customerStore}
           closeModalEdit={setCustomerModalEdit}
+        />
+      )}
+      {profileModalEdit && (
+        <ProfileEdit
+          // profileStore={profileStore}
+          closeModalEdit={setProfileModalEdit}
         />
       )}
       {packageModalEdit && (
