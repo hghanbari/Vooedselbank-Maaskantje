@@ -69,7 +69,7 @@ export default function Suppliers({
               <tr key={index}>
                 <td>{user.companyName}</td>
                 <td>{user.contactName}</td>
-                <td>{user.adress}</td>
+                <td>{user.address}</td>
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
                 <td>

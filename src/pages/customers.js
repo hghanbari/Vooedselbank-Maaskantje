@@ -4,7 +4,7 @@ import ReactPaginate from "react-paginate";
 
 export default function Customers({
   setModalForm,
-  setEditModalForm,
+  showEditModal,
   customerStore,
 }) {
   const { customersList, fetchCustomers } = customerStore;
@@ -34,6 +34,10 @@ export default function Customers({
     }
   };
 
+  const handleEdit = (id) => {
+    showEditModal(id);
+  };
+
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
     setCurrentItems(customersList.slice(itemOffset, endOffset));
@@ -44,7 +48,7 @@ export default function Customers({
     const newOffset = (event.selected * itemsPerPage) % customersList.length;
     setItemOffset(newOffset);
   };
-  console.log(customersList);
+
   return (
     <div className="body-content">
       <div className="header-content">
@@ -76,7 +80,7 @@ export default function Customers({
                 <td>
                   <button
                     className="in-table"
-                    onClick={() => setEditModalForm(true)}>
+                    onClick={handleEdit.bind(this, user.customerId)}>
                     <span className="material-symbols-outlined">edit</span>
                   </button>
 

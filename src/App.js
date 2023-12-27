@@ -48,7 +48,7 @@ function App() {
     useState(false);
 
   const [profileModalEdit, setProfileModalEdit] = useState(false);
-  const [customerModalEdit, setCustomerModalEdit] = useState(false);
+  const [editCustomer, setEditCustomer] = useState(0);
   const [userModalEdit, setUserModalEdit] = useState(false);
   const [packageModalEdit, setPackageModalEdit] = useState(false);
   const [supplierModalEdit, setSupplierModalEdit] = useState(false);
@@ -89,7 +89,7 @@ function App() {
                   <UserManager
                     userStore={userStore}
                     setModalForm={setCustomerModalForm}
-                    setEditModalForm={setCustomerModalEdit}
+                    setEditModalForm={setEditCustomer}
                   />
                 }
               />
@@ -99,7 +99,7 @@ function App() {
                   <Customers
                     customerStore={customerStore}
                     setModalForm={setCustomerModalForm}
-                    setEditModalForm={setCustomerModalEdit}
+                    showEditModal={setEditCustomer}
                   />
                 }
               />
@@ -173,10 +173,11 @@ function App() {
           inventoryManagementStore={inventoryManagementStore}
         />
       )}
-      {customerModalEdit && (
+      {editCustomer !== 0 && (
         <CustomerEdit
           customerStore={customerStore}
-          closeModalEdit={setCustomerModalEdit}
+          id={editCustomer}
+          closeModal={() => setEditCustomer(0)}
         />
       )}
       {profileModalEdit && (

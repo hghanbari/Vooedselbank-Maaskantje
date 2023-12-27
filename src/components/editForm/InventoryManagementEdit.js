@@ -20,8 +20,6 @@ export default function InventoryManagementEdit({ closeModalEdit }) {
         const data = Object.keys(res.data).map((key) => res.data[key]);
         setProductData(data[0]);
         setDeliveryData(data[1]);
-        console.log(productData);
-        console.log(deliveryData);
       })
       .catch((err) => console.log(err));
   }, []);

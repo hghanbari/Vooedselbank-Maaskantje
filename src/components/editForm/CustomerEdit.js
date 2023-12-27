@@ -1,7 +1,7 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-export default function CustomerEdit({ closeModalEdit, customerStore }) {
+export default function CustomerEdit({ id, closeModal, customerStore }) {
   const { fetchCustomers } = customerStore;
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
@@ -13,15 +13,16 @@ export default function CustomerEdit({ closeModalEdit, customerStore }) {
   const [age, setAge] = useState("");
   const [specifics, setSpecifics] = useState("");
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost/backend/json/.php")
-  //     .then((res) => {
-  //       const specificsArr = Object.keys(res.data).map((key) => res.data[key]);
-  //       setData(specificsArr);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost/backend/json/customerJson.php?id=" + id, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setFirstName(res.data.firstName);
+      })
+      .catch((err) => console.log(err));
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,6 +30,7 @@ export default function CustomerEdit({ closeModalEdit, customerStore }) {
       .get(
         "http://localhost/backend/actions/edit/customer.php",
         {
+          id: id,
           email: email,
           firstName: firstName,
           middleName: middleName,
@@ -46,7 +48,7 @@ export default function CustomerEdit({ closeModalEdit, customerStore }) {
       .then((res) => {
         if (res.data.success) {
           alert(res.data.message);
-          closeModalEdit(false);
+          closeModal();
           fetchCustomers();
         }
       })
@@ -61,7 +63,7 @@ export default function CustomerEdit({ closeModalEdit, customerStore }) {
           <button
             className="modal-close-button"
             onClick={() => {
-              closeModalEdit(false);
+              closeModal();
             }}>
             X
           </button>

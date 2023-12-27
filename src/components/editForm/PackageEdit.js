@@ -24,7 +24,6 @@ export default function PackageEdit({ closeModalEdit }) {
       .then((res) => {
         const productArr = Object.keys(res.data).map((key) => res.data[key]);
         setProductData(productArr);
-        console.log("Products", productArr);
       })
       .catch((err) => console.log(err));
   }, []);

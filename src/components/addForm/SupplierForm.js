@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 
 export default function SupplierForm({ closeModalForm, suppliersStore }) {
-  const { fetchSupplier } = suppliersStore;
+  const { fetchSuppliers } = suppliersStore;
   const [companyName, setCompanyName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
@@ -13,18 +13,24 @@ export default function SupplierForm({ closeModalForm, suppliersStore }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost/backend/actions/add/supplier.php", {
-        companyName: companyName,
-        address: address,
-        phone: phone,
-        contactPerson: contactPerson,
-        email: email,
-      })
+      .post(
+        "http://localhost/backend/actions/add/supplier.php",
+        {
+          companyName: companyName,
+          address: address,
+          phone: phone,
+          contactPerson: contactPerson,
+          email: email,
+        },
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         if (res.data.success) {
           alert(res.data.message);
           closeModalForm(false);
-          fetchSupplier();
+          fetchSuppliers();
         }
       })
       .catch((err) => console.log(err));
