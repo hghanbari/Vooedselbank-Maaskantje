@@ -3,7 +3,15 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-export default function Header() {
+export default function Header({
+  customerStore,
+  inventoryManagementStore,
+  packageStore,
+}) {
+  const { customersList } = customerStore;
+  const { inventoryManagementList } = inventoryManagementStore;
+  const { packagesList } = packageStore;
+
   const handleRejectCookies = (e) => {
     e.preventDefault();
     axios
@@ -20,6 +28,9 @@ export default function Header() {
       })
       .catch((err) => console.log(err));
   };
+  const packageCount = Object.keys(packagesList).length;
+  const inventoryManagementCount = Object.keys(inventoryManagementList).length;
+  const customerCount = Object.keys(customersList).length;
 
   return (
     <div className="app-header">
@@ -36,7 +47,7 @@ export default function Header() {
           <div>
             <h3>
               <span>Antal Pakketen</span>
-              <span>25</span>
+              <span>{packageCount}</span>
             </h3>
             <div className="circle-icon red">
               <span className="material-symbols-outlined ">
@@ -56,7 +67,7 @@ export default function Header() {
           <div>
             <h3>
               <span>Antal Klanten</span>
-              <span>25</span>
+              <span>{customerCount}</span>
             </h3>
             <div className="circle-icon blue">
               <span className="material-symbols-outlined ">data_usage</span>
@@ -74,7 +85,7 @@ export default function Header() {
           <div>
             <h3>
               <span>Voorraad</span>
-              <span>780</span>
+              <span>{inventoryManagementCount}</span>
             </h3>
             <div className="circle-icon yellow">
               <span className="material-symbols-outlined ">

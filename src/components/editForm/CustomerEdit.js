@@ -6,6 +6,7 @@ export default function CustomerEdit({ closeModalEdit, customerStore }) {
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [famAmount, setFamAmount] = useState("");
@@ -34,6 +35,7 @@ export default function CustomerEdit({ closeModalEdit, customerStore }) {
           lastName: lastName,
           phone: phone,
           amount: famAmount,
+          address: address,
           age: age,
           specifics: specifics,
         },
@@ -129,7 +131,16 @@ export default function CustomerEdit({ closeModalEdit, customerStore }) {
             required
           />
           <div className="form-border"></div>
-
+          <label htmlFor="text">Address:</label>
+          <input
+            type="text"
+            name="text"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            className="form-content"
+            required
+          />
+          <div className="form-border"></div>
           <label htmlFor="number">Family members:</label>
           <input
             type="number"

@@ -67,7 +67,11 @@ function App() {
           />
           <Sidebar />
           <div className="app-body">
-            <Header />
+            <Header
+              customerStore={customerStore}
+              inventoryManagementStore={inventoryManagementStore}
+              packageStore={packageStore}
+            />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route

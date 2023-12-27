@@ -44,7 +44,7 @@ export default function Customers({
     const newOffset = (event.selected * itemsPerPage) % customersList.length;
     setItemOffset(newOffset);
   };
-
+  console.log(customersList);
   return (
     <div className="body-content">
       <div className="header-content">
@@ -60,6 +60,7 @@ export default function Customers({
             <th>Last Name</th>
             <th>E-mail</th>
             <th>Phone</th>
+            <th>Address</th>
             <th></th>
           </tr>
         </thead>
@@ -71,6 +72,7 @@ export default function Customers({
                 <td>{user.lastName}</td>
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
+                <td>{user.address}</td>
                 <td>
                   <button
                     className="in-table"

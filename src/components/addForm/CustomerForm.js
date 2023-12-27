@@ -9,6 +9,7 @@ export default function CustomerForm({ closeModalForm, customerStore }) {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
   const [famAmount, setFamAmount] = useState("");
   const [age, setAge] = useState("");
   const [data, setData] = useState([]);
@@ -35,6 +36,7 @@ export default function CustomerForm({ closeModalForm, customerStore }) {
           middleName: middleName,
           lastName: lastName,
           phone: phone,
+          address: address,
           amount: famAmount,
           age: age,
           specifics: specifics,
@@ -131,7 +133,16 @@ export default function CustomerForm({ closeModalForm, customerStore }) {
             required
           />
           <div className="form-border"></div>
-
+          <label htmlFor="number">Address:</label>
+          <input
+            type="text"
+            name="text"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            className="form-content"
+            required
+          />
+          <div className="form-border"></div>
           <label htmlFor="number">Family members:</label>
           <input
             type="number"
