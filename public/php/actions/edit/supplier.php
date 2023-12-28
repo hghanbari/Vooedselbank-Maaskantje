@@ -17,7 +17,7 @@ try {
     }
 
     // Get regular data
-    $query = $conn->prepare('SELECT `companyName`, `adress`, `contactName`, `email`, `phone` FROM `supplier` WHERE `supplierId` = :id');
+    $query = $conn->prepare('SELECT `companyName`, `address`, `contactName`, `email`, `phone` FROM `supplier` WHERE `supplierId` = :id');
     $query->bindParam(':id', $_POST['id']);
     $query->execute();
     $result = $query->fetch(PDO::FETCH_ASSOC);
@@ -25,14 +25,14 @@ try {
     $data = [
         ':id' => $_POST['id'],
         ':companyName' => $result['companyName'],
-        ':adress' => $result['adress'],
+        ':address' => $result['address'],
         ':contactName' => $result['contactName'],
         ':email' => $result['email'],
         ':phone' => $result['phone']
     ];
 
     // Check for changes
-    foreach ($_POST as $key=>$item) {
+    foreach ($_POST as $key => $item) {
         if ($item != '') {
             $data[":$key"] = $item;
         }

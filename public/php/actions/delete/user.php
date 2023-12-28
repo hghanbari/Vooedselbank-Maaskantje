@@ -1,4 +1,5 @@
-<?php 
+<?php
+session_start();
 include_once("../../functions.php");
 
 $conn = ConnectDB("root", "");
@@ -41,4 +42,3 @@ try {
 } catch (PDOException $e) {
     echo "Error!: " . $e->getMessage();
 }
-?>

@@ -1,4 +1,5 @@
-<?php 
+<?php
+session_start();
 include_once("../functions.php");
 
 $conn = ConnectDB("root", "");
@@ -12,17 +13,17 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 try {
 
-    $query = $conn->prepare("SELECT supplierId, companyName, adress, contactName, email, phone FROM supplier");
+    $query = $conn->prepare("SELECT supplierId, companyName, address, contactName, email, phone FROM supplier");
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-    if(!empty($result)) {
+    if (!empty($result)) {
         $data = [];
         foreach ($result as $supplier) {
             $data[$supplier["supplierId"]] = [
                 'supplierId' => $supplier["supplierId"],
                 'companyName' => $supplier["companyName"],
-                'adress' => $supplier["adress"],
+                'address' => $supplier["address"],
                 'contactName' => $supplier["contactName"],
                 'email' => $supplier["email"],
                 'phone' => $supplier["phone"]
@@ -35,7 +36,5 @@ try {
         echo "This table is empty";
     }
 } catch (PDOException $e) {
-    echo "Error!: " . $e->getMessage();
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }
-
-?>

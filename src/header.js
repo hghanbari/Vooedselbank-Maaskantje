@@ -4,11 +4,11 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 export default function Header({
-  customerStore,
+  customersStore,
   inventoryManagementStore,
   packageStore,
 }) {
-  const { customersList } = customerStore;
+  const { customersList } = customersStore;
   const { inventoryManagementList } = inventoryManagementStore;
   const { packagesList } = packageStore;
 

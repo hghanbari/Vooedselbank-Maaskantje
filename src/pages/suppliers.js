@@ -5,14 +5,14 @@ import ReactPaginate from "react-paginate";
 
 export default function Suppliers({
   setModalForm,
-  setEditModalForm,
+  showEditModal,
   suppliersStore,
 }) {
   const { suppliersList, fetchSuppliers } = suppliersStore;
   const [currentItems, setCurrentItems] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
   const [pageCount, setPageCount] = useState(0);
-  const itemsPerPage = 3;
+  const itemsPerPage = 5;
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure?")) {
@@ -31,6 +31,10 @@ export default function Suppliers({
         })
         .catch((err) => console.log(err));
     }
+  };
+
+  const handleEdit = (id) => {
+    showEditModal(id);
   };
 
   useEffect(() => {
@@ -75,7 +79,7 @@ export default function Suppliers({
                 <td>
                   <button
                     className="in-table"
-                    onClick={() => setEditModalForm(true)}>
+                    onClick={handleEdit.bind(this, user.supplierId)}>
                     <span className="material-symbols-outlined">edit</span>
                   </button>
 

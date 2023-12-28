@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-export default function CustomerEdit({ id, closeModal, customerStore }) {
-  const { fetchCustomers } = customerStore;
+export default function CustomerEdit({ id, closeModal, customersStore }) {
+  const { fetchCustomers } = customersStore;
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -168,12 +168,7 @@ export default function CustomerEdit({ id, closeModal, customerStore }) {
           </select>
           <div className="form-border"></div>
 
-          <input
-            id="submit-btn"
-            type="submit"
-            name="submit"
-            value="Toevoegen"
-          />
+          <input id="submit-btn" type="submit" name="submit" value="Opslaan" />
         </form>
       </div>
     </div>

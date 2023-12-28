@@ -5,9 +5,9 @@ import ReactPaginate from "react-paginate";
 export default function Customers({
   setModalForm,
   showEditModal,
-  customerStore,
+  customersStore,
 }) {
-  const { customersList, fetchCustomers } = customerStore;
+  const { customersList, fetchCustomers } = customersStore;
 
   const [currentItems, setCurrentItems] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);

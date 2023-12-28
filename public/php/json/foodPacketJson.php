@@ -1,4 +1,5 @@
-<?php 
+<?php
+session_start();
 include_once("../functions.php");
 
 $conn = ConnectDB("root", "");
@@ -20,11 +21,12 @@ try {
         ON packetStock.packetId = packet.packetId
         LEFT JOIN products
         ON packetStock.EAN = products.EAN
-        ");
+        "
+    );
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-    if(!empty($result)) {
+    if (!empty($result)) {
         $data = [];
         foreach ($result as $packet) {
             $packetId = $packet["packetId"];
@@ -47,7 +49,7 @@ try {
                 if (!array_key_exists('products', $data[$packetId])) {
                     $data[$packetId]['products'] = array();
                 }
-                
+
                 $productData = [
                     'EAN' => $packet["EAN"],
                     'amount' => $packet["amount"],
@@ -55,15 +57,13 @@ try {
                 ];
                 array_push($data[$packetId]['products'], $productData);
             }
-        } 
+        }
         header('Content-Type: application/json');
 
         echo json_encode($data);
     } else {
-        echo "No tables in database";
+        echo json_encode(["success" => false, "message" => "No data"]);
     }
-
 } catch (PDOException $e) {
-    echo "Error!: " . $e->getMessage();
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }
-?>

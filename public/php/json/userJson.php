@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once('../functions.php');
 
 $conn = ConnectDB('root', '');
@@ -13,7 +14,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 try {
     $query = $conn->prepare(
         'SELECT
-        user.`userId`, user.`firstName`, user.`middleName`,user.`lastName`, user.`email`, user.`phone`, user.`adress`, user.`auth`
+        user.`userId`, user.`firstName`, user.`middleName`,user.`lastName`, user.`email`, user.`phone`, user.`address`, user.`auth`
         FROM `user`'
     );
     $query->execute();
@@ -30,7 +31,7 @@ try {
                 'lastName' => $user['lastName'],
                 'email' => $user['email'],
                 'phone' => $user['phone'],
-                'adress' => $user['adress'],
+                'address' => $user['address'],
                 'auth' => $user['auth']
             ];
         }
@@ -42,5 +43,5 @@ try {
         echo "This table is empty";
     }
 } catch (PDOException $e) {
-    echo "Error!: " . $e->getMessage();
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }

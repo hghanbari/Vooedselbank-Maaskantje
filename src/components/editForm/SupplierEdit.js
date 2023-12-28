@@ -2,8 +2,8 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 
-export default function SupplierEdit({ closeModalEdit, suppliersStore }) {
-  const { fetchSupplier } = suppliersStore;
+export default function SupplierEdit({ id, closeModal, suppliersStore }) {
+  const { fetchSuppliers } = suppliersStore;
   const [companyName, setCompanyName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
@@ -14,6 +14,7 @@ export default function SupplierEdit({ closeModalEdit, suppliersStore }) {
     e.preventDefault();
     axios
       .post("http://localhost/backend/actions/add/supplier.php", {
+        id: id,
         companyName: companyName,
         address: address,
         phone: phone,
@@ -23,8 +24,8 @@ export default function SupplierEdit({ closeModalEdit, suppliersStore }) {
       .then((res) => {
         if (res.data.success) {
           alert(res.data.message);
-          closeModalEdit(false);
-          fetchSupplier();
+          closeModal();
+          fetchSuppliers();
         }
       })
       .catch((err) => console.log(err));
@@ -38,7 +39,7 @@ export default function SupplierEdit({ closeModalEdit, suppliersStore }) {
           <button
             className="modal-close-button"
             onClick={() => {
-              closeModalEdit(false);
+              closeModal();
             }}>
             X
           </button>
@@ -98,12 +99,7 @@ export default function SupplierEdit({ closeModalEdit, suppliersStore }) {
             required
           />
           <div className="form-border"></div>
-          <input
-            id="submit-btn"
-            type="submit"
-            name="submit"
-            value="Toevoegen"
-          />
+          <input id="submit-btn" type="submit" name="submit" value="Opslaan" />
         </form>
       </div>
     </div>

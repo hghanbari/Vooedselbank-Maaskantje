@@ -1,4 +1,5 @@
-<?php 
+<?php
+session_start();
 include_once("../../functions.php");
 
 $conn = ConnectDB("root", "");
@@ -18,9 +19,9 @@ $input = json_decode($json);
 
 
 try {
-    if (!CheckAuth(3, $conn)) {
-        // Return
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+    // Check auth
+    if (empty($_SESSION["login"])) {
+        echo json_encode(["success" => false, "message" => "User is not authorized"]);
         exit();
     }
 
@@ -29,7 +30,8 @@ try {
         "SELECT supplier.`supplierId` FROM supplier
         INNER JOIN delivery ON delivery.`supplierId` = supplier.`supplierId`
         WHERE delivery.`deliveryId` = :id
-    ");
+    "
+    );
 
     $query->execute([':id' => $input->delivery]);
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -50,11 +52,10 @@ try {
 
     $query = $conn->prepare(
         "INSERT INTO stock (stockId, EAN, deliveryId, supplierId, amount, inUseAmount, bestByDate)
-        VALUES (:id, :ean, :deliveryId, :supplierId, :amount, :inUse, :bestByDate)");
+        VALUES (:id, :ean, :deliveryId, :supplierId, :amount, :inUse, :bestByDate)"
+    );
     $query->execute($data);
     echo json_encode(['success' => true]);
 } catch (PDOException $e) {
     echo "Error!: " . $e->getMessage();
 }
-
-?>

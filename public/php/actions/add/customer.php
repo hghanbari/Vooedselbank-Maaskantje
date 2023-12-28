@@ -49,14 +49,15 @@ try {
         ':lastName' => $input->lastName,
         ':email' => $input->email,
         ':phone' => $input->phone,
+        ':address' => $input->address,
         ':amount' => $input->amount,
         ':age' => $input->age
     ];
 
     $query = $conn->prepare(
         'INSERT INTO `customer`
-        (`customerId`, `firstName`, `middleName` , `lastName`, `email`, `phone`, `familyMemberAmount`, `youngestPerson`)
-        VALUES (:id, :firstName,:middleName, :lastName, :email, :phone, :amount, :age)'
+        (`customerId`, `firstName`, `middleName` , `lastName`, `email`, `phone`,`address`, `familyMemberAmount`, `youngestPerson`)
+        VALUES (:id, :firstName,:middleName, :lastName, :email, :phone, :address,:amount, :age)'
     );
     $query->execute($data);
 

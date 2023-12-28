@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once('../functions.php');
 
 $conn = ConnectDB('root', '');
@@ -52,7 +53,7 @@ try {
 
                     'deliveryInfo' => [
                         'deliveryId' => $stock['deliveryId'],
-                        'dilveryDate' => $stock['deliveryDate'],
+                        'deliveryDate' => $stock['deliveryDate'],
                         'deliveryTime' => $stock['deliveryTime']
                     ]
                 ];
@@ -66,5 +67,5 @@ try {
         echo "This table is empty";
     }
 } catch (PDOException $e) {
-    echo "Error!: " . $e->getMessage();
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }

@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once('../../functions.php');
 
 $conn = ConnectDB("root", "");
@@ -29,7 +30,8 @@ try {
     // }
 
     // Insert basics
-    function NextWeekDay($dayOfWeek) {
+    function NextWeekDay($dayOfWeek)
+    {
         $currentDate = new DateTime();
         $currentWeekDay = $currentDate->format('w');
         $daysUntil = ($dayOfWeek - $currentWeekDay + 7) % 7;
@@ -91,10 +93,9 @@ try {
     //     $query->execute($data);
     // }
     echo json_encode(['success' => true]);
-
 } catch (PDOException $e) {
     echo "Error!: " . $e->getMessage();
-    
+
     // Error cookie
     header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit();

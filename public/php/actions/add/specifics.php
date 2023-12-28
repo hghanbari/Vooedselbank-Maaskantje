@@ -1,4 +1,5 @@
-<?php 
+<?php
+session_start();
 include_once("../../functions.php");
 
 $conn = ConnectDB("root", "");
@@ -12,9 +13,8 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 try {
     // Check auth
-    if (!CheckAuth(2, $conn)) {
-        // Create error cookie
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+    if (empty($_SESSION["login"])) {
+        echo json_encode(["success" => false, "message" => "User is not authorized"]);
         exit();
     }
 
@@ -25,7 +25,6 @@ try {
 
     $query = $conn->prepare("INSERT INTO `specifics` (`specificId`, `desc`) VALUES (:id, :description)");
     $query->execute($data);
-
 } catch (PDOException $e) {
     echo "Error!: " . $e->getMessage();
 
@@ -33,4 +32,3 @@ try {
     header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit();
 }
-?>

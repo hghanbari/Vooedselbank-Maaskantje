@@ -36,7 +36,7 @@ function App() {
   const packageStore = usePackages();
   // const profileStore = useProfile();
   const userStore = useUsers();
-  const customerStore = useCustomers();
+  const customersStore = useCustomers();
   const suppliersStore = useSupplier();
   const inventoryManagementStore = useInventoryManagement();
 
@@ -51,7 +51,7 @@ function App() {
   const [editCustomer, setEditCustomer] = useState(0);
   const [userModalEdit, setUserModalEdit] = useState(false);
   const [packageModalEdit, setPackageModalEdit] = useState(false);
-  const [supplierModalEdit, setSupplierModalEdit] = useState(false);
+  const [editSupplier, setEditSupplier] = useState(0);
   const [inventoryManagementModalEdit, setInventoryManagementModalEdit] =
     useState(false);
 
@@ -68,7 +68,7 @@ function App() {
           <Sidebar />
           <div className="app-body">
             <Header
-              customerStore={customerStore}
+              customersStore={customersStore}
               inventoryManagementStore={inventoryManagementStore}
               packageStore={packageStore}
             />
@@ -97,7 +97,7 @@ function App() {
                 path="/customers"
                 element={
                   <Customers
-                    customerStore={customerStore}
+                    customersStore={customersStore}
                     setModalForm={setCustomerModalForm}
                     showEditModal={setEditCustomer}
                   />
@@ -109,7 +109,7 @@ function App() {
                   <Suppliers
                     suppliersStore={suppliersStore}
                     setModalForm={setSupplierModalForm}
-                    setEditModalForm={setSupplierModalEdit}
+                    showEditModal={setEditSupplier}
                   />
                 }
               />
@@ -145,7 +145,7 @@ function App() {
       )}
       {customerModalForm && (
         <CustomerForm
-          customerStore={customerStore}
+          customersStore={customersStore}
           closeModalForm={setCustomerModalForm}
         />
       )}
@@ -175,7 +175,7 @@ function App() {
       )}
       {editCustomer !== 0 && (
         <CustomerEdit
-          customerStore={customerStore}
+          customersStore={customersStore}
           id={editCustomer}
           closeModal={() => setEditCustomer(0)}
         />
@@ -198,10 +198,11 @@ function App() {
           userStore={userStore}
         />
       )}
-      {supplierModalEdit && (
+      {editSupplier !== 0 && (
         <SupplierEdit
-          closeModalEdit={setSupplierModalEdit}
+          closeModal={() => setEditSupplier(0)}
           suppliersStore={suppliersStore}
+          id={editSupplier}
         />
       )}
       {inventoryManagementModalEdit && (

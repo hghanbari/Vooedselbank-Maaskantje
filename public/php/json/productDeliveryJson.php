@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once('../functions.php');
 
 $conn = ConnectDB('root', '');
@@ -20,7 +21,8 @@ try {
     $query = $conn->prepare(
         "SELECT delivery.deliveryId, supplier.companyName, delivery.deliveryDate FROM `delivery`
         INNER JOIN `supplier`
-        ON supplier.supplierId = delivery.supplierId");
+        ON supplier.supplierId = delivery.supplierId"
+    );
     $query->execute();
     $delivery = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -38,5 +40,5 @@ try {
         echo "This table is empty";
     }
 } catch (PDOException $e) {
-    echo "Error!: " . $e->getMessage();
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }

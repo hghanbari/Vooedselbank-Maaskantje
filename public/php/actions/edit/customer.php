@@ -28,18 +28,15 @@ try {
         ':email' => $input->email
     ];
     if (CheckIfExists($stmt, $data, $conn)) {
-        echo "This email or phone already exists";
-
         // error cookie
-
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        echo json_encode(["success" => false, "message" => "This email or phone already exists"]);
         exit();
     }
     unset($data);
 
     // Check what changed
     // Get default data
-    $query = $conn->prepare('SELECT `firstName`, `lastName`, `email`, `phone`, `familyMemberAmount`, `youngestPerson` FROM `customer` WHERE `customerId` = :id');
+    $query = $conn->prepare('SELECT `firstName`, `lastName`, `email`, `phone`,`address`, `familyMemberAmount`, `youngestPerson` FROM `customer` WHERE `customerId` = :id');
     $query->bindParam(':id', $input->id);
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -51,6 +48,7 @@ try {
         ':lastName' => $result[0]['lastName'],
         ':email' => $result[0]['email'],
         ':phone' => $result[0]['phone'],
+        ':address' => $result[0]['address'],
         ':amount' => $result[0]['familyMemberAmount'],
         ':youngest' => $result[0]['youngestPerson']
     ];
@@ -69,6 +67,7 @@ try {
         `middleName` = :middleName,
         `lastName` = :lastName,
         `email` = :email,
+        `address`= :address,
         `phone` = :phone,
         `familyMemberAmount` = :amount,
         `youngestPerson` = :youngest
@@ -95,5 +94,3 @@ try {
 } catch (PDOException $e) {
     echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }
-
-// header('Location: ' . $_SERVER['HTTP_REFERER']);

@@ -1,4 +1,5 @@
-<?php 
+<?php
+session_start();
 include_once("../../functions.php");
 
 $conn = ConnectDB("root", "");
@@ -11,27 +12,27 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 try {
-    // check auth
-    if (!CheckAuth(3, $conn)) {
-        header("Location: " . $_SERVER["HTTP_REFERER"]);
+    $supplier_id = $_GET["id"];
+    // Check auth
+    if (empty($_SESSION["login"])) {
+        echo json_encode(["success" => false, "message" => "User is not authorized"]);
         exit();
     }
 
     // check if supplier exists in deliveries
     $stmt = 'SELECT supplierId FROM delivery WHERE supplierId = :supplierId';
-    $data = [':supplierId' => $_POST["supplier"]];
+    $data = [':supplierId' => $supplier_id];
     if (CheckIfExists($stmt, $data, $conn)) {
         // throw error
-        header("Location: " . $_SERVER["HTTP_REFERER"]);
+        echo json_encode(["success" => true, "message" => "Error: There is an active delivery."]);
         exit();
     }
 
     $query = $conn->prepare("DELETE FROM supplier WHERE supplierId = :supplierId");
-    $query->bindParam(":supplierId", $_POST["supplier"]);
+    $query->bindParam(":supplierId", $supplier_id);
     $query->execute();
 
-
+    echo json_encode(["success" => true, "message" => "Supplier has been deleted successfully"]);
 } catch (PDOException $e) {
-    echo "Error!: " . $e->getMessage();
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }
-?>

@@ -1,4 +1,5 @@
-<?php 
+<?php
+session_start();
 include_once("../functions.php");
 
 $conn = ConnectDB("root", "");
@@ -16,7 +17,7 @@ try {
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-    if(!empty($result)) {
+    if (!empty($result)) {
         $data = [];
         foreach ($result as $delivery) {
             $data[$delivery["deliveryId"]] = [
@@ -34,7 +35,5 @@ try {
         echo "This table is empty";
     }
 } catch (PDOException $e) {
-    echo "Error!: " . $e->getMessage();
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }
-
-?>

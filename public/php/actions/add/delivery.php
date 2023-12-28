@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once("../../functions.php");
 
 $conn = ConnectDB("root", "");
@@ -11,9 +12,9 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 try {
-    if (!CheckAuth(3, $conn)) {
-        // Return
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+    // Check auth
+    if (empty($_SESSION["login"])) {
+        echo json_encode(["success" => false, "message" => "User is not authorized"]);
         exit();
     }
 
@@ -30,5 +31,3 @@ try {
 } catch (PDOException $e) {
     echo "Error!: " . $e->getMessage();
 }
-
-?>
