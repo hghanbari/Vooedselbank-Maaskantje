@@ -4,7 +4,7 @@ import ReactPaginate from "react-paginate";
 
 export default function InventoryManagement({
   setModalForm,
-  setEditModalForm,
+  showEditModal,
   inventoryManagementStore,
 }) {
   const { fetchInventoryManagement, inventoryManagementList } =
@@ -15,17 +15,6 @@ export default function InventoryManagement({
   const [pageCount, setPageCount] = useState(0);
 
   const itemsPerPage = 5;
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost/backend/json/stockJson.php")
-  //     .then((res) => {
-  //       const myArray = Object.keys(res.data).map((key) => res.data[key]);
-  //       console.log(myArray);
-  //       setData(myArray);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure?")) {
@@ -44,6 +33,10 @@ export default function InventoryManagement({
         })
         .catch((err) => console.log(err));
     }
+  };
+
+  const handleEdit = (id) => {
+    showEditModal(id);
   };
 
   useEffect(() => {
@@ -89,7 +82,7 @@ export default function InventoryManagement({
                 <td>
                   <button
                     className="in-table"
-                    onClick={() => setEditModalForm(true)}>
+                    onClick={handleEdit.bind(this, user.inventoryManagementId)}>
                     <span className="material-symbols-outlined">edit</span>
                   </button>
 

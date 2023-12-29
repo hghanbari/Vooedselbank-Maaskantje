@@ -20,6 +20,13 @@ export default function CustomerEdit({ id, closeModal, customersStore }) {
       })
       .then((res) => {
         setFirstName(res.data.firstName);
+        setMiddleName(res.data.middleName);
+        setLastName(res.data.lastName);
+        setPhone(res.data.phone);
+        setFamAmount(res.data.famAmount);
+        setAddress(res.data.address);
+        setAge(res.data.age);
+        setSpecifics(res.data.specifics);
       })
       .catch((err) => console.log(err));
   });

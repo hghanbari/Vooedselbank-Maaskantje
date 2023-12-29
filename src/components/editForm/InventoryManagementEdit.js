@@ -1,8 +1,12 @@
 import axios from "axios";
-import * as React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function InventoryManagementEdit({ closeModalEdit }) {
+export default function InventoryManagementEdit({
+  id,
+  closeModal,
+  inventoryManagementStore,
+}) {
+  const { fetchInventoryManagement } = inventoryManagementStore;
   const [product, setProduct] = useState("");
   const [delivery, setDelivery] = useState("");
   const [amount, setAmount] = useState(0);
@@ -12,6 +16,20 @@ export default function InventoryManagementEdit({ closeModalEdit }) {
 
   const [productData, setProductData] = useState([]);
   const [deliveryData, setDeliveryData] = useState([]);
+
+  useEffect(() => {
+    axios
+      // .get("http://localhost/backend/json/Json.php?id=" + id, {
+      //   withCredentials: true,
+      // })
+      .then((res) => {
+        setDelivery(res.data.delivery);
+        setAmount(res.data.amount);
+        setBestByDate(res.data.bestByDate);
+        setEan(res.data.ean);
+      })
+      .catch((err) => console.log(err));
+  });
 
   useEffect(() => {
     axios
@@ -42,7 +60,9 @@ export default function InventoryManagementEdit({ closeModalEdit }) {
         }
       )
       .then((res) => {
-        closeModalEdit(false);
+        alert(res.data.message);
+        closeModal();
+        fetchInventoryManagement();
       })
       .catch((err) => console.log(err));
   };
@@ -55,7 +75,7 @@ export default function InventoryManagementEdit({ closeModalEdit }) {
           <button
             className="modal-close-button"
             onClick={() => {
-              closeModalEdit(false);
+              closeModal();
             }}>
             X
           </button>

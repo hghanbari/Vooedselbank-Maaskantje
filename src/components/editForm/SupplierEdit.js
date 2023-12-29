@@ -1,6 +1,5 @@
 import axios from "axios";
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function SupplierEdit({ id, closeModal, suppliersStore }) {
   const { fetchSuppliers } = suppliersStore;
@@ -9,6 +8,21 @@ export default function SupplierEdit({ id, closeModal, suppliersStore }) {
   const [phone, setPhone] = useState("");
   const [contactPerson, setContactPerson] = useState("");
   const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("http://localhost/backend/json/customerJson.php?id=" + id, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setCompanyName(res.data.companyName);
+        setAddress(res.data.address);
+        setEmail(res.data.email);
+        setContactPerson(res.data.contactPerson);
+        setPhone(res.data.phone);
+      })
+      .catch((err) => console.log(err));
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();

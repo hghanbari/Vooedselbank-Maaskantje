@@ -52,8 +52,7 @@ function App() {
   const [userModalEdit, setUserModalEdit] = useState(false);
   const [packageModalEdit, setPackageModalEdit] = useState(false);
   const [editSupplier, setEditSupplier] = useState(0);
-  const [inventoryManagementModalEdit, setInventoryManagementModalEdit] =
-    useState(false);
+  const [editInventoryManagement, setEditInventoryManagement] = useState(0);
 
   const session = Cookies.get("PHPSESSID");
 
@@ -127,7 +126,7 @@ function App() {
                 path="/inventoryManagement"
                 element={
                   <InventoryManagement
-                    setEditModalForm={setInventoryManagementModalEdit}
+                    showEditModal={setEditInventoryManagement}
                     setModalForm={setInventoryManagementModalForm}
                     inventoryManagementStore={inventoryManagementStore}
                   />
@@ -205,10 +204,11 @@ function App() {
           id={editSupplier}
         />
       )}
-      {inventoryManagementModalEdit && (
+      {editInventoryManagement !== 0 && (
         <InventoryManagementEdit
-          closeModalEdit={setInventoryManagementModalEdit}
+          closeModal={() => setEditInventoryManagement(0)}
           inventoryManagementStore={inventoryManagementStore}
+          id={editInventoryManagement}
         />
       )}
     </BrowserRouter>
