@@ -4,7 +4,7 @@ import ReactPaginate from "react-paginate";
 
 export default function Packages({
   setModalForm,
-  setEditModalForm,
+  showEditModal,
   packageStore,
 }) {
   const { packagesList, fetchPackages } = packageStore;
@@ -43,6 +43,10 @@ export default function Packages({
         })
         .catch((err) => console.log(err));
     }
+  };
+
+  const handleEdit = (id) => {
+    showEditModal(id);
   };
 
   useEffect(() => {
@@ -86,13 +90,13 @@ export default function Packages({
                 <td>
                   <button
                     className="in-table"
-                    onClick={() => setEditModalForm(true)}>
+                    onClick={handleEdit.bind(this, user.packageId)}>
                     <span className="material-symbols-outlined">edit</span>
                   </button>
 
                   <button
                     className="in-table"
-                    onClick={handleDelete.bind(this, user.customerId)}>
+                    onClick={handleDelete.bind(this, user.packageId)}>
                     <span className="material-symbols-outlined">delete</span>
                   </button>
                 </td>

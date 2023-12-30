@@ -30,11 +30,11 @@ import useSupplier from "./states/useSuppliers";
 import usePackages from "./states/usePackages";
 import useUsers from "./states/useUsers";
 import useInventoryManagement from "./states/useInventoryManagement";
-// import useProfile from "./states/useProfile";
+import useProfile from "./states/useProfile";
 
 function App() {
   const packageStore = usePackages();
-  // const profileStore = useProfile();
+  const profileStore = useProfile();
   const userStore = useUsers();
   const customersStore = useCustomers();
   const suppliersStore = useSupplier();
@@ -47,10 +47,10 @@ function App() {
   const [inventoryManagementModalForm, setInventoryManagementModalForm] =
     useState(false);
 
-  const [profileModalEdit, setProfileModalEdit] = useState(false);
+  const [editProfile, setEditProfile] = useState(0);
   const [editCustomer, setEditCustomer] = useState(0);
-  const [userModalEdit, setUserModalEdit] = useState(false);
-  const [packageModalEdit, setPackageModalEdit] = useState(false);
+  const [editUser, setEditUser] = useState(0);
+  const [editPackage, setEditPackage] = useState(0);
   const [editSupplier, setEditSupplier] = useState(0);
   const [editInventoryManagement, setEditInventoryManagement] = useState(0);
 
@@ -77,8 +77,8 @@ function App() {
                 path="/profile"
                 element={
                   <Profile
-                    setEditModalForm={setProfileModalEdit}
-                    // profileStore={profileStore}
+                    showEditModal={setEditProfile}
+                    profileStore={profileStore}
                   />
                 }
               />
@@ -88,7 +88,7 @@ function App() {
                   <UserManager
                     userStore={userStore}
                     setModalForm={setCustomerModalForm}
-                    setEditModalForm={setEditCustomer}
+                    showEditModal={setEditUser}
                   />
                 }
               />
@@ -117,7 +117,7 @@ function App() {
                 element={
                   <Packages
                     setModalForm={setPackageModalForm}
-                    setEditModalForm={setPackageModalEdit}
+                    showEditModal={setEditPackage}
                     packageStore={packageStore}
                   />
                 }
@@ -179,21 +179,21 @@ function App() {
           closeModal={() => setEditCustomer(0)}
         />
       )}
-      {profileModalEdit && (
+      {editProfile !== 0 && (
         <ProfileEdit
-          // profileStore={profileStore}
-          closeModalEdit={setProfileModalEdit}
+          profileStore={profileStore}
+          closeModal={() => setEditProfile(0)}
         />
       )}
-      {packageModalEdit && (
+      {editPackage !== 0 && (
         <PackageEdit
-          closeModalEdit={setPackageModalEdit}
+          closeModal={() => setEditPackage(0)}
           packageStore={packageStore}
         />
       )}
-      {userModalEdit && (
+      {editUser !== 0 && (
         <UserManagerEdit
-          closeModalEdit={setUserModalEdit}
+          closeModal={() => setEditUser(0)}
           userStore={userStore}
         />
       )}

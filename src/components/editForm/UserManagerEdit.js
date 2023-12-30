@@ -2,7 +2,7 @@ import * as React from "react";
 import axios from "axios";
 import { useState } from "react";
 
-export default function UserManagerEdit({ closeModalEdit, userStore }) {
+export default function UserManagerEdit({ closeModal, userStore, id }) {
   const { fetchUsers } = userStore;
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
@@ -45,7 +45,7 @@ export default function UserManagerEdit({ closeModalEdit, userStore }) {
       .then((res) => {
         if (res.data.success) {
           alert(res.data.message);
-          closeModalEdit(false);
+          closeModal();
           fetchUsers();
         }
       })
@@ -60,7 +60,7 @@ export default function UserManagerEdit({ closeModalEdit, userStore }) {
           <button
             className="modal-close-button"
             onClick={() => {
-              closeModalEdit(false);
+              closeModal();
             }}>
             X
           </button>

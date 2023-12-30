@@ -2,10 +2,13 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function Profile({ setEditModalForm }) {
+export default function Profile({ showEditModal, profileStore }) {
   const [data, setData] = useState([]);
   // const { profile } = profileStore;
 
+  const handleEdit = (id) => {
+    showEditModal(id);
+  };
   useEffect(() => {
     axios
       .get("http://localhost/backend/json/userJson.php")
@@ -20,9 +23,7 @@ export default function Profile({ setEditModalForm }) {
     <div className="body-content">
       <div className="header-content">
         <h4 className="header-title">profile</h4>
-        <button
-          className="header-button"
-          onClick={() => setEditModalForm(true)}>
+        <button className="header-button" onClick={() => setEditModalForm()}>
           profile wijzigen
         </button>
       </div>
