@@ -30,11 +30,11 @@ import useSupplier from "./states/useSuppliers";
 import usePackages from "./states/usePackages";
 import useUsers from "./states/useUsers";
 import useInventoryManagement from "./states/useInventoryManagement";
-import useProfile from "./states/useProfile";
+// import useProfile from "./states/useProfile";
 
 function App() {
   const packageStore = usePackages();
-  const profileStore = useProfile();
+  // const profileStore = useProfile();
   const userStore = useUsers();
   const customersStore = useCustomers();
   const suppliersStore = useSupplier();
@@ -47,7 +47,7 @@ function App() {
   const [inventoryManagementModalForm, setInventoryManagementModalForm] =
     useState(false);
 
-  const [editProfile, setEditProfile] = useState(0);
+  // const [editProfile, setEditProfile] = useState(0);
   const [editCustomer, setEditCustomer] = useState(0);
   const [editUser, setEditUser] = useState(0);
   const [editPackage, setEditPackage] = useState(0);
@@ -77,8 +77,8 @@ function App() {
                 path="/profile"
                 element={
                   <Profile
-                    showEditModal={setEditProfile}
-                    profileStore={profileStore}
+                  // showEditModal={setEditProfile}
+                  // profileStore={profileStore}
                   />
                 }
               />
@@ -179,12 +179,12 @@ function App() {
           closeModal={() => setEditCustomer(0)}
         />
       )}
-      {editProfile !== 0 && (
+      {/* {editProfile !== 0 && (
         <ProfileEdit
           profileStore={profileStore}
           closeModal={() => setEditProfile(0)}
         />
-      )}
+      )} */}
       {editPackage !== 0 && (
         <PackageEdit
           closeModal={() => setEditPackage(0)}
