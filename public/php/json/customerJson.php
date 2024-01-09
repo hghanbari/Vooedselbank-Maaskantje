@@ -16,6 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 try {
+    $condition = "";
+    $parameters = array();
+    if (isset($_GET['id'])) {
+        $condition = "WHERE customer.`customerId` = :id";
+        $parameters = [":id" => $_GET['id']];
+    }
+
     // Get customer data
     $query = $conn->prepare(
         'SELECT
@@ -26,9 +33,10 @@ try {
         ON customer.`customerId` = customerSpecifics.`customerId`
         LEFT JOIN specifics
         ON customerSpecifics.`specificId` = specifics.`specificId`
-        ORDER BY customer.customerId DESC'
+        ' . $condition . '
+        ORDER BY customer.`customerId` DESC'
     );
-    $query->execute();
+    $query->execute($parameters);
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
     // Check if the table is not empty
@@ -67,7 +75,7 @@ try {
 
         echo json_encode($result);
     } else {
-        echo "This table is empty";
+        echo json_encode(["success" => false, "message" => "This table is empty"]);
     }
 } catch (PDOException $e) {
     echo json_encode(["success" => false, "message" => $e->getMessage()]);
