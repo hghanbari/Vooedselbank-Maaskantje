@@ -42,6 +42,7 @@ try {
     // Check if the table is not empty
     if (!empty($result)) {
         $data = array();
+
         // foreach ($result as $customer) {
         //     $custId = $customer['custId'];
         //     $specId = $customer['specId'];

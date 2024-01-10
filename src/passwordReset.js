@@ -88,7 +88,7 @@ export default function PasswordReset() {
               required
             />
             <div className="form-border"></div>
-            <Link to="/login">
+            <Link to="/">
               <legend className="forgot-pass">Login</legend>
             </Link>
             <input id="submit-btn" type="submit" name="submit" value="Send" />
