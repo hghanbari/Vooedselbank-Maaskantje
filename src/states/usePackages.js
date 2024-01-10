@@ -7,7 +7,8 @@ const usePackages = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost/backend/json/foodPacketJson.php")
+      // .get("http://localhost/backend/json/foodPacketJson.php")
+      .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/foodPacketJson.php")
       .then((res) => {
         const myArray = Object.keys(res.data).map((key) => res.data[key]);
         setPackagesList(myArray);

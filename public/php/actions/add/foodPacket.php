@@ -7,7 +7,7 @@ $conn = ConnectDB("root", "");
 header('Access-Control-Allow-Origin: http://localhost:3000');
 header('Access-Control-Allow-Credentials: true');
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST, DELETE, OPTIONS");
+header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
@@ -43,7 +43,7 @@ try {
 
     $data = [
         ':packetId' => $packetId,
-        ':customerId' => $input->klant,
+        ':customerId' => $input->customer,
         ':makeDate' => NextWeekDay(4),
         ':pickUpDate' => NextWeekDay(5)
     ];
@@ -53,6 +53,28 @@ try {
         VALUES (:packetId, :customerId, :makeDate, :pickUpDate)'
     );
     $query->execute($data);
+
+    // Insert items
+    $values = explode("&", $input->product);
+    $ean = $values[0];
+    $stockId = $values[1];
+
+    // Update packet
+    $data = [
+        ':packetId' => $packetId,
+        ':customerId' => $input->customer,
+        ':stockId' => $stockId,
+        ':ean' => $ean,
+        ':amount' => $input->amount
+    ];
+
+    $query = $conn->prepare(
+        'INSERT INTO `packetstock`
+        (`packetId`, `customerId`, `stockId`, `EAN`, `amount`)
+        VALUES (:packetId, :customerId, :stockId, :ean, :amount)'
+    );
+    $query->execute($data);
+
 
     // // Insert items
     // $ean = array();
@@ -92,7 +114,8 @@ try {
     //     );
     //     $query->execute($data);
     // }
-    echo json_encode(['success' => true]);
+    
+    echo json_encode(["success" => true, "message" => "foodpacket has been added successfully"]);
 } catch (PDOException $e) {
     echo "Error!: " . $e->getMessage();
 

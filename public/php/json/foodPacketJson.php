@@ -14,13 +14,13 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 try {
     $query = $conn->prepare(
-        "SELECT packet.packetId, packet.customerId, packet.makeDate, packet.pickUpDate, customer.firstName, customer.lastName, packetStock.stockId, packetStock.EAN, packetStock.amount, products.name AS productName FROM packet
+        "SELECT packet.packetId, packet.customerId, packet.makeDate, packet.pickUpDate, customer.firstName, customer.lastName, packetstock.stockId, packetstock.EAN, packetstock.amount, products.name AS productName FROM packet
         LEFT JOIN customer
         ON packet.customerId = customer.customerId
-        LEFT JOIN packetStock
-        ON packetStock.packetId = packet.packetId
+        LEFT JOIN packetstock
+        ON packetstock.packetId = packet.packetId
         LEFT JOIN products
-        ON packetStock.EAN = products.EAN
+        ON packetstock.EAN = products.EAN
         "
     );
     $query->execute();

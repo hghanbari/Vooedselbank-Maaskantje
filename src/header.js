@@ -16,7 +16,8 @@ export default function Header({
     e.preventDefault();
     axios
       .post(
-        "http://localhost/backend/account/logout.php",
+        // "http://localhost/backend/account/logout.php",
+        "http://localhost/Vooedselbank-Maaskantje/public/php/account/logout.php",
         {},
         {
           withCredentials: true,

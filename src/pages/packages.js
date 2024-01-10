@@ -83,10 +83,7 @@ export default function Packages({
               <tr key={index}>
                 <td>{user.makeDate}</td>
                 <td>{user.pickUpDate}</td>
-                <td>
-                  {/* {user.customer.customerFirstName}
-                  {user.customer.customerLastName} */}
-                </td>
+                <td>{user.customer.customerName} {user.customer.customerLastName}</td>
                 <td>
                   <button
                     className="in-table"
