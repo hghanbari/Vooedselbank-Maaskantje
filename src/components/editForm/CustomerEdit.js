@@ -19,18 +19,20 @@ export default function CustomerEdit({ id, closeModal, customersStore }) {
         withCredentials: true,
       })
       .then((res) => {
-        const data = res.data;
+        const data = res.data[0];
         setFirstName(data.firstName);
         setMiddleName(data.middleName);
         setLastName(data.lastName);
+        setEmail(data.email);
+        setFamAmount(data.familyMemberAmount);
         setPhone(data.phone);
-        setFamAmount(data.famAmount);
         setAddress(data.address);
-        setAge(data.age);
-        setSpecifics(data.specifics);
+        setAge(data.youngestPerson);
+        setSpecifics(data.specId);
+        console.log(data);
       })
       .catch((err) => console.log(err));
-  });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,14 +41,14 @@ export default function CustomerEdit({ id, closeModal, customersStore }) {
         "http://localhost/backend/actions/edit/customer.php",
         {
           id: id,
-          email: email,
           firstName: firstName,
           middleName: middleName,
           lastName: lastName,
+          email: email,
           phone: phone,
-          amount: famAmount,
           address: address,
-          age: age,
+          amount: famAmount,
+          youngest: age,
           specifics: specifics,
         },
         {
@@ -62,7 +64,7 @@ export default function CustomerEdit({ id, closeModal, customersStore }) {
       })
       .catch((err) => console.log(err));
   };
-  console.log(firstName);
+
   return (
     <div className="modal-background">
       <div className="modal-container">
