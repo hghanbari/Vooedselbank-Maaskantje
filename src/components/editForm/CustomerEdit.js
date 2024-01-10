@@ -19,14 +19,15 @@ export default function CustomerEdit({ id, closeModal, customersStore }) {
         withCredentials: true,
       })
       .then((res) => {
-        setFirstName(res.data.firstName);
-        setMiddleName(res.data.middleName);
-        setLastName(res.data.lastName);
-        setPhone(res.data.phone);
-        setFamAmount(res.data.famAmount);
-        setAddress(res.data.address);
-        setAge(res.data.age);
-        setSpecifics(res.data.specifics);
+        const data = res.data;
+        setFirstName(data.firstName);
+        setMiddleName(data.middleName);
+        setLastName(data.lastName);
+        setPhone(data.phone);
+        setFamAmount(data.famAmount);
+        setAddress(data.address);
+        setAge(data.age);
+        setSpecifics(data.specifics);
       })
       .catch((err) => console.log(err));
   });
@@ -61,7 +62,7 @@ export default function CustomerEdit({ id, closeModal, customersStore }) {
       })
       .catch((err) => console.log(err));
   };
-
+  console.log(firstName);
   return (
     <div className="modal-background">
       <div className="modal-container">
