@@ -12,9 +12,11 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 try {
-    if (empty($_SESSION["login"])) {
-        echo json_encode(["success" => false, "message" => "User is not authorized"]);
-        exit();
+    $condition = "";
+    $parameters = array();
+    if (isset($_GET['id'])) {
+        $condition = "WHERE customer.`customerId` = :id";
+        $parameters = [":id" => $_GET['id']];
     }
 
     $json = file_get_contents('php://input');
