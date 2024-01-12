@@ -11,30 +11,12 @@ header("Access-Control-Allow-Methods: POST, DELETE, OPTIONS");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-try {
-    $condition = "";
-    $parameters = array();
-    if (isset($_GET['id'])) {
-        $condition = "WHERE customer.`customerId` = :id";
-        $parameters = [":id" => $_GET['id']];
-    }
 
+try {
     $json = file_get_contents('php://input');
 
     // Converts it into a PHP object
     $input = json_decode($json);
-
-    // Check for same email / phone
-    $stmt = 'SELECT `email`, `phone` FROM `customer` WHERE `email` = :email';
-    $data = [
-        ':email' => $input->email
-    ];
-    if (CheckIfExists($stmt, $data, $conn)) {
-        // error cookie
-        echo json_encode(["success" => false, "message" => "This email or phone already exists"]);
-        exit();
-    }
-    unset($data);
 
     // Check what changed
     // Get default data
@@ -77,20 +59,6 @@ try {
     );
     $query->execute($data);
 
-    // Check if specifics has changed
-    // if (!empty($_POST['specifics'])) {
-    //     // Remove all specifics
-    //     $query = $conn->prepare('DELETE FROM `customerspecifics` WHERE `customerId` = :custId');
-    //     $query->bindParam(':custId', $_POST['id']);
-    //     $query->execute();
-
-    //     foreach ($_POST['specifics'] as $item) {
-    //         $query = $conn->prepare('INSERT INTO `customerspecifics` (`customerId`, `specificId`) VALUE (:custId, :specId)');
-    //         $query->bindParam(':custId', $_POST['id']);
-    //         $query->bindParam(':specId', $item);
-    //         $query->execute();
-    //     }
-    // }
 
     echo json_encode(["success" => true, "message" => "Customer has been updated successfully"]);
 } catch (PDOException $e) {

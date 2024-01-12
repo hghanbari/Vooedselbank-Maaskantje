@@ -12,6 +12,12 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 try {
+    $condition = "";
+    $parameters = array();
+    if (isset($_GET['id'])) {
+        $condition = "WHERE customer.`customerId` = :id";
+        $parameters = [":id" => $_GET['id']];
+    }
     $query = $conn->prepare(
         'SELECT
         user.`userId`, user.`firstName`, user.`middleName`,user.`lastName`, user.`email`, user.`phone`, user.`address`, user.`auth`

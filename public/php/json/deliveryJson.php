@@ -13,6 +13,13 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 try {
 
+    $condition = "";
+    $parameters = array();
+    if (isset($_GET['id'])) {
+        $condition = "WHERE customer.`customerId` = :id";
+        $parameters = [":id" => $_GET['id']];
+    }
+
     $query = $conn->prepare("SELECT deliveryId, supplierId, deliveryDate, deliveryTime, delivered FROM delivery");
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_ASSOC);

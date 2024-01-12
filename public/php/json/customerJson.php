@@ -41,39 +41,6 @@ try {
 
     // Check if the table is not empty
     if (!empty($result)) {
-        $data = array();
-
-        // foreach ($result as $customer) {
-        //     $custId = $customer['custId'];
-        //     $specId = $customer['specId'];
-
-        //     // Create array key if not exists
-        //     if (!array_key_exists($custId, $data)) {
-        //         // Generic data
-        //         $data[$custId] = [
-        //             'customerId' => $custId,
-        //             'firstName' => $customer['firstName'],
-        //             'lastName' => $customer['lastName'],
-        //             'email' => $customer['email'],
-        //             'phone' => $customer['phone'],
-        //             'familyMemberAmount' => $customer['familyMemberAmount'],
-        //             'youngestPerson' => $customer['youngestPerson']
-        //         ];
-        //     }
-
-        //     if ($specId != '') {
-        //         if (!array_key_exists('specifics', $data[$custId])) {
-        //             $data[$custId]['specifics'] = array();
-        //         }
-
-        //         $specData = [
-        //             'specificId' => $specId,
-        //             'specificDesc' => $customer['desc']
-        //         ];
-        //         array_push($data[$custId]['specifics'], $specData);
-        //     }
-        // }
-
         echo json_encode($result);
     } else {
         echo json_encode(["success" => false, "message" => "This table is empty"]);

@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once('../../functions.php');
 
 $conn = ConnectDB('root', '');
@@ -11,28 +12,28 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 try {
-    if (!CheckAuth(3, $conn)) {
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
-        exit();
-    }
+    $json = file_get_contents('php://input');
+
+    // Converts it into a PHP object
+    $input = json_decode($json);
 
     // Get regular data
-    $query = $conn->prepare('SELECT `companyName`, `address`, `contactName`, `email`, `phone` FROM `supplier` WHERE `supplierId` = :id');
-    $query->bindParam(':id', $_POST['id']);
+    $query = $conn->prepare('SELECT `companyName`, `address`, `contactPerson`, `email`, `phone` FROM `supplier` WHERE `supplierId` = :id');
+    $query->bindParam(':id', $input->id);
     $query->execute();
-    $result = $query->fetch(PDO::FETCH_ASSOC);
+    $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
     $data = [
-        ':id' => $_POST['id'],
-        ':companyName' => $result['companyName'],
-        ':address' => $result['address'],
-        ':contactName' => $result['contactName'],
-        ':email' => $result['email'],
-        ':phone' => $result['phone']
+        ':id' => $input->id,
+        ':companyName' => $result[0]['companyName'],
+        ':address' => $result[0]['address'],
+        ':contactPerson' => $result[0]['contactPerson'],
+        ':email' => $result[0]['email'],
+        ':phone' => $result[0]['phone']
     ];
 
     // Check for changes
-    foreach ($_POST as $key => $item) {
+    foreach ($input as $key => $item) {
         if ($item != '') {
             $data[":$key"] = $item;
         }
@@ -42,15 +43,14 @@ try {
     $query = $conn->prepare(
         'UPDATE `supplier` SET
         `companyName` = :companyName,
-        `adress` = :adress,
-        `contactName` = :contactName,
+        `address` = :address,
+        `contactPerson` = :contactPerson,
         `email` = :email,
         `phone` = :phone
         WHERE `supplierId` = :id'
     );
     $query->execute($data);
+    echo json_encode(["success" => true, "message" => "Supplier has been updated successfully"]);
 } catch (PDOException $e) {
-    echo "Error!: " . $e->getMessage();
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }
-
-header('Location: ' . $_SERVER['HTTP_REFERER']);

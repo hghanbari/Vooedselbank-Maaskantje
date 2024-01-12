@@ -12,26 +12,26 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 try {
+    $condition = "";
+    $parameters = array();
+    if (isset($_GET['id'])) {
+        $condition = "WHERE supplier.`supplierId` = :id";
+        $parameters = [":id" => $_GET['id']];
+    }
 
-    $query = $conn->prepare("SELECT supplierId, companyName, address, contactName, email, phone FROM supplier");
-    $query->execute();
+    $json = file_get_contents('php://input');
+
+    // Converts it into a PHP object
+    $input = json_decode($json);
+
+    $query = $conn->prepare("SELECT supplierId, companyName, address, contactPerson, email, phone FROM supplier " . $condition);
+    $query->execute($parameters);
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
     if (!empty($result)) {
-        $data = [];
-        foreach ($result as $supplier) {
-            $data[$supplier["supplierId"]] = [
-                'supplierId' => $supplier["supplierId"],
-                'companyName' => $supplier["companyName"],
-                'address' => $supplier["address"],
-                'contactName' => $supplier["contactName"],
-                'email' => $supplier["email"],
-                'phone' => $supplier["phone"]
-            ];
-        }
-        header('Content-Type: application/json');
 
-        echo json_encode($data);
+
+        echo json_encode($result);
     } else {
         echo "This table is empty";
     }
