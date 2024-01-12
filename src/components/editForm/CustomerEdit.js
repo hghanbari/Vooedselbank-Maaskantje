@@ -29,15 +29,14 @@ export default function CustomerEdit({ id, closeModal, customersStore }) {
         setAddress(data.address);
         setAge(data.youngestPerson);
         setSpecifics(data.specId);
-        console.log(data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
-      .get(
+      .post(
         "http://localhost/backend/actions/edit/customer.php",
         {
           id: id,

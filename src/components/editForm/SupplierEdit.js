@@ -11,30 +11,37 @@ export default function SupplierEdit({ id, closeModal, suppliersStore }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost/backend/json/customerJson.php?id=" + id, {
+      .get("http://localhost/backend/json/supplierJson.php?id=" + id, {
         withCredentials: true,
       })
       .then((res) => {
-        setCompanyName(res.data.companyName);
-        setAddress(res.data.address);
-        setEmail(res.data.email);
-        setContactPerson(res.data.contactPerson);
-        setPhone(res.data.phone);
+        const data = res.data[0];
+        setCompanyName(data.companyName);
+        setAddress(data.address);
+        setEmail(data.email);
+        setContactPerson(data.contactPerson);
+        setPhone(data.phone);
       })
       .catch((err) => console.log(err));
-  });
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost/backend/actions/add/supplier.php", {
-        id: id,
-        companyName: companyName,
-        address: address,
-        phone: phone,
-        contactPerson: contactPerson,
-        email: email,
-      })
+      .post(
+        "http://localhost/backend/actions/edit/supplier.php",
+        {
+          id: id,
+          companyName: companyName,
+          address: address,
+          phone: phone,
+          contactPerson: contactPerson,
+          email: email,
+        },
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         if (res.data.success) {
           alert(res.data.message);

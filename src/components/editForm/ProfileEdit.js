@@ -1,8 +1,8 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function ProfileEdit({ closeModalEdit, profileStore }) {
-  // const { fetchProfile } = profileStore;
+export default function ProfileEdit({ id, closeModalEdit, profileStore }) {
+  const { fetchProfile } = profileStore;
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -11,16 +11,33 @@ export default function ProfileEdit({ closeModalEdit, profileStore }) {
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
 
+  useEffect(() => {
+    axios
+      .get("http://localhost/backend/json/userJson.php?id=" + id, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        const data = res.data[0];
+        setFirstName(data.firstName);
+        setMiddleName(data.middleName);
+        setLastName(data.lastName);
+        setEmail(data.email);
+        setPhone(data.phone);
+        setAddress(data.address);
+      })
+      .catch((err) => console.log(err));
+  }, [id]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
-      .get(
-        // "http://localhost/backend/actions/edit/userJson.php",
+      .post(
+        "http://localhost/backend/actions/edit/userJson.php",
         {
-          email: email,
           firstName: firstName,
           middleName: middleName,
           lastName: lastName,
+          email: email,
           phone: phone,
           password: password,
           address: address,
@@ -33,7 +50,7 @@ export default function ProfileEdit({ closeModalEdit, profileStore }) {
         if (res.data.success) {
           alert(res.data.message);
           closeModalEdit(false);
-          // fetchProfile();
+          fetchProfile();
         }
       })
       .catch((err) => console.log(err));
