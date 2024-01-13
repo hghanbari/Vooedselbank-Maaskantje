@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 session_start();
+$_SESSION["login"] = null;
 session_destroy();
 
 echo json_encode(['success' => true]);

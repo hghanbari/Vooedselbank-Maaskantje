@@ -18,10 +18,11 @@ try {
         $condition = "WHERE customer.`customerId` = :id";
         $parameters = [":id" => $_GET['id']];
     }
+
     $query = $conn->prepare(
-        'SELECT
+        ('SELECT
         user.`userId`, user.`firstName`, user.`middleName`,user.`lastName`, user.`email`, user.`phone`, user.`address`, user.`auth`
-        FROM `user`'
+        FROM `user`' . $condition)
     );
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_ASSOC);

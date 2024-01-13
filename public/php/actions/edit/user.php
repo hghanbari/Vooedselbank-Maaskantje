@@ -1,6 +1,8 @@
 <?php
+session_start();
 include_once("../../functions.php");
 
+// Connect to DB
 $conn = ConnectDB("root", "");
 
 header('Access-Control-Allow-Origin: http://localhost:3000');
@@ -11,18 +13,23 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 try {
-    $query = $conn->prepare("SELECT `userId`, `firstName`, `lastName`, `email`, `pass`, `phone`, `address`, `auth` FROM `user` WHERE `userId` = :userId");
+    $json = file_get_contents('php://input');
+
+    // Converts it into a PHP object
+    $input = json_decode($json);
+
+    $query = $conn->prepare("SELECT `userId`, `firstName`, `lastName`, `email`, `password`, `phone`, `address`, `auth` FROM `user` WHERE `userId` = :userId");
     $query->bindParam(":userId", $_POST["id"]);
     $query->execute();
     $user = $query->fetchAll(PDO::FETCH_ASSOC);
 
     // Check current password
-    if (password_verify($_POST["currPass"], $user[0]["pass"])) {
+    if (password_verify($_POST["currPassword"], $user[0]["password"])) {
         $firstName = $_POST["firstName"];
         $middleName = $_POST['middleName'];
         $lastName = $_POST["lastName"];
         $email = $_POST["email"];
-        $password = password_hash($_POST["newPass"], PASSWORD_BCRYPT);
+        $password = password_hash($_POST["newPassword"], PASSWORD_BCRYPT);
         $phone = $_POST["phone"];
         $address = $_POST["address"];
         $auth = $_POST["auth"];
@@ -39,8 +46,8 @@ try {
         if ($_POST["email"] == "") {
             $email = $user[0]["email"];
         }
-        if ($_POST["newPass"] == "") {
-            $password = $user[0]["pass"];
+        if ($_POST["newPassword"] == "") {
+            $password = $user[0]["password"];
         }
         if ($_POST["phone"] == "") {
             $phone = $user[0]["phone"];
@@ -53,7 +60,7 @@ try {
         }
 
         $query = $conn->prepare("UPDATE user 
-        SET `firstName` = :firstName, `middleName` = :middleName, lastName = :lastName, email = :email, pass = :password, phone = :phone, address = :address, auth = :auth 
+        SET `firstName` = :firstName, `middleName` = :middleName, lastName = :lastName, email = :email, password = :password, phone = :phone, address = :address, auth = :auth 
         WHERE userId = :id
         ");
         $query->bindParam(":firstName", $firstName);

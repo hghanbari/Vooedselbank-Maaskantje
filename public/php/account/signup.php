@@ -1,8 +1,16 @@
 <?php
+session_start();
 include("../functions.php");
 
 // Connect to DB
 $conn = ConnectDB("root", "");
+
+header('Access-Control-Allow-Origin: http://localhost:3000');
+header('Access-Control-Allow-Credentials: true');
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: POST, DELETE, OPTIONS");
+header("Access-Control-Max-Age: 3600");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 try {
     // Since we still need to create a user, this'll be commented out
@@ -32,31 +40,27 @@ try {
     // Get data
     $data = [
         ':id' => GenerateUUID(),
-        ':name' => $_POST['name'],
+        ':firstName' => $_POST['firstName'],
         ':middleName' => $_POST['middleName'],
         ':lastName' => $_POST['lastName'],
-        ':pass' => password_hash('12345678', PASSWORD_BCRYPT),
+        ':password' => password_hash('12345678', PASSWORD_BCRYPT),
         ':email' => $_POST['email'],
         ':phone' => $_POST['phone'],
-        ':adress' => $_POST['adress'],
+        ':address' => $_POST['address'],
         ':auth' => $_POST['auth']
     ];
 
     // Query DB
-    $query = $conn->prepare
-        ('INSERT INTO `user`
-        (`userId`, `firstName`, `middleName`, `lastName`, `pass`, `email`, `phone`, `adress`, `auth`)
-        VALUES (:id, :name, :middleName, :lastName, :pass, :email, :phone, :adress, :auth)
+    $query = $conn->prepare('INSERT INTO `user`
+        (`userId`, `firstName`, `middleName`, `lastName`, `password`, `email`, `phone`, `address`, `auth`)
+        VALUES (:id, :name, :middleName, :lastName, :password, :email, :phone, :address, :auth)
         ');
     $query->execute($data);
 
     $query->closeCursor();
+    echo json_encode(["success" => true, "message" => "User has been added successfully"]);
 } catch (PDOException $e) {
-    echo "Error!: " . $e->getMessage();
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
 
-    // Create error cookie
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit();
 }
-
-header('Location: ' . $_SERVER['HTTP_REFERER']);
