@@ -4,7 +4,7 @@ import ReactPaginate from "react-paginate";
 
 export default function UserManager({
   setModalForm,
-  setEditModalForm,
+  showEditModal,
   userStore,
 }) {
   const { usersList, fetchUsers } = userStore;
@@ -41,6 +41,9 @@ export default function UserManager({
     const newOffset = (event.selected * itemsPerPage) % usersList.length;
     setItemOffset(newOffset);
   };
+  const handleEdit = (id) => {
+    showEditModal(id);
+  };
 
   return (
     <div className="body-content">
@@ -71,7 +74,7 @@ export default function UserManager({
                 <td>
                   <button
                     className="in-table"
-                    onClick={() => setEditModalForm(true)}>
+                    onClick={handleEdit.bind(this, user.userId)}>
                     <span className="material-symbols-outlined">edit</span>
                   </button>
 

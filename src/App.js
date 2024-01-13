@@ -20,7 +20,6 @@ import PackageForm from "./components/addForm/PackageForm";
 import SupplierForm from "./components/addForm/SupplierForm";
 import InventoryManagementForm from "./components/addForm/InventoryManagementForm";
 import CustomerEdit from "./components/editForm/CustomerEdit";
-import ProfileEdit from "./components/editForm/ProfileEdit";
 import PackageEdit from "./components/editForm/PackageEdit";
 import SupplierEdit from "./components/editForm/SupplierEdit";
 import UserManagerEdit from "./components/editForm/UserManagerEdit";
@@ -30,11 +29,9 @@ import useSupplier from "./states/useSuppliers";
 import usePackages from "./states/usePackages";
 import useUsers from "./states/useUsers";
 import useInventoryManagement from "./states/useInventoryManagement";
-import useProfile from "./states/useProfile";
 
 function App() {
   const packageStore = usePackages();
-  const profileStore = useProfile();
   const userStore = useUsers();
   const customersStore = useCustomers();
   const suppliersStore = useSupplier();
@@ -47,7 +44,6 @@ function App() {
   const [inventoryManagementModalForm, setInventoryManagementModalForm] =
     useState(false);
 
-  const [editProfile, setEditProfile] = useState(0);
   const [editCustomer, setEditCustomer] = useState(0);
   const [editUser, setEditUser] = useState(0);
   const [editPackage, setEditPackage] = useState(0);
@@ -73,21 +69,13 @@ function App() {
             />
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route
-                path="/profile"
-                element={
-                  <Profile
-                    showEditModal={setEditProfile}
-                    profileStore={profileStore}
-                  />
-                }
-              />
+              <Route path="/profile" element={<Profile />} />
               <Route
                 path="/userManager"
                 element={
                   <UserManager
                     userStore={userStore}
-                    setModalForm={setCustomerModalForm}
+                    setModalForm={setUserModalForm}
                     showEditModal={setEditUser}
                   />
                 }
@@ -177,12 +165,6 @@ function App() {
           customersStore={customersStore}
           id={editCustomer}
           closeModal={() => setEditCustomer(0)}
-        />
-      )}
-      {editProfile !== 0 && (
-        <ProfileEdit
-          profileStore={profileStore}
-          closeModal={() => setEditProfile(0)}
         />
       )}
       {editPackage !== 0 && (

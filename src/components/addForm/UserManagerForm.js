@@ -1,43 +1,33 @@
 import axios from "axios";
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function CustomerForm({ closeModalForm, userStore }) {
   const { fetchUsers } = userStore;
+
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [famAmount, setFamAmount] = useState("");
-  const [age, setAge] = useState("");
-  const [data, setData] = useState([]);
-  const [specifics, setSpecifics] = useState("");
-
-  useEffect(() => {
-    axios
-      .get("http://localhost/backend/json/specificsJson.php")
-      .then((res) => {
-        const specificsArr = Object.keys(res.data).map((key) => res.data[key]);
-        setData(specificsArr);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  const [address, setAddress] = useState("");
+  const [password, setPassword] = useState("");
+  const [auth, setAuth] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
       .post(
-        "http://localhost/backend/actions/add/customer.php",
+        "http://localhost/backend/account/signup.php",
         {
-          email: email,
           firstName: firstName,
           middleName: middleName,
           lastName: lastName,
+          email: email,
           phone: phone,
-          amount: famAmount,
-          age: age,
-          specifics: specifics,
+          address: address,
+          password: password,
+          auth: auth,
         },
         {
           withCredentials: true,
@@ -57,7 +47,7 @@ export default function CustomerForm({ closeModalForm, userStore }) {
     <div className="modal-background">
       <div className="modal-container">
         <div className="title">
-          <h4>Klant gegeven toevoegen</h4>
+          <h4>User gegeven toevoegen</h4>
           <button
             className="modal-close-button"
             onClick={() => {
@@ -88,13 +78,22 @@ export default function CustomerForm({ closeModalForm, userStore }) {
             className="form-content"
           />
           <div className="form-border"></div>
-
           <label htmlFor="lastName">Last Name:</label>
           <input
             type="text"
             name="name"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
+            className="form-content"
+            required
+          />
+          <div className="form-border"></div>
+          <label htmlFor="address">Address:</label>
+          <input
+            type="text"
+            name="address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
             className="form-content"
             required
           />
@@ -111,12 +110,12 @@ export default function CustomerForm({ closeModalForm, userStore }) {
           />
           <div className="form-border"></div>
 
-          <label htmlFor="number">Youngest family member:</label>
+          <label htmlFor="password">password:</label>
           <input
-            type="date"
-            name="number"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
+            type="password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="form-content"
             required
           />
@@ -130,33 +129,19 @@ export default function CustomerForm({ closeModalForm, userStore }) {
             className="form-content"
             required
           />
-          <div className="form-border"></div>
 
-          <label htmlFor="number">Family members:</label>
-          <input
-            type="number"
-            name="number"
-            value={famAmount}
-            onChange={(e) => setFamAmount(e.target.value)}
-            className="form-content"
-            required
-          />
           <div className="form-border"></div>
-
-          <label htmlFor="number">allergieen</label>
+          <label htmlFor="number">Work position:</label>
           <select
-            name="specifics"
-            value={specifics}
-            onChange={(e) => setSpecifics(e.target.value)}
-            className="form-content">
-            {data.map((specific, index) => {
-              return (
-                <option key={index} value={specific.specificId}>
-                  {specific.desc}
-                </option>
-              );
-            })}
+            name="auth"
+            value={auth}
+            onChange={(e) => setAuth(e.target.value)}
+            className="form-content"
+            required>
+            <option value={1}>Vrijwilliger</option>
+            <option value={2}>Magazijnmedewerker</option>
           </select>
+
           <div className="form-border"></div>
           <input
             id="submit-btn"

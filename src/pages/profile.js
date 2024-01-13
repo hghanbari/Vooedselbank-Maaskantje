@@ -1,42 +1,131 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
-export default function Profile({ showEditModal, profileStore }) {
-  const { profile } = profileStore;
+export default function Profile() {
+  const [firstName, setFirstName] = useState("");
+  const [middleName, setMiddleName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleEdit = (id) => {
-    showEditModal(id);
+  useEffect(() => {
+    axios
+      .get("http://localhost/backend/account/profile.php", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        const data = res.dart;
+        setFirstName(data.firstName);
+        setMiddleName(data.middleName);
+        setLastName(data.lastName);
+        setEmail(data.email);
+        setPhone(data.phone);
+        setAddress(data.address);
+        setPassword(data.password);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        "http://localhost/backend/actions/edit/profile.php",
+        {
+          firstName: firstName,
+          middleName: middleName,
+          lastName: lastName,
+          email: email,
+          phone: phone,
+          password: password,
+          address: address,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        if (res.data.success) {
+          alert(res.data.message);
+        }
+      })
+      .catch((err) => console.log(err));
   };
-
   return (
     <div className="body-content">
-      <div className="header-content">
-        <h4 className="header-title">profile</h4>
-        <button className="header-button" onClick={handleEdit.bind()}>
-          profile wijzigen
-        </button>
-      </div>
-      <table className="data-table">
-        <thead className="table-header">
-          <tr>
-            <th>First Name</th>
-            <th>Middle Name</th>
-            <th>Last Name</th>
-            <th>Address</th>
-            <th>E-mail</th>
-            <th>Phone</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr key={profile.id}>
-            <td>{profile.firstName}</td>
-            <td>{profile.middleName}</td>
-            <td>{profile.lastName}</td>
-            <td>{profile.address}</td>
-            <td>{profile.email}</td>
-            <td>{profile.phone}</td>
-          </tr>
-        </tbody>
-      </table>
+      <form method="post" className="form" onSubmit={handleSubmit}>
+        <label htmlFor="firstName">First Name:</label>
+        <input
+          type="text"
+          name="name"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          className="form-content"
+          required
+        />
+        <label htmlFor="middleName">Middle Name:</label>
+        <input
+          type="text"
+          name="name"
+          value={middleName}
+          onChange={(e) => setMiddleName(e.target.value)}
+          className="form-content"
+        />
+        <div className="form-border"></div>
+        <label htmlFor="lastName">Last Name:</label>
+        <input
+          type="text"
+          name="name"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          className="form-content"
+          required
+        />
+        <div className="form-border"></div>
+        <label htmlFor="email">E-mail:</label>
+        <input
+          type="email"
+          name="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="form-content"
+          required
+        />
+        <div className="form-border"></div>
+        <label htmlFor="number">Address:</label>
+        <input
+          type="date"
+          name="text"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          className="form-content"
+          required
+        />
+        <div className="form-border"></div>
+        <label htmlFor="number">Phone:</label>
+        <input
+          type="number"
+          name="number"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          className="form-content"
+          required
+        />
+        <div className="form-border"></div>
+        <label htmlFor="number">Password:</label>
+        <input
+          type="password"
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="form-content"
+          required
+        />
+        <div className="form-border"></div>
+        <input id="submit-btn" type="submit" name="submit" value="Opslaan" />
+      </form>
     </div>
   );
 }
