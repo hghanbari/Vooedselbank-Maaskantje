@@ -10,7 +10,8 @@ export default function PackageEdit({ closeModalEdit }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost/backend/json/customerJson.php")
+      // .get("http://localhost/backend/json/customerJson.php")
+      .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/customerJson.php")
       .then((res) => {
         const customer = Object.keys(res.data).map((key) => res.data[key]);
         setCustomerData(customer);
@@ -20,7 +21,8 @@ export default function PackageEdit({ closeModalEdit }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost/backend/json/foodPacketJson.php")
+      // .get("http://localhost/backend/json/foodPacketJson.php")
+      .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/foodPacketJson.php")
       .then((res) => {
         const productArr = Object.keys(res.data).map((key) => res.data[key]);
         setProductData(productArr);
@@ -32,7 +34,8 @@ export default function PackageEdit({ closeModalEdit }) {
     e.preventDefault();
     axios
       .post(
-        "http://localhost/backend/actions/add/foodPacket.php",
+        // "http://localhost/backend/actions/add/foodPacket.php",
+        "http://localhost/Vooedselbank-Maaskantje/public/php/actions/add/foodPacket.php",
         {
           Customer: customer,
           product: product,

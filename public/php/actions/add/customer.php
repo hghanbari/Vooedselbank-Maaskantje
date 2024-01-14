@@ -41,7 +41,7 @@ try {
     unset($data);
 
     // Insert into DB
-    $id = hexdec(uniqid());
+    $id = GenerateUUID();
     $data = [
         ':id' => $id,
         ':firstName' =>  $input->firstName,

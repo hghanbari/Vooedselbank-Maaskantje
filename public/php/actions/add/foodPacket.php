@@ -22,12 +22,11 @@ $input = json_decode($json);
 
 
 try {
-    // // Check auth
-    // if (!CheckAuth(1, $conn)) {
-    //     // Send user back to previous page
-    //     header('Location: ' . $_SERVER['HTTP_REFERER']);
-    //     exit();
-    // }
+    // Check auth
+    if (!CheckAuth(1, $conn)) {
+        echo json_encode(["success" => false, "message" => "Incorrect authority"]);
+        exit();
+    }
 
     // Insert basics
     function NextWeekDay($dayOfWeek)
@@ -55,25 +54,38 @@ try {
     $query->execute($data);
 
     // Insert items
-    $values = explode("&", $input->product);
-    $ean = $values[0];
-    $stockId = $values[1];
+    $ean = array();
+    $stockId = array();
 
-    // Update packet
-    $data = [
-        ':packetId' => $packetId,
-        ':customerId' => $input->customer,
-        ':stockId' => $stockId,
-        ':ean' => $ean,
-        ':amount' => $input->amount
-    ];
+    foreach($input->product as $product) {
+        $values = explode("&", $product);
+        array_push($ean, $values[0]);
+        array_push($stockId, $values[1]);
+    }
 
-    $query = $conn->prepare(
-        'INSERT INTO `packetstock`
-        (`packetId`, `customerId`, `stockId`, `EAN`, `amount`)
-        VALUES (:packetId, :customerId, :stockId, :ean, :amount)'
-    );
-    $query->execute($data);
+    foreach($ean as $i => $eanValue) {
+        // Update stock
+        $query = $conn->prepare('UPDATE `stock` SET `inUseAmount` = `inUseAmount` + :amount WHERE `stockId` = :id');
+        $query->bindParam(':amount', $input->amount[$i]);
+        $query->bindParam(':id', $stockId[$i]);
+        $query->execute();
+        
+        // Update packet
+        $data = [
+            ':packetId' => $packetId,
+            ':customerId' => $input->customer,
+            ':stockId' => $stockId[$i],
+            ':ean' => $eanValue,
+            ':amount' => $input->amount[$i]
+        ];
+    
+        $query = $conn->prepare(
+            'INSERT INTO `packetstock`
+            (`packetId`, `customerId`, `stockId`, `EAN`, `amount`)
+            VALUES (:packetId, :customerId, :stockId, :ean, :amount)'
+        );
+        $query->execute($data);
+    }
 
 
     // // Insert items
@@ -117,11 +129,7 @@ try {
     
     echo json_encode(["success" => true, "message" => "foodpacket has been added successfully"]);
 } catch (PDOException $e) {
-    echo "Error!: " . $e->getMessage();
-
-    // Error cookie
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
-    exit();
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }
 
-header('Location: ' . $_SERVER['HTTP_REFERER']);
+// header('Location: ' . $_SERVER['HTTP_REFERER']);

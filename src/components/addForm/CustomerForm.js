@@ -16,7 +16,8 @@ export default function CustomerForm({ closeModalForm, customersStore }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost/backend/json/specificsJson.php")
+      // .get("http://localhost/backend/json/specificsJson.php")
+      .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/specificsJson.php")
       .then((res) => {
         const specificsArr = Object.keys(res.data).map((key) => res.data[key]);
         setData(specificsArr);
@@ -28,7 +29,8 @@ export default function CustomerForm({ closeModalForm, customersStore }) {
     e.preventDefault();
     axios
       .post(
-        "http://localhost/backend/actions/add/customer.php",
+        // "http://localhost/backend/actions/add/customer.php",
+        "http://localhost/Vooedselbank-Maaskantje/public/php/actions/add/customer.php",
         {
           email: email,
           firstName: firstName,
@@ -159,6 +161,7 @@ export default function CustomerForm({ closeModalForm, customersStore }) {
             value={specifics}
             onChange={(e) => setSpecifics(e.target.value)}
             className="form-content">
+              {/* <option>Geen allergieen</option> */}
             {data.map((specific, index) => {
               return (
                 <option key={index} value={specific.specificId}>

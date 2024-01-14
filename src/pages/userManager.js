@@ -18,7 +18,8 @@ export default function UserManager({
   const handleDelete = (id) => {
     if (window.confirm("Are you sure?")) {
       axios
-        .delete("http://localhost/backend/actions/delete/user.php?id=" + id, {
+        // .delete("http://localhost/backend/actions/delete/user.php?id=" + id, {
+        .delete("http://localhost/Vooedselbank-Maaskantje/public/php/actions/delete/user.php?id=" + id, {
           withCredentials: true,
         })
         .then((res) => {

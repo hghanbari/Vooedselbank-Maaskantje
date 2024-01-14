@@ -16,6 +16,7 @@ export default function ProfileEdit({ closeModalEdit, profileStore }) {
     axios
       .get(
         // "http://localhost/backend/actions/edit/userJson.php",
+        // "http://localhost/Vooedselbank-Maaskantje/public/php/actions/edit/userJson.php",
         {
           email: email,
           firstName: firstName,

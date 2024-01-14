@@ -16,7 +16,8 @@ export default function CustomerForm({ closeModalForm, userStore }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost/backend/json/specificsJson.php")
+      // .get("http://localhost/backend/json/specificsJson.php")
+      .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/specificsJson.php")
       .then((res) => {
         const specificsArr = Object.keys(res.data).map((key) => res.data[key]);
         setData(specificsArr);
@@ -28,7 +29,8 @@ export default function CustomerForm({ closeModalForm, userStore }) {
     e.preventDefault();
     axios
       .post(
-        "http://localhost/backend/actions/add/customer.php",
+        // "http://localhost/backend/actions/add/customer.php",
+        "http://localhost/Vooedselbank-Maaskantje/public/php/actions/add/customer.php",
         {
           email: email,
           firstName: firstName,

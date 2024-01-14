@@ -11,7 +11,8 @@ export default function SupplierEdit({ id, closeModal, suppliersStore }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost/backend/json/customerJson.php?id=" + id, {
+      // .get("http://localhost/backend/json/customerJson.php?id=" + id, {
+      .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/customerJson.php?id=" + id, {
         withCredentials: true,
       })
       .then((res) => {
@@ -27,7 +28,8 @@ export default function SupplierEdit({ id, closeModal, suppliersStore }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost/backend/actions/add/supplier.php", {
+      // .post("http://localhost/backend/actions/add/supplier.php", {
+      .post("http://localhost/Vooedselbank-Maaskantje/public/php/actions/add/supplier.php", {
         id: id,
         companyName: companyName,
         address: address,

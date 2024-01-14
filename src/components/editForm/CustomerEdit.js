@@ -15,7 +15,8 @@ export default function CustomerEdit({ id, closeModal, customersStore }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost/backend/json/customerJson.php?id=" + id, {
+      // .get("http://localhost/backend/json/customerJson.php?id=" + id, {
+      .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/customerJson.php?id=" + id, {
         withCredentials: true,
       })
       .then((res) => {
@@ -35,7 +36,8 @@ export default function CustomerEdit({ id, closeModal, customersStore }) {
     e.preventDefault();
     axios
       .get(
-        "http://localhost/backend/actions/edit/customer.php",
+        // "http://localhost/backend/actions/edit/customer.php",
+        "http://localhost/Vooedselbank-Maaskantje/public/php/actions/edit/customer.php",
         {
           id: id,
           email: email,

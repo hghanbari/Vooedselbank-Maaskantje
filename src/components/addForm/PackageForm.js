@@ -5,8 +5,10 @@ import { useState, useEffect } from "react";
 export default function PackageForm({ closeModalForm, packageStore }) {
   const { fetchPackages } = packageStore;
   const [customer, setCustomer] = useState("");
-  const [product, setProduct] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [product, setProduct] = useState([]);
+  const [amount, setAmount] = useState([]);
+  // const [product, setProduct] = useState("");
+  // const [amount, setAmount] = useState(0);
 
   const [customerData, setCustomerData] = useState([]);
   const [productData, setProductData] = useState([]);
@@ -91,7 +93,7 @@ export default function PackageForm({ closeModalForm, packageStore }) {
           </select>
           <div className="form-border"></div>
 
-          <label htmlFor="lastName">product:</label>
+          <label htmlFor="lastName">product 1:</label>
           <select
             name="product"
             value={product}
@@ -117,6 +119,34 @@ export default function PackageForm({ closeModalForm, packageStore }) {
             className="form-content"
           />
           <div className="form-border"></div>
+
+{/* 
+          <label htmlFor="lastName">product 2:</label>
+          <select
+            name="product"
+            value={product[1]}
+            onChange={(e) => setProduct(e.target.value)}
+            className="form-content">
+            {productData.map((product) => {
+              // console.log(product);
+              return (
+                <option key={product.EAN} value={product.EAN + "&" + product.stockId}>
+                  {product.name}
+                </option>
+              );
+            })}
+          </select>
+          <div className="form-border"></div>
+
+          <label htmlFor="amount">hoeveel:</label>
+          <input
+            type="number"
+            name="amount"
+            value={amount[1]}
+            onChange={(e) => setAmount(e.target.value)}
+            className="form-content"
+          />
+          <div className="form-border"></div> */}
           <input
             id="submit-btn"
             type="submit"

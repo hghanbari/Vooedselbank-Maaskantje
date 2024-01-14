@@ -30,7 +30,8 @@ export default function Packages({
     if (window.confirm("Are you sure?")) {
       axios
         .delete(
-          "http://localhost/backend/actions/delete/customer.php?id=" + id,
+          // "http://localhost/backend/actions/delete/customer.php?id=" + id,
+          "http://localhost/Vooedselbank-Maaskantje/public/php/actions/delete/customer.php?id=" + id,
           {
             withCredentials: true,
           }
