@@ -16,14 +16,12 @@ export default function Profile() {
         withCredentials: true,
       })
       .then((res) => {
-        const data = res.dart;
-        setFirstName(data.firstName);
-        setMiddleName(data.middleName);
-        setLastName(data.lastName);
-        setEmail(data.email);
-        setPhone(data.phone);
-        setAddress(data.address);
-        setPassword(data.password);
+        setFirstName(res.data.firstName);
+        setMiddleName(res.data.middleName);
+        setLastName(res.data.lastName);
+        setEmail(res.data.email);
+        setPhone(res.data.phone);
+        setAddress(res.data.address);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -55,7 +53,7 @@ export default function Profile() {
   };
   return (
     <div className="body-content">
-      <form method="post" className="form" onSubmit={handleSubmit}>
+      <form method="post" className="profile" onSubmit={handleSubmit}>
         <label htmlFor="firstName">First Name:</label>
         <input
           type="text"
@@ -65,6 +63,7 @@ export default function Profile() {
           className="form-content"
           required
         />
+        <div className="form-border"></div>
         <label htmlFor="middleName">Middle Name:</label>
         <input
           type="text"
@@ -96,7 +95,7 @@ export default function Profile() {
         <div className="form-border"></div>
         <label htmlFor="number">Address:</label>
         <input
-          type="date"
+          type="text"
           name="text"
           value={address}
           onChange={(e) => setAddress(e.target.value)}

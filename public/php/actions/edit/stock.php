@@ -32,7 +32,7 @@ try {
     ];
 
     // Alter data
-    foreach ($_POST as $key=>$item) {
+    foreach ($_POST as $key => $item) {
         if ($item != '') {
             $data[":$key"] = $item;
             if ($key == 'product' && $item == 'same') {
@@ -45,7 +45,5 @@ try {
     $query = $conn->prepare('UPDATE `stock` SET `EAN` = :product, `amount` = :amount, `inUseAmount` = :inUse, `bestByDate` = :bestBy WHERE `stockId` = :stock');
     $query->execute($data);
 } catch (PDOException $e) {
-    echo "Error!: " . $e->getMessage();
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }
-
-header('Location: ' . $_SERVER['HTTP_REFERER']);

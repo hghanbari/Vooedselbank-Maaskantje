@@ -23,7 +23,7 @@ $input = json_decode($json);
 
 try {
 
-    $query = $conn->prepare("SELECT userId, email, pass FROM user WHERE email = :email");
+    $query = $conn->prepare("SELECT userId, email,  password FROM user WHERE email = :email");
     $query->bindParam(":email", $input->email);
     $query->execute();
 
@@ -31,7 +31,7 @@ try {
 
     // check if user exits
     if (!empty($result)) {
-        if (password_verify($input->password, $result[0]["pass"])) {
+        if (password_verify($input->password, $result[0]["password"])) {
             session_start();
             $_SESSION["login"] = $result[0]["userId"];
 

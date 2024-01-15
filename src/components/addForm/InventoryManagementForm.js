@@ -30,7 +30,7 @@ export default function InventoryManagementForm({ closeModalForm }) {
       .post(
         "http://localhost/backend/actions/add/stock.php",
         {
-          // product: product,
+          product: product,
           delivery: delivery,
           amount: amount,
           bestByDate: bestByDate,
