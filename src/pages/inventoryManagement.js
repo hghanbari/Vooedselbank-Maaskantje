@@ -33,6 +33,7 @@ export default function InventoryManagement({
   };
 
   const handleEdit = (id) => {
+    console.log(id);
     showEditModal(id);
   };
 

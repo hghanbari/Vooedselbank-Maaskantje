@@ -2,7 +2,8 @@ import axios from "axios";
 import * as React from "react";
 import { useState, useEffect } from "react";
 
-export default function PackageEdit({ closeModalEdit }) {
+export default function PackageEdit({ id, closeModal, packerStore }) {
+  const { fetchPackages } = packerStore;
   const [customer, setCustomer] = useState("");
   const [product, setProduct] = useState("");
   const [customerData, setCustomerData] = useState([]);
@@ -20,13 +21,13 @@ export default function PackageEdit({ closeModalEdit }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost/backend/json/foodPacketJson.php")
+      .get("http://localhost/backend/json/foodPacketJson.php?=" + id)
       .then((res) => {
         const productArr = Object.keys(res.data).map((key) => res.data[key]);
         setProductData(productArr);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,7 +43,9 @@ export default function PackageEdit({ closeModalEdit }) {
         }
       )
       .then((res) => {
-        closeModalEdit(false);
+        alert(res.data.message);
+        closeModal();
+        fetchPackages();
       })
       .catch((err) => console.log(err));
   };
@@ -55,7 +58,7 @@ export default function PackageEdit({ closeModalEdit }) {
           <button
             className="modal-close-button"
             onClick={() => {
-              closeModalEdit(false);
+              closeModal(false);
             }}>
             X
           </button>

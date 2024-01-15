@@ -171,6 +171,7 @@ function App() {
         <PackageEdit
           closeModal={() => setEditPackage(0)}
           packageStore={packageStore}
+          id={editPackage}
         />
       )}
       {editUser !== 0 && (

@@ -27,7 +27,7 @@ export default function InventoryManagementEdit({
         setEan(res.data.ean);
       })
       .catch((err) => console.log(err));
-  });
+  }, [id]);
 
   useEffect(() => {
     axios
@@ -85,8 +85,12 @@ export default function InventoryManagementEdit({
             onChange={(e) => setEan(e.target.value)}
             className="form-content"
             required>
-            {productData.map((product) => {
-              return <option value={product.EAN}>{product.name}</option>;
+            {productData.map((product, index) => {
+              return (
+                <option key={index} value={product.EAN}>
+                  {product.name}
+                </option>
+              );
             })}
           </select>
           <div className="form-border"></div>
@@ -98,9 +102,9 @@ export default function InventoryManagementEdit({
             onChange={(e) => setDelivery(e.target.value)}
             className="form-content"
             required>
-            {deliveryData.map((delivery) => {
+            {deliveryData.map((delivery, index) => {
               return (
-                <option value={delivery.deliveryId}>
+                <option key={index} value={delivery.deliveryId}>
                   {delivery.companyName} {delivery.deliveryDate}
                 </option>
               );

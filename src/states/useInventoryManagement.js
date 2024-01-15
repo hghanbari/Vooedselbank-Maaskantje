@@ -9,8 +9,10 @@ const useInventoryManagement = () => {
     axios
       .get("http://localhost/backend/json/stockJson.php")
       .then((res) => {
-        const myArray = Object.keys(res.data).map((key) => res.data[key]);
-        setInventoryManagement(myArray);
+        if ((res.data[1] /= "This table is empty")) {
+          const myArray = Object.keys(res.data).map((key) => res.data[key]);
+          setInventoryManagement(myArray);
+        }
       })
       .catch((err) => console.log(err));
   }, [timestamp]);

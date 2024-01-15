@@ -41,6 +41,7 @@ export default function UserManager({
     const newOffset = (event.selected * itemsPerPage) % usersList.length;
     setItemOffset(newOffset);
   };
+
   const handleEdit = (id) => {
     showEditModal(id);
   };
