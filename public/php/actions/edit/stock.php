@@ -11,6 +11,18 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 try {
+    $json = file_get_contents('php://input');
+
+    // Converts it into a PHP object
+    $input = json_decode($json);
+
+    // Check what changed
+    // Get default data
+    $query = $conn->prepare('SELECT `EAN`, `amount`, `inUseAmount`, `bestByDate` FROM `stock` WHERE `stockId` = :id');
+    $query->bindParam(':id', $input->id);
+    $query->execute();
+    $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
     // Check auth
     if (!CheckAuth(2, $conn)) {
         header('Location: ' . $_SERVER['HTTP_REFERER']);

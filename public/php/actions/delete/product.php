@@ -33,7 +33,5 @@ try {
     // Delete product
     $conn->prepare('DELETE FROM `products` WHERE `EAN` = :ean')->execute([':ean' => $_POST['product']]);
 } catch (PDOException $e) {
-    echo "Error!: " . $e->getMessage();
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }
-
-header('Location: ' . $_SERVER['HTTP_REFERER']);

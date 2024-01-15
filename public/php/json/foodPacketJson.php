@@ -12,17 +12,30 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    return 0;
+}
+
 try {
+
+    $condition = "";
+    $parameters = array();
+    if (isset($_GET['id'])) {
+        $condition = "WHERE customer.`customerId` = :id";
+        $parameters = [":id" => $_GET['id']];
+    }
+
     $query = $conn->prepare(
-        "SELECT packet.packetId, packet.customerId, packet.makeDate, packet.pickUpDate, customer.firstName, customer.lastName, packetStock.stockId, packetStock.EAN, packetStock.amount, products.name AS productName FROM packet
+        "SELECT packet.packetId, packet.customerId, packet.makeDate, packet.pickUpDate, customer.firstName, customer.lastName, packetstock.stockId, packetstock.EAN, packetstock.amount, products.name AS productName FROM packet
         LEFT JOIN customer
         ON packet.customerId = customer.customerId
-        LEFT JOIN packetStock
-        ON packetStock.packetId = packet.packetId
+        LEFT JOIN packetstock
+        ON packetstock.packetId = packet.packetId
         LEFT JOIN products
-        ON packetStock.EAN = products.EAN
-        "
+        ON packetstock.EAN = products.EAN
+        " . $condition
     );
+
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -58,11 +71,11 @@ try {
                 array_push($data[$packetId]['products'], $productData);
             }
         }
-        header('Content-Type: application/json');
+
 
         echo json_encode($data);
     } else {
-        echo json_encode(["success" => false, "message" => "No data"]);
+        echo json_encode(["success" => true, "message" => "This table is empty"]);
     }
 } catch (PDOException $e) {
     echo json_encode(["success" => false, "message" => $e->getMessage()]);

@@ -2,6 +2,7 @@
 session_start();
 include_once('../../functions.php');
 
+// Connect to DB
 $conn = ConnectDB("root", "");
 
 header('Access-Control-Allow-Origin: http://localhost:3000');
@@ -92,13 +93,10 @@ try {
     //     );
     //     $query->execute($data);
     // }
-    echo json_encode(['success' => true]);
+    echo json_encode(["success" => true, "message" => "Packet has been added successfully"]);
 } catch (PDOException $e) {
-    echo "Error!: " . $e->getMessage();
 
     // Error cookie
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
     exit();
 }
-
-header('Location: ' . $_SERVER['HTTP_REFERER']);

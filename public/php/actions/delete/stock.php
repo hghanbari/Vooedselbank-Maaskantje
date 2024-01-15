@@ -35,5 +35,5 @@ try {
     $query->bindParam(":stockId", $_POST["stock"]);
     $query->execute();
 } catch (PDOException $e) {
-    echo "Error!: " . $e->getMessage();
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }

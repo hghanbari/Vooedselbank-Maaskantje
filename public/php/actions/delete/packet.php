@@ -48,6 +48,5 @@ try {
     // Delete packet
     $conn->prepare('DELETE FROM `packet` WHERE `packetId` = :id')->execute([':id' => $_POST['packet']]);
 } catch (PDOException $e) {
-    echo "Error!: " . $e->getMessage();
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }
-//header('Location: ' . $_SERVER['HTTP_REFERER']);

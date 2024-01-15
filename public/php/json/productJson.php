@@ -21,12 +21,9 @@ try {
     if (!empty($result)) {
         // $data = array();
 
-        // header('Access-Control-Allow-Origin: *');
-        // header('Content-Type: application/json');
-
         echo json_encode($result);
     } else {
-        echo "This table is empty";
+        echo json_encode(["success" => true, "message" => "This table is empty"]);
     }
 } catch (PDOException $e) {
     echo json_encode(["success" => false, "message" => $e->getMessage()]);

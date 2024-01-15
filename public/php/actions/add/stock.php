@@ -55,7 +55,7 @@ try {
         VALUES (:id, :ean, :deliveryId, :supplierId, :amount, :inUse, :bestByDate)"
     );
     $query->execute($data);
-    echo json_encode(['success' => true]);
+    echo json_encode(["success" => true, "message" => "Product has been added successfully"]);
 } catch (PDOException $e) {
-    echo "Error!: " . $e->getMessage();
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }

@@ -37,7 +37,7 @@ try {
 
         echo json_encode($obj);
     } else {
-        echo "This table is empty";
+        echo json_encode(["success" => true, "message" => "This table is empty"]);
     }
 } catch (PDOException $e) {
     echo json_encode(["success" => false, "message" => $e->getMessage()]);

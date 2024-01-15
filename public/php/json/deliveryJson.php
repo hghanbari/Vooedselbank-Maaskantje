@@ -20,7 +20,7 @@ try {
         $parameters = [":id" => $_GET['id']];
     }
 
-    $query = $conn->prepare("SELECT deliveryId, supplierId, deliveryDate, deliveryTime, delivered FROM delivery");
+    $query = $conn->prepare("SELECT deliveryId, supplierId, deliveryDate, deliveryTime, delivered FROM delivery" . $condition);
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -35,11 +35,11 @@ try {
                 'delivered' => $delivery["delivered"]
             ];
         }
-        header('Content-Type: application/json');
 
         echo json_encode($data);
     } else {
-        echo "This table is empty";
+
+        echo json_encode(["success" => true, "message" => "This table is empty"]);
     }
 } catch (PDOException $e) {
     echo json_encode(["success" => false, "message" => $e->getMessage()]);

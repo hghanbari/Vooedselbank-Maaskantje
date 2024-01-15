@@ -16,13 +16,9 @@ export default function PackageForm({ closeModalForm, packageStore }) {
   useEffect(() => {
     axios
       .get("http://localhost/backend/json/customerJson.php")
-      // .get(
-      // "http://localhost/Vooedselbank-Maaskantje/public/php/json/customerJson.php"
-      // )
       .then((res) => {
         const customer = Object.keys(res.data).map((key) => res.data[key]);
         setCustomerData(customer);
-        // console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -30,9 +26,6 @@ export default function PackageForm({ closeModalForm, packageStore }) {
   useEffect(() => {
     axios
       .get("http://localhost/backend/json/productJson.php")
-      // .get(
-      //   "http://localhost/Vooedselbank-Maaskantje/public/php/json/productJson.php"
-      // )
       .then((res) => {
         const productArr = Object.keys(res.data).map((key) => res.data[key]);
         setProductData(productArr);
@@ -45,7 +38,6 @@ export default function PackageForm({ closeModalForm, packageStore }) {
     axios
       .post(
         "http://localhost/backend/actions/add/foodPacket.php",
-        // "http://localhost/Vooedselbank-Maaskantje/public/php/actions/add/foodPacket.php",
         {
           customer: customer,
           product: product,

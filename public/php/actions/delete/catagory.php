@@ -28,7 +28,5 @@ try {
         $query->execute();
     }
 } catch (PDOException $e) {
-    echo "Error!: " . $e->getMessage();
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }
-
-header('Location: ' . $_SERVER['HTTP_REFERER']);

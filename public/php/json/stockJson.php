@@ -12,6 +12,15 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 try {
+
+
+    $condition = "";
+    $parameters = array();
+    if (isset($_GET['id'])) {
+        $condition = "WHERE customer.`customerId` = :id";
+        $parameters = [":id" => $_GET['id']];
+    }
+
     // Get data
     $query = $conn->prepare(
         'SELECT
@@ -25,7 +34,7 @@ try {
         LEFT JOIN `catagory`
         ON products.`catagoryId` = catagory.`catagoryId`
         LEFT JOIN `delivery`
-        ON stock.`deliveryId` = delivery.`deliveryId`'
+        ON stock.`deliveryId` = delivery.`deliveryId`' . $condition
     );
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -59,8 +68,6 @@ try {
                 ];
             }
         }
-
-        header('Content-Type: application/json');
 
         echo json_encode($data);
     } else {
