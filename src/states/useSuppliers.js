@@ -9,10 +9,8 @@ const useSupplier = () => {
     axios
       .get("http://localhost/backend/json/supplierJson.php")
       .then((res) => {
-        if ((res.data[1] /= "This table is empty")) {
-          const myArray = Object.keys(res.data).map((key) => res.data[key]);
-          setSuppliersList(myArray);
-        }
+        const myArray = Object.keys(res.data).map((key) => res.data[key]);
+        setSuppliersList(myArray);
       })
       .catch((err) => console.log(err));
   }, [timestamp]);

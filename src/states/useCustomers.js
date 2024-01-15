@@ -9,10 +9,8 @@ const useCustomers = () => {
     axios
       .get("http://localhost/backend/json/customerJson.php")
       .then((res) => {
-        if ((res.data[1] /= "This table is empty")) {
-          const myArray = Object.keys(res.data).map((key) => res.data[key]);
-          setCustomersList(myArray);
-        }
+        const myArray = Object.keys(res.data).map((key) => res.data[key]);
+        setCustomersList(myArray);
       })
       .catch((err) => console.log(err));
   }, [timestamp]);

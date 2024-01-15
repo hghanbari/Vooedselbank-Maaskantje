@@ -61,6 +61,7 @@ export default function UserManager({
             <th>Last Name</th>
             <th>E-mail</th>
             <th>Phone</th>
+            <th>Functie</th>
             <th></th>
           </tr>
         </thead>
@@ -72,6 +73,9 @@ export default function UserManager({
                 <td>{user.lastName}</td>
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
+                <td>
+                  {user.auth && 2 ? "Vrijwilliger" : "Magazijnmedewerker"}
+                </td>
                 <td>
                   <button
                     className="in-table"

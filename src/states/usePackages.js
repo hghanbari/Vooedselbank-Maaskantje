@@ -9,10 +9,8 @@ const usePackages = () => {
     axios
       .get("http://localhost/backend/json/foodPacketJson.php")
       .then((res) => {
-        if ((res.data[1] /= "This table is empty")) {
-          const myArray = Object.keys(res.data).map((key) => res.data[key]);
-          setPackagesList(myArray);
-        }
+        const myArray = Object.keys(res.data).map((key) => res.data[key]);
+        setPackagesList(myArray);
       })
 
       .catch((err) => console.log(err));
