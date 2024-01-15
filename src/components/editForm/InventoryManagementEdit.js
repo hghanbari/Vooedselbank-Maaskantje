@@ -7,21 +7,19 @@ export default function InventoryManagementEdit({
   inventoryManagementStore,
 }) {
   const { fetchInventoryManagement } = inventoryManagementStore;
-  const [product, setProduct] = useState("");
   const [delivery, setDelivery] = useState("");
   const [amount, setAmount] = useState(0);
   const [bestByDate, setBestByDate] = useState("");
   const [ean, setEan] = useState("");
-  // const [supplierId, setSupplierId] = useState("");
 
   const [productData, setProductData] = useState([]);
   const [deliveryData, setDeliveryData] = useState([]);
 
   useEffect(() => {
     axios
-      // .get("http://localhost/backend/json/Json.php?id=" + id, {
-      //   withCredentials: true,
-      // })
+      .get("http://localhost/backend/json/stockJson.php?id=" + id, {
+        withCredentials: true,
+      })
       .then((res) => {
         setDelivery(res.data.delivery);
         setAmount(res.data.amount);
@@ -48,12 +46,10 @@ export default function InventoryManagementEdit({
       .post(
         "http://localhost/backend/actions/add/stock.php",
         {
-          // product: product,
           delivery: delivery,
           amount: amount,
           bestByDate: bestByDate,
           ean: ean,
-          // supplierId: supplierId
         },
         {
           withCredentials: true,

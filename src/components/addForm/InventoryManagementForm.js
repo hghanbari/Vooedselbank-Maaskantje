@@ -2,14 +2,16 @@ import axios from "axios";
 import * as React from "react";
 import { useState, useEffect } from "react";
 
-export default function InventoryManagementForm({ closeModalForm }) {
+export default function InventoryManagementForm({
+  closeModalForm,
+  inventoryManagementStore,
+}) {
+  const { fetchInventoryManagement } = inventoryManagementStore;
   const [product, setProduct] = useState("");
   const [delivery, setDelivery] = useState("");
   const [amount, setAmount] = useState(0);
   const [bestByDate, setBestByDate] = useState("");
   const [ean, setEan] = useState("");
-  // const [supplierId, setSupplierId] = useState("");
-
   const [productData, setProductData] = useState([]);
   const [deliveryData, setDeliveryData] = useState([]);
 
@@ -35,14 +37,17 @@ export default function InventoryManagementForm({ closeModalForm }) {
           amount: amount,
           bestByDate: bestByDate,
           ean: ean,
-          // supplierId: supplierId
         },
         {
           withCredentials: true,
         }
       )
       .then((res) => {
-        closeModalForm(false);
+        if (res.data.success) {
+          alert(res.data.message);
+          closeModalForm(false);
+          fetchInventoryManagement();
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -69,12 +74,12 @@ export default function InventoryManagementForm({ closeModalForm }) {
             onChange={(e) => setEan(e.target.value)}
             className="form-content"
             required>
+            <option value={""}>Select</option>
             {productData.map((product) => {
               return <option value={product.EAN}>{product.name}</option>;
             })}
           </select>
           <div className="form-border"></div>
-
           <label htmlFor="delivery">Bestelling:</label>
           <select
             name="delivery"
@@ -82,10 +87,11 @@ export default function InventoryManagementForm({ closeModalForm }) {
             onChange={(e) => setDelivery(e.target.value)}
             className="form-content"
             required>
+            <option value={""}>Select</option>
             {deliveryData.map((delivery) => {
               return (
                 <option value={delivery.deliveryId}>
-                  {delivery.companyName} {delivery.deliveryDate}
+                  {delivery.companyName}/{delivery.deliveryDate}
                 </option>
               );
             })}
@@ -93,7 +99,7 @@ export default function InventoryManagementForm({ closeModalForm }) {
           <div className="form-border"></div>
           <label htmlFor="amount">hoeveelheid:</label>
           <input
-            type="amount"
+            type="number"
             name="amount"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
@@ -101,7 +107,6 @@ export default function InventoryManagementForm({ closeModalForm }) {
             required
           />
           <div className="form-border"></div>
-
           <label htmlFor="bestByDate">Goed tot:</label>
           <input
             type="date"

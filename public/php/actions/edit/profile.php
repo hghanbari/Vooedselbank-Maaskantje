@@ -18,13 +18,13 @@ try {
     // Converts it into a PHP object
     $input = json_decode($json);
 
-    $userId = $_SESSION["login"];
-    // Get user data
-    $query = $conn->prepare(
-        'SELECT * FROM user WHERE userId = :userId'
-    );
-    $query->execute([':userId' => $userId]);
-    $result = $query->fetch(PDO::FETCH_ASSOC);
+    // $userId = $_SESSION["login"];
+    // // Get user data
+    // $query = $conn->prepare(
+    //     'SELECT * FROM user WHERE userId = :userId'
+    // );
+    // $query->execute([':userId' => $userId]);
+    // $result = $query->fetch(PDO::FETCH_ASSOC);
 
     if (!empty($result)) {
         echo json_encode($result);

@@ -19,12 +19,9 @@ export default function InventoryManagement({
   const handleDelete = (id) => {
     if (window.confirm("Are you sure?")) {
       axios
-        .delete(
-          "http://localhost/backend/actions/delete/customer.php?id=" + id,
-          {
-            withCredentials: true,
-          }
-        )
+        .delete("http://localhost/backend/actions/delete/stock.php?id=" + id, {
+          withCredentials: true,
+        })
         .then((res) => {
           if (res.data.success) {
             alert(res.data.message);
@@ -88,7 +85,10 @@ export default function InventoryManagement({
 
                   <button
                     className="in-table"
-                    onClick={handleDelete.bind(this, user.customerId)}>
+                    onClick={handleDelete.bind(
+                      this,
+                      user.inventoryManagementId
+                    )}>
                     <span className="material-symbols-outlined">delete</span>
                   </button>
                 </td>

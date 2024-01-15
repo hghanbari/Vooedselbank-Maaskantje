@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 
 export default function Packages({
@@ -15,22 +15,11 @@ export default function Packages({
 
   const itemsPerPage = 5;
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost/backend/json/foodPacketJson.php")
-  //     .then((res) => {
-  //       const myArray = Object.keys(res.data).map((key) => res.data[key]);
-  //       console.log(myArray);
-  //       setData(myArray);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
-
   const handleDelete = (id) => {
     if (window.confirm("Are you sure?")) {
       axios
         .delete(
-          "http://localhost/backend/actions/delete/customer.php?id=" + id,
+          "http://localhost/backend/actions/delete/foodPacket.php?id=" + id,
           {
             withCredentials: true,
           }

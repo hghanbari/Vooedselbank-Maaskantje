@@ -9,9 +9,11 @@ const usePackages = () => {
     axios
       .get("http://localhost/backend/json/foodPacketJson.php")
       .then((res) => {
+        console.log(res);
         const myArray = Object.keys(res.data).map((key) => res.data[key]);
         setPackagesList(myArray);
       })
+
       .catch((err) => console.log(err));
   }, [timestamp]);
 
