@@ -7,13 +7,17 @@ $conn = ConnectDB('root', '');
 header('Access-Control-Allow-Origin: http://localhost:3000');
 header('Access-Control-Allow-Credentials: true');
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST, DELETE, OPTIONS");
+header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 try {
     // Get customer data
-    $query = $conn->prepare("SELECT `EAN`, `name` FROM `products`");
+    $query = $conn->prepare(
+        "SELECT stock.`EAN`, products.`name`, stock.`stockId` FROM `stock`
+        INNER JOIN products
+        ON stock.EAN = products.EAN
+        ");
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -23,7 +27,11 @@ try {
 
         echo json_encode($result);
     } else {
+<<<<<<< HEAD
         echo json_encode(["success" => true, "message" => "This table is empty"]);
+=======
+        echo json_encode(["success" => false, "message" => "This table is empty"]);
+>>>>>>> voedsel_pakket_toevoegen
     }
 } catch (PDOException $e) {
     echo json_encode(["success" => false, "message" => $e->getMessage()]);

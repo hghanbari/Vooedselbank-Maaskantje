@@ -11,7 +11,12 @@ export default function SupplierEdit({ id, closeModal, suppliersStore }) {
 
   useEffect(() => {
     axios
+<<<<<<< HEAD
       .get("http://localhost/backend/json/supplierJson.php?id=" + id, {
+=======
+      // .get("http://localhost/backend/json/customerJson.php?id=" + id, {
+      .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/customerJson.php?id=" + id, {
+>>>>>>> voedsel_pakket_toevoegen
         withCredentials: true,
       })
       .then((res) => {
@@ -28,6 +33,7 @@ export default function SupplierEdit({ id, closeModal, suppliersStore }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
+<<<<<<< HEAD
       .post(
         "http://localhost/backend/actions/edit/supplier.php",
         {
@@ -42,6 +48,17 @@ export default function SupplierEdit({ id, closeModal, suppliersStore }) {
           withCredentials: true,
         }
       )
+=======
+      // .post("http://localhost/backend/actions/add/supplier.php", {
+      .post("http://localhost/Vooedselbank-Maaskantje/public/php/actions/add/supplier.php", {
+        id: id,
+        companyName: companyName,
+        address: address,
+        phone: phone,
+        contactPerson: contactPerson,
+        email: email,
+      })
+>>>>>>> voedsel_pakket_toevoegen
       .then((res) => {
         if (res.data.success) {
           alert(res.data.message);

@@ -7,7 +7,8 @@ const useCustomers = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost/backend/json/customerJson.php")
+      .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/customerJson.php")
+      // .get("http://localhost/backend/json/customerJson.php")
       .then((res) => {
         const myArray = Object.keys(res.data).map((key) => res.data[key]);
         setCustomersList(myArray);

@@ -33,7 +33,11 @@ try {
         ON packetstock.packetId = packet.packetId
         LEFT JOIN products
         ON packetstock.EAN = products.EAN
+<<<<<<< HEAD
         " . $condition
+=======
+        "
+>>>>>>> voedsel_pakket_toevoegen
     );
 
     $query->execute();

@@ -37,7 +37,8 @@ export default function Login() {
     if (email !== "" && password !== "") {
       axios
         .post(
-          "http://localhost/backend/account/login.php",
+          // "http://localhost/backend/account/login.php",
+          "http://localhost/Vooedselbank-Maaskantje/public/php/account/login.php",
           {
             email: email,
             password: password,

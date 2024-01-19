@@ -7,9 +7,13 @@ $conn = ConnectDB('root', '');
 header('Access-Control-Allow-Origin: http://localhost:3000');
 header('Access-Control-Allow-Credentials: true');
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST, DELETE, OPTIONS");
+header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    return 0;
+}
 
 try {
     $condition = "";
@@ -45,7 +49,11 @@ try {
 
         echo json_encode($data);
     } else {
+<<<<<<< HEAD
         echo json_encode(["success" => true, "message" => "This table is empty"]);
+=======
+        echo json_encode(["success" => false, "message" => "This table is empty"]);
+>>>>>>> voedsel_pakket_toevoegen
     }
 } catch (PDOException $e) {
     echo json_encode(["success" => false, "message" => $e->getMessage()]);

@@ -17,7 +17,8 @@ export default function InventoryManagementForm({
 
   useEffect(() => {
     axios
-      .get("http://localhost/backend/json/productDeliveryJson.php")
+      // .get("http://localhost/backend/json/productDeliveryJson.php")
+      .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/productDeliveryJson.php")
       .then((res) => {
         const data = Object.keys(res.data).map((key) => res.data[key]);
         setProductData(data[0]);
@@ -30,7 +31,8 @@ export default function InventoryManagementForm({
     e.preventDefault();
     axios
       .post(
-        "http://localhost/backend/actions/add/stock.php",
+        // "http://localhost/backend/actions/add/stock.php",
+        "http://localhost/Vooedselbank-Maaskantje/public/php/actions/add/stock.php",
         {
           product: product,
           delivery: delivery,

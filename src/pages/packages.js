@@ -19,7 +19,12 @@ export default function Packages({
     if (window.confirm("Are you sure?")) {
       axios
         .delete(
+<<<<<<< HEAD
           "http://localhost/backend/actions/delete/foodPacket.php?id=" + id,
+=======
+          // "http://localhost/backend/actions/delete/customer.php?id=" + id,
+          "http://localhost/Vooedselbank-Maaskantje/public/php/actions/delete/customer.php?id=" + id,
+>>>>>>> voedsel_pakket_toevoegen
           {
             withCredentials: true,
           }
@@ -72,10 +77,7 @@ export default function Packages({
               <tr key={index}>
                 <td>{user.makeDate}</td>
                 <td>{user.pickUpDate}</td>
-                <td>
-                  {/* {user.customer.customerFirstName}
-                  {user.customer.customerLastName} */}
-                </td>
+                <td>{user.customer.customerName} {user.customer.customerLastName}</td>
                 <td>
                   <button
                     className="in-table"

@@ -29,10 +29,10 @@ try {
         customer.`customerId`, customer.`firstName`, customer.`middleName`, customer.`lastName`, customer.`email`, customer.`phone`,customer.`address`, customer.`familyMemberAmount`, customer.`youngestPerson`,
         specifics.`specificId` AS specId, specifics.`desc`
         FROM customer
-        LEFT JOIN customerSpecifics
-        ON customer.`customerId` = customerSpecifics.`customerId`
+        LEFT JOIN customerspecifics
+        ON customer.`customerId` = customerspecifics.`customerId`
         LEFT JOIN specifics
-        ON customerSpecifics.`specificId` = specifics.`specificId`
+        ON customerspecifics.`specificId` = specifics.`specificId`
         ' . $condition . '
         ORDER BY customer.`customerId` DESC'
     );
