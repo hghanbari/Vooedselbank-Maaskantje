@@ -71,6 +71,7 @@ export default function InventoryManagementForm({ closeModalForm }) {
             onChange={(e) => setEan(e.target.value)}
             className="form-content"
             required>
+            <option value={""}>Select</option>
             {productData.map((product) => {
               return <option value={product.EAN}>{product.name}</option>;
             })}
@@ -84,6 +85,7 @@ export default function InventoryManagementForm({ closeModalForm }) {
             onChange={(e) => setDelivery(e.target.value)}
             className="form-content"
             required>
+            <option value={""}>Select</option>
             {deliveryData.map((delivery) => {
               return (
                 <option value={delivery.deliveryId}>

@@ -82,7 +82,10 @@ export default function PackageForm({ closeModalForm, packageStore }) {
             name="customer"
             value={customer}
             onChange={(e) => setCustomer(e.target.value)}
-            className="form-content">
+            className="form-content"
+            required
+            >
+            <option value={""}>Select</option>
             {customerData.map((customer) => {
               return (
                 <option key={customer.customerId} value={customer.customerId}>
@@ -98,7 +101,10 @@ export default function PackageForm({ closeModalForm, packageStore }) {
             name="product"
             value={product}
             onChange={(e) => setProduct(e.target.value)}
-            className="form-content">
+            className="form-content"
+            required
+            >
+            <option value={""}>Select</option>
             {productData.map((product) => {
               // console.log(product);
               return (
@@ -117,6 +123,7 @@ export default function PackageForm({ closeModalForm, packageStore }) {
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             className="form-content"
+            required
           />
           <div className="form-border"></div>
 

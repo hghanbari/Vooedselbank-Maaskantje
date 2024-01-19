@@ -161,7 +161,7 @@ export default function CustomerForm({ closeModalForm, customersStore }) {
             value={specifics}
             onChange={(e) => setSpecifics(e.target.value)}
             className="form-content">
-              {/* <option>Geen allergieen</option> */}
+            <option value={""}>Select</option>
             {data.map((specific, index) => {
               return (
                 <option key={index} value={specific.specificId}>
