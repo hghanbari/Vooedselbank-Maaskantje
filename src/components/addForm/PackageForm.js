@@ -1,47 +1,27 @@
 import axios from "axios";
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function PackageForm({ closeModalForm, packageStore }) {
-  const { fetchPackages } = packageStore;
+  const { fetchPackages, customerData, productData } = packageStore;
+
   const [customer, setCustomer] = useState("");
-  // const [product, setProduct] = useState([]);
-  // const [amount, setAmount] = useState([]);
   const [product, setProduct] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState("");
 
-  const [customerData, setCustomerData] = useState([]);
-  const [productData, setProductData] = useState([]);
+  const [order, setOrder] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get("http://localhost/backend/json/customerJson.php")
-      .then((res) => {
-        const customer = Object.keys(res.data).map((key) => res.data[key]);
-        setCustomerData(customer);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost/backend/json/productJson.php")
-      .then((res) => {
-        const productArr = Object.keys(res.data).map((key) => res.data[key]);
-        setProductData(productArr);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  let nextId = 0;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(order);
     axios
       .post(
         "http://localhost/backend/actions/add/foodPacket.php",
         {
           customer: customer,
-          product: product,
-          amount: amount,
+          order: order,
         },
         {
           withCredentials: true,
@@ -89,7 +69,7 @@ export default function PackageForm({ closeModalForm, packageStore }) {
           </select>
           <div className="form-border"></div>
 
-          <label htmlFor="lastName">product 1:</label>
+          <label htmlFor="lastName">postroduct:</label>
           <select
             name="product"
             value={product}
@@ -100,7 +80,9 @@ export default function PackageForm({ closeModalForm, packageStore }) {
               return (
                 <option
                   key={product.EAN}
-                  value={product.EAN + "&" + product.stockId}>
+                  value={
+                    product.EAN + "&" + product.stockId + "&" + product.name
+                  }>
                   {product.name}
                 </option>
               );
@@ -108,7 +90,7 @@ export default function PackageForm({ closeModalForm, packageStore }) {
           </select>
           <div className="form-border"></div>
 
-          <label htmlFor="amount">hoeveel:</label>
+          <label htmlFor="amount">Hoeveel:</label>
           <input
             type="number"
             name="amount"
@@ -117,34 +99,30 @@ export default function PackageForm({ closeModalForm, packageStore }) {
             className="form-content"
           />
           <div className="form-border"></div>
-
-          {/* 
-          <label htmlFor="lastName">product 2:</label>
-          <select
-            name="product"
-            value={product[1]}
-            onChange={(e) => setProduct(e.target.value)}
-            className="form-content">
-            {productData.map((product) => {
-              // console.log(product);
-              return (
-                <option key={product.EAN} value={product.EAN + "&" + product.stockId}>
-                  {product.name}
-                </option>
-              );
-            })}
-          </select>
-          <div className="form-border"></div>
-
-          <label htmlFor="amount">hoeveel:</label>
-          <input
-            type="number"
-            name="amount"
-            value={amount[1]}
-            onChange={(e) => setAmount(e.target.value)}
-            className="form-content"
-          />
-          <div className="form-border"></div> */}
+          <button
+            onClick={() => {
+              setOrder([
+                ...order,
+                { id: nextId++, amount: amount, product: product },
+              ]);
+            }}>
+            Add
+          </button>
+          <ul>
+            {order.map((order) => (
+              <li key={order.id}>
+                {order.product}X{order.amount}
+                {/* <button
+                  onClick={() => {
+                    setOrder(
+                      Object.values(order).filter((id) => id.id !== order.id)
+                    );
+                  }}>
+                  Delete
+                </button> */}
+              </li>
+            ))}
+          </ul>
           <input
             id="submit-btn"
             type="submit"
