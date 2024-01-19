@@ -22,12 +22,7 @@ export default function PackageEdit({ id, closeModal, packerStore }) {
 
   useEffect(() => {
     axios
-<<<<<<< HEAD
       .get("http://localhost/backend/json/foodPacketJson.php?=" + id)
-=======
-      // .get("http://localhost/backend/json/foodPacketJson.php")
-      .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/foodPacketJson.php")
->>>>>>> voedsel_pakket_toevoegen
       .then((res) => {
         const productArr = Object.keys(res.data).map((key) => res.data[key]);
         setProductData(productArr);

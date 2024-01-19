@@ -49,11 +49,7 @@ try {
 
         echo json_encode($data);
     } else {
-<<<<<<< HEAD
-        echo json_encode(["success" => true, "message" => "This table is empty"]);
-=======
         echo json_encode(["success" => false, "message" => "This table is empty"]);
->>>>>>> voedsel_pakket_toevoegen
     }
 } catch (PDOException $e) {
     echo json_encode(["success" => false, "message" => $e->getMessage()]);

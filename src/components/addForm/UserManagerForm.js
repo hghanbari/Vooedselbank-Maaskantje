@@ -10,38 +10,15 @@ export default function CustomerForm({ closeModalForm, userStore }) {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-<<<<<<< HEAD
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [auth, setAuth] = useState("");
-=======
-  const [famAmount, setFamAmount] = useState("");
-  const [age, setAge] = useState("");
-  const [data, setData] = useState([]);
-  const [specifics, setSpecifics] = useState("");
-
-  useEffect(() => {
-    axios
-      // .get("http://localhost/backend/json/specificsJson.php")
-      .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/specificsJson.php")
-      .then((res) => {
-        const specificsArr = Object.keys(res.data).map((key) => res.data[key]);
-        setData(specificsArr);
-      })
-      .catch((err) => console.log(err));
-  }, []);
->>>>>>> voedsel_pakket_toevoegen
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
       .post(
-<<<<<<< HEAD
         "http://localhost/backend/account/signup.php",
-=======
-        // "http://localhost/backend/actions/add/customer.php",
-        "http://localhost/Vooedselbank-Maaskantje/public/php/actions/add/customer.php",
->>>>>>> voedsel_pakket_toevoegen
         {
           firstName: firstName,
           middleName: middleName,

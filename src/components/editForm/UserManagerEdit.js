@@ -36,12 +36,7 @@ export default function UserManagerEdit({ closeModal, userStore, id }) {
     e.preventDefault();
     axios
       .get(
-<<<<<<< HEAD
         "http://localhost/backend/actions/edit/user.php",
-=======
-        // "http://localhost/backend/actions/edit/customer.php",
-        "http://localhost/Vooedselbank-Maaskantje/public/php/actions/edit/customer.php",
->>>>>>> voedsel_pakket_toevoegen
         {
           firstName: firstName,
           middleName: middleName,

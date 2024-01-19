@@ -127,7 +127,6 @@ try {
     //     );
     //     $query->execute($data);
     // }
-<<<<<<< HEAD
     echo json_encode(["success" => true, "message" => "Packet has been added successfully"]);
 } catch (PDOException $e) {
 
@@ -135,12 +134,3 @@ try {
     echo json_encode(["success" => false, "message" => $e->getMessage()]);
     exit();
 }
-=======
-    
-    echo json_encode(["success" => true, "message" => "foodpacket has been added successfully"]);
-} catch (PDOException $e) {
-    echo json_encode(["success" => false, "message" => $e->getMessage()]);
-}
-
-// header('Location: ' . $_SERVER['HTTP_REFERER']);
->>>>>>> voedsel_pakket_toevoegen

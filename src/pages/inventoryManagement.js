@@ -19,19 +19,9 @@ export default function InventoryManagement({
   const handleDelete = (id) => {
     if (window.confirm("Are you sure?")) {
       axios
-<<<<<<< HEAD
         .delete("http://localhost/backend/actions/delete/stock.php?id=" + id, {
           withCredentials: true,
         })
-=======
-        .delete(
-          // "http://localhost/backend/actions/delete/customer.php?id=" + id,
-          "http://localhost/Vooedselbank-Maaskantje/public/php/actions/delete/customer.php?id=" + id,
-          {
-            withCredentials: true,
-          }
-        )
->>>>>>> voedsel_pakket_toevoegen
         .then((res) => {
           if (res.data.success) {
             alert(res.data.message);

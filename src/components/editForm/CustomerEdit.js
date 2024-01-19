@@ -37,14 +37,8 @@ export default function CustomerEdit({ id, closeModal, customersStore }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
-<<<<<<< HEAD
       .post(
         "http://localhost/backend/actions/edit/customer.php",
-=======
-      .get(
-        // "http://localhost/backend/actions/edit/customer.php",
-        "http://localhost/Vooedselbank-Maaskantje/public/php/actions/edit/customer.php",
->>>>>>> voedsel_pakket_toevoegen
         {
           id: id,
           firstName: firstName,
