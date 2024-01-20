@@ -7,8 +7,8 @@ const useInventoryManagement = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/stockJson.php")
-      // .get("http://localhost/backend/json/stockJson.php")
+      // .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/stockJson.php")
+      .get("http://localhost/backend/json/stockJson.php")
       .then((res) => {
         const myArray = Object.keys(res.data).map((key) => res.data[key]);
         setInventoryManagement(myArray);

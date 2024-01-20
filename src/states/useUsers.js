@@ -7,8 +7,8 @@ const useUsers = () => {
 
   useEffect(() => {
     axios
-      // .get("http://localhost/backend/json/userJson.php")
-      .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/userJson.php")
+      .get("http://localhost/backend/json/userJson.php")
+      // .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/userJson.php")
       .then((res) => {
         const myArray = Object.keys(res.data).map((key) => res.data[key]);
         setUsersList(myArray);

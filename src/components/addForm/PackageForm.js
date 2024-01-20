@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function PackageForm({ closeModalForm, packageStore }) {
   const { fetchPackages, customerData, productData } = packageStore;
@@ -8,6 +8,7 @@ export default function PackageForm({ closeModalForm, packageStore }) {
   const [customer, setCustomer] = useState("");
   const [product, setProduct] = useState("");
   const [amount, setAmount] = useState("");
+
 
   const [order, setOrder] = useState([]);
 
@@ -19,6 +20,7 @@ export default function PackageForm({ closeModalForm, packageStore }) {
     axios
       .post(
         "http://localhost/backend/actions/add/foodPacket.php",
+        // "http://localhost/Vooedselbank-Maaskantje/public/php/actions/add/foodPacket.php",
         {
           customer: customer,
           order: order,
@@ -71,7 +73,7 @@ export default function PackageForm({ closeModalForm, packageStore }) {
           </select>
           <div className="form-border"></div>
 
-          <label htmlFor="lastName">postroduct:</label>
+          <label htmlFor="lastName">product:</label>
           <select
             name="product"
             value={product}
@@ -85,9 +87,7 @@ export default function PackageForm({ closeModalForm, packageStore }) {
               return (
                 <option
                   key={product.EAN}
-                  value={
-                    product.EAN + "&" + product.stockId + "&" + product.name
-                  }>
+                  value={product.EAN + "&" + product.stockId + "&" + product.name}>
                   {product.name}
                 </option>
               );
@@ -105,11 +105,13 @@ export default function PackageForm({ closeModalForm, packageStore }) {
           />
           <div className="form-border"></div>
           <button
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               setOrder([
                 ...order,
                 { id: nextId++, amount: amount, product: product },
               ]);
+              console.log(order);
             }}>
             Add
           </button>

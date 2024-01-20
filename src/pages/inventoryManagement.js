@@ -20,6 +20,7 @@ export default function InventoryManagement({
     if (window.confirm("Are you sure?")) {
       axios
         .delete("http://localhost/backend/actions/delete/stock.php?id=" + id, {
+        // .delete("http://localhost/Vooedselbank-Maaskantje/public/php/actions/delete/stock.php?id=" + id, {
           withCredentials: true,
         })
         .then((res) => {

@@ -14,8 +14,8 @@ export default function SupplierForm({ closeModalForm, suppliersStore }) {
     e.preventDefault();
     axios
       .post(
-        // "http://localhost/backend/actions/add/supplier.php",
-        "http://localhost/Vooedselbank-Maaskantje/public/php/actions/add/supplier.php",
+        "http://localhost/backend/actions/add/supplier.php",
+        // "http://localhost/Vooedselbank-Maaskantje/public/php/actions/add/supplier.php",
         {
           companyName: companyName,
           address: address,

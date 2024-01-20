@@ -58,8 +58,8 @@ try {
     $ean = array();
     $stockId = array();
 
-    foreach($input->product as $product) {
-        $values = explode("&", $product);
+    foreach($input->order as $product) {
+        $values = explode("&", $product->product);
         array_push($ean, $values[0]);
         array_push($stockId, $values[1]);
     }
@@ -67,7 +67,7 @@ try {
     foreach($ean as $i => $eanValue) {
         // Update stock
         $query = $conn->prepare('UPDATE `stock` SET `inUseAmount` = `inUseAmount` + :amount WHERE `stockId` = :id');
-        $query->bindParam(':amount', $input->amount[$i]);
+        $query->bindParam(':amount', $input->order[$i]->amount);
         $query->bindParam(':id', $stockId[$i]);
         $query->execute();
         
@@ -77,7 +77,7 @@ try {
             ':customerId' => $input->customer,
             ':stockId' => $stockId[$i],
             ':ean' => $eanValue,
-            ':amount' => $input->amount[$i]
+            ':amount' => $input->order[$i]->amount
         ];
     
         $query = $conn->prepare(

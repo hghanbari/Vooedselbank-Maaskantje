@@ -19,6 +19,7 @@ export default function CustomerForm({ closeModalForm, userStore }) {
     axios
       .post(
         "http://localhost/backend/account/signup.php",
+        // "http://localhost/Vooedselbank-Maaskantje/public/php/account/signup.php",
         {
           firstName: firstName,
           middleName: middleName,

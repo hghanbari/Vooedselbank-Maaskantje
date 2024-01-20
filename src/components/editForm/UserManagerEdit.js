@@ -16,6 +16,7 @@ export default function UserManagerEdit({ closeModal, userStore, id }) {
   useEffect(() => {
     axios
       .get("http://localhost/backend/json/userJson.php?id=" + id, {
+      // .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/userJson.php?id=" + id, {
         withCredentials: true,
       })
       .then((res) => {
@@ -37,6 +38,7 @@ export default function UserManagerEdit({ closeModal, userStore, id }) {
     axios
       .get(
         "http://localhost/backend/actions/edit/user.php",
+        // "http://localhost/Vooedselbank-Maaskantje/public/php/actions/edit/user.php",
         {
           firstName: firstName,
           middleName: middleName,

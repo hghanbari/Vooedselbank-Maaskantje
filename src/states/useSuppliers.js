@@ -7,8 +7,8 @@ const useSupplier = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/supplierJson.php")
-      // .get("http://localhost/backend/json/supplierJson.php")
+      // .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/supplierJson.php")
+      .get("http://localhost/backend/json/supplierJson.php")
       .then((res) => {
         const myArray = Object.keys(res.data).map((key) => res.data[key]);
         setSuppliersList(myArray);

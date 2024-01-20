@@ -12,6 +12,7 @@ export default function SupplierEdit({ id, closeModal, suppliersStore }) {
   useEffect(() => {
     axios
       .get("http://localhost/backend/json/supplierJson.php?id=" + id, {
+      // .get("http://localhost/Vooedselbank-Maaskantje/public/php/json/supplierJson.php?id=" + id, {
         withCredentials: true,
       })
       .then((res) => {
@@ -30,6 +31,7 @@ export default function SupplierEdit({ id, closeModal, suppliersStore }) {
     axios
       .post(
         "http://localhost/backend/actions/edit/supplier.php",
+        // "http://localhost/Vooedselbank-Maaskantje/public/php/actions/edit/supplier.php",
         {
           id: id,
           companyName: companyName,

@@ -13,6 +13,7 @@ export default function Profile() {
   useEffect(() => {
     axios
       .get("http://localhost/backend/account/profile.php", {
+      // .get("http://localhost/Vooedselbank-Maaskantje/public/php/account/profile.php", {
         withCredentials: true,
       })
       .then((res) => {
@@ -31,6 +32,7 @@ export default function Profile() {
     axios
       .post(
         "http://localhost/backend/actions/edit/profile.php",
+        // "http://localhost/Vooedselbank-Maaskantje/public/php/actions/edit/profile.php",
         {
           firstName: firstName,
           middleName: middleName,

@@ -24,7 +24,7 @@ try {
     // Converts it into a PHP object
     $input = json_decode($json);
 
-    $query = $conn->prepare("SELECT supplierId, companyName, address, contactPerson, email, phone FROM supplier " . $condition);
+    $query = $conn->prepare("SELECT supplierId, companyName, address, contactName, email, phone FROM supplier " . $condition);
     $query->execute($parameters);
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -32,7 +32,7 @@ try {
 
         echo json_encode($result);
     } else {
-        echo json_encode(["success" => true, "message" => "This table is empty"]);
+        echo json_encode(["success" => false, "message" => "This table is empty"]);
     }
 } catch (PDOException $e) {
     echo json_encode(["success" => false, "message" => $e->getMessage()]);

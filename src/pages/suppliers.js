@@ -18,8 +18,8 @@ export default function Suppliers({
     if (window.confirm("Are you sure?")) {
       axios
         .delete(
-          // "http://localhost/backend/actions/delete/supplier.php?id=" + id,
-          "http://localhost/Vooedselbank-Maaskantje/public/php/actions/delete/supplier.php?id=" + id,
+          "http://localhost/backend/actions/delete/supplier.php?id=" + id,
+          // "http://localhost/Vooedselbank-Maaskantje/public/php/actions/delete/supplier.php?id=" + id,
           {
             withCredentials: true,
           }

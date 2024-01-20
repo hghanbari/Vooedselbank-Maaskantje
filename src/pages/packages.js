@@ -20,6 +20,7 @@ export default function Packages({
       axios
         .delete(
           "http://localhost/backend/actions/delete/foodPacket.php?id=" + id,
+          // "http://localhost/Vooedselbank-Maaskantje/public/php/actions/delete/foodPacket.php?id=" + id,
           {
             withCredentials: true,
           }
