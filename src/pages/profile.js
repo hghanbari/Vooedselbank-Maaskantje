@@ -9,6 +9,7 @@ export default function Profile() {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
+  const [nPassword, setNPassword] = useState("");
 
   useEffect(() => {
     axios
@@ -40,6 +41,7 @@ export default function Profile() {
           email: email,
           phone: phone,
           password: password,
+          nPassword: nPassword,
           address: address,
         },
         {
@@ -123,6 +125,15 @@ export default function Profile() {
           onChange={(e) => setPassword(e.target.value)}
           className="form-content"
           required
+        />
+        <div className="form-border"></div>
+        <label htmlFor="number">New password:</label>
+        <input
+          type="password"
+          name="nPassword"
+          value={nPassword}
+          onChange={(e) => setNPassword(e.target.value)}
+          className="form-content"
         />
         <div className="form-border"></div>
         <input id="submit-btn" type="submit" name="submit" value="Opslaan" />
