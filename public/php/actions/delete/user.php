@@ -12,6 +12,7 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 try {
+    $userId = $_GET["id"];
     // check auth
     if (!CheckAuth(3, $conn)) {
         header("Location: " . $_SERVER["HTTP_REFERER"]);
@@ -19,26 +20,27 @@ try {
     }
 
     // check if user exists
-    $stmt = 'SELECT userId, pass FROM user WHERE userId = :userId';
-    $data = [':userId' => $_POST["user"]];
+    $stmt = 'SELECT userId FROM user WHERE userId = :userId';
+    $data = [':userId' => $userId];
     if (!CheckIfExists($stmt, $data, $conn)) {
-        header("Location: " . $_SERVER["HTTP_REFERER"]);
+        echo json_encode(["success" => false, "message" => "User doesn't exist"]);
         exit();
     }
 
-    // Check password
-    $password = $conn->prepare("SELECT pass FROM user WHERE userId = :userId");
-    $password->bindParam(":userId", $_POST["user"]);
-    $password->execute();
+    // // Check password
+    // $password = $conn->prepare("SELECT pass FROM user WHERE userId = :userId");
+    // $password->bindParam(":userId", $userId);
+    // $password->execute();
 
-    if (!password_verify($_POST["password"], $password[0]["pass"])) {
-        header("Location: " . $_SERVER["HTTP_REFERER"]);
-        exit();
-    }
+    // if (!password_verify($_POST["password"], $password[0]["pass"])) {
+    //     header("Location: " . $_SERVER["HTTP_REFERER"]);
+    //     exit();
+    // }
 
     $query = $conn->prepare("DELETE FROM user WHERE userId = :userId");
-    $query->bindParam(':userId', $_POST["user"]);
+    $query->bindParam(':userId', $userId);
     $query->execute();
+    echo json_encode(["success" => true, "message" => "user has been deleted"]);
 } catch (PDOException $e) {
     echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }

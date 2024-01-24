@@ -81,7 +81,7 @@ export default function InventoryManagement({
                 <td>
                   <button
                     className="in-table"
-                    onClick={handleEdit.bind(this, user.inventoryManagementId)}>
+                    onClick={handleEdit.bind(this, user.stockId)}>
                     <span className="material-symbols-outlined">edit</span>
                   </button>
 
@@ -89,7 +89,7 @@ export default function InventoryManagement({
                     className="in-table"
                     onClick={handleDelete.bind(
                       this,
-                      user.inventoryManagementId
+                      user.stockId
                     )}>
                     <span className="material-symbols-outlined">delete</span>
                   </button>

@@ -11,7 +11,12 @@ header("Access-Control-Allow-Methods: POST, DELETE, OPTIONS");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    return 0;
+}
+
 try {
+    $packetId = $_GET["id"];
     // Check auth
     if (empty($_SESSION["login"])) {
         echo json_encode(["success" => false, "message" => "User is not authorized"]);
@@ -21,7 +26,7 @@ try {
     // The query should only get the items that have yet to be picked up
     // Just in case something weird happend this will check if the date has passed
     $query = $conn->prepare('SELECT `pickUpDate` FROM `packet` WHERE `packetId` = :id');
-    $query->bindParam(':id', $_POST['packet']);
+    $query->bindParam(':id', $packetId);
     $query->execute();
 
     if ($query->fetchAll(PDO::FETCH_ASSOC) > new DateTime()) {
@@ -32,7 +37,7 @@ try {
 
     // Update stock
     $query = $conn->prepare('SELECT `stockId`, `amount` FROM `packetstock` WHERE `packetId` = :id');
-    $query->execute([':id' => $_POST['packet']]);
+    $query->execute([':id' => $packetId]);
     $stock = $query->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($stock as $item) {
@@ -43,10 +48,11 @@ try {
     }
 
     // Delete children
-    $conn->prepare('DELETE FROM `packetStock` WHERE `packetId` = :id')->execute([':id' => $_POST['packet']]);
+    $conn->prepare('DELETE FROM `packetstock` WHERE `packetId` = :id')->execute([':id' => $packetId]);
 
     // Delete packet
-    $conn->prepare('DELETE FROM `packet` WHERE `packetId` = :id')->execute([':id' => $_POST['packet']]);
+    $conn->prepare('DELETE FROM `packet` WHERE `packetId` = :id')->execute([':id' => $packetId]);
+    echo json_encode(["success" => true, "message" => "Packet succesfully deleted"]);
 } catch (PDOException $e) {
     echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }

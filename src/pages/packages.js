@@ -19,8 +19,8 @@ export default function Packages({
     if (window.confirm("Are you sure?")) {
       axios
         .delete(
-          "http://localhost/backend/actions/delete/foodPacket.php?id=" + id,
-          // "http://localhost/Vooedselbank-Maaskantje/public/php/actions/delete/foodPacket.php?id=" + id,
+          "http://localhost/backend/actions/delete/packet.php?id=" + id,
+          // "http://localhost/Vooedselbank-Maaskantje/public/php/actions/delete/packet.php?id=" + id,
           {
             withCredentials: true,
           }
@@ -77,13 +77,13 @@ export default function Packages({
                 <td>
                   <button
                     className="in-table"
-                    onClick={handleEdit.bind(this, user.packageId)}>
+                    onClick={handleEdit.bind(this, user.packetId)}>
                     <span className="material-symbols-outlined">edit</span>
                   </button>
 
                   <button
                     className="in-table"
-                    onClick={handleDelete.bind(this, user.packageId)}>
+                    onClick={handleDelete.bind(this, user.packetId)}>
                     <span className="material-symbols-outlined">delete</span>
                   </button>
                 </td>
